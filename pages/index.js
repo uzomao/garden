@@ -2,17 +2,20 @@ import Head from "next/head"
 import { fetchGraphQL } from "@/utils/contentful"
 import { queries } from '@/utils/query'
 import { useState, useEffect } from "react"
+import styles from '@/styles/Home.module.css'
 
 export default function Home() {
 
+  const [thoughts, setThoughts] = useState(null)
+
   useEffect(() => {
     fetchGraphQL(queries.thoughts)
-      .then((res) => console.log(res))
+      .then((thoughts) => {setThoughts(thoughts.data.blogPostCollection.items)})
   
     return () => {}
   }, [])
-  
-  // const [thoughts, setThoughts] = useState(null)
+
+  const cloudTopPositions = [10,20,30,40,50,60,70]
 
   return (
     <>
@@ -27,7 +30,16 @@ export default function Home() {
 
         </div>
         <div id='ground'>
-
+          {
+            thoughts && thoughts.map(({slug, title}, index) => 
+              <article key={slug} className={styles.cloud} style={{
+                animationDelay: `${index*5}s`,
+                top: `${cloudTopPositions[Math.floor(Math.random()*cloudTopPositions.length)]}px`
+              }}>
+                <h3>{title}</h3>
+              </article>
+            )
+          }
         </div>
       </main>
     </>

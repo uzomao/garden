@@ -19,7 +19,7 @@ body {
 }
 
 #sky {
-  height: 55vh;
+  height: 50vh;
   background-color: var(--sky);
   padding: 1em;
 }
@@ -29,10 +29,11 @@ body {
   background-image: url('../public/images/grass.png');
   display: flex;
   flex-wrap: wrap;
-  min-height: 45vh;
+  min-height: 50vh;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
+    
   }
 }

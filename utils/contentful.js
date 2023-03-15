@@ -1,5 +1,4 @@
 const fetchGraphQL = (query) => {
-    console.log('query:', query)
     return fetch(
       `https://graphql.contentful.com/content/v1/spaces/${process.env.CONTENTFUL_SPACE_ID}`,
       {
