@@ -1,25 +1,36 @@
 .cloud {
   position: absolute;
+  text-align: center;
   width: 234px;
-  /* height: 234px; */
-  right: -224px;
-  background-image: url('../public/images/cloud.png');
+  height: 234px;
+  right: -234px;
+
+  background-image: url('../public/images/cloud-1.png');
   background-size: contain;
   background-repeat: no-repeat;
-  transform: translate(0);
+  background-position: center;
+
   animation-name: drift;
   animation-timing-function: linear;
   animation-iteration-count: infinite;
-  animation-duration: 20s;
+  animation-duration: 30s;
   animation-play-state: running;
 
-  display: flex;
-  justify-content: center;
-  padding: .5rem;
-  background-position: center;
-  align-items: center;
-
   cursor: pointer;
+
+  backdrop-filter: blur(6px);
+  opacity: 0.85;
+}
+
+.cloud img {
+  width: 100%;
+}
+
+.cloud h3 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 @keyframes drift {

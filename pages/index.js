@@ -3,6 +3,8 @@ import { fetchGraphQL } from "@/utils/contentful"
 import { queries } from '@/utils/query'
 import { useState, useEffect } from "react"
 import styles from '@/styles/Home.module.css'
+import Image from "next/image"
+import cloud from '../public/images/cloud-1.png'
 
 export default function Home() {
 
@@ -27,19 +29,18 @@ export default function Home() {
       </Head>
       <main id='garden'>
         <div id='sky'>
-
-        </div>
-        <div id='ground'>
           {
             thoughts && thoughts.map(({slug, title}, index) => 
-              <article key={slug} className={styles.cloud} style={{
-                animationDelay: `${index*5}s`,
-                top: `${cloudTopPositions[Math.floor(Math.random()*cloudTopPositions.length)]}px`
-              }}>
+              <div className={styles.cloud} key={slug} style={{
+                  animationDelay: `${index*10}s`,
+                  top: `${cloudTopPositions[Math.floor(Math.random()*cloudTopPositions.length)]}px`
+                }}>
                 <h3>{title}</h3>
-              </article>
+              </div>
             )
           }
+        </div>
+        <div id='ground'>
         </div>
       </main>
     </>
