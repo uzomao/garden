@@ -4,16 +4,21 @@ import { queries } from '@/utils/query'
 import { useState, useEffect } from "react"
 import styles from '@/styles/Home.module.css'
 import Image from "next/image"
-import cloud from '../public/images/cloud-1.png'
+import defaultImg from '@/public/images/default.jpg'
 
 export default function Home() {
 
   const [thoughts, setThoughts] = useState(null)
+  const [ideas, setIdeas] = useState(null)
 
   useEffect(() => {
-    fetchGraphQL(queries.thoughts)
-      .then((thoughts) => {setThoughts(thoughts.data.blogPostCollection.items)})
-  
+    fetchGraphQL(`{ ${queries.thoughts}, ${queries.ideas} }`)
+      .then((content) => {
+        const data = content.data
+        setThoughts(data.blogPostCollection.items)
+        console.log(data.ideaCollection.items)
+        setIdeas(data.ideaCollection.items)
+      })
     return () => {}
   }, [])
 
@@ -35,12 +40,25 @@ export default function Home() {
                   animationDelay: `${index*10}s`,
                   top: `${cloudTopPositions[Math.floor(Math.random()*cloudTopPositions.length)]}px`
                 }}>
-                <h3>{title}</h3>
+                <h3 className={styles.title}>{title}</h3>
               </div>
             )
           }
         </div>
-        <div id='ground'>
+        <div id='ground' className={styles.ideas}>
+          {
+            ideas && ideas.map(({ title, imagesCollection, date }, index) => 
+              <div key={index} className={styles.idea}>
+                <Image 
+                  src={imagesCollection.items.length >= 1 ? imagesCollection.items[0].url : defaultImg} 
+                  width={100} 
+                  height={100} 
+                />
+                <p>{title}</p>
+                <small>{date}</small>
+              </div>
+            )
+          }
         </div>
       </main>
     </>

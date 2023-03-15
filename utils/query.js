@@ -1,5 +1,5 @@
 const queries = {
-    thoughts: `{
+    thoughts: `
         blogPostCollection {
             items {
             title
@@ -11,8 +11,8 @@ const queries = {
             tags
             }
         }
-    }`,
-    ideas: `{
+    `,
+    ideas: `
         ideaCollection {
             items {
                 title
@@ -28,7 +28,7 @@ const queries = {
                 plantPosition
             }
         }
-    }`
+    `
 }
 
 export { queries }
