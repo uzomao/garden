@@ -16,7 +16,6 @@ export default function Home() {
       .then((content) => {
         const data = content.data
         setThoughts(data.blogPostCollection.items)
-        console.log(data.ideaCollection.items)
         setIdeas(data.ideaCollection.items)
       })
     return () => {}
@@ -47,17 +46,19 @@ export default function Home() {
         </div>
         <div id='ground' className={styles.ideas}>
           {
-            ideas && ideas.map(({ title, imagesCollection, date }, index) => 
-              <div key={index} className={styles.idea}>
+            ideas && ideas.map(({ title, imagesCollection, date }, index) => {
+              const image = imagesCollection.items[0]
+              return <div key={index} className={styles.idea}>
                 <Image 
-                  src={imagesCollection.items.length >= 1 ? imagesCollection.items[0].url : defaultImg} 
+                  src={ image ? image.url : defaultImg } 
+                  alt={ image ? image.fileName : "default image" }
                   width={100} 
                   height={100} 
                 />
                 <p>{title}</p>
                 <small>{date}</small>
               </div>
-            )
+            })
           }
         </div>
       </main>

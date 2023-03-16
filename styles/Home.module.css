@@ -8,7 +8,7 @@
   background-image: url('../public/images/cloud-1.png');
   background-size: contain;
   background-repeat: no-repeat;
-  background-position: center;
+  background-position: top;
 
   animation-name: drift;
   animation-timing-function: linear;
@@ -24,7 +24,7 @@
 
 .cloud .title {
   position: absolute;
-  top: 50%;
+  top: 30%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
