@@ -1,0 +1,16 @@
+.overlay {
+    position: absolute;
+    z-index: 1;
+    background: var(--modal-bg);
+    transform: translateY(10%);
+    padding: 1.5rem;
+    border-radius: var(--default-border-radius);
+    height: 80%;
+    width: 50%;
+    overflow: scroll;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    top: 0;
+}

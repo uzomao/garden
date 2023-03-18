@@ -1,4 +1,6 @@
 import { queries } from '@/utils/query'
+import { documentToHtmlString } from '@contentful/rich-text-html-renderer';
+import { BLOCKS, MARKS } from '@contentful/rich-text-types';
 
 const fetchGraphQL = (query) => {
     return fetch(
@@ -46,5 +48,18 @@ async function getThoughtPaths (arg){
   return slugs
 }
 
-export { fetchGraphQL, fetchGraphQLAsync, getAllContent, getThoughtPaths }
+const parseRichText = (richText) => {
+  const options = {
+      // renderMark: {
+      //     [MARKS.BOLD]: text => `<custom-bold>${text}<custom-bold>`
+      // },
+      // renderNode: {
+      //     [BLOCKS.EMBEDDED_ASSET]: (node) => `<img src=https://${node.data.target.fields.file.url} alt={node.data.target.fields.description}>`
+      // }
+  }
+
+  return documentToHtmlString(richText, options)
+}
+
+export { fetchGraphQL, fetchGraphQLAsync, getAllContent, getThoughtPaths, parseRichText }
 
