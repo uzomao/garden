@@ -5,6 +5,7 @@ import { useState, useEffect } from "react"
 import styles from '@/styles/Home.module.css'
 import Image from "next/image"
 import defaultImg from '@/public/images/default.jpg'
+import Link from "next/link"
 
 export default function Home() {
 
@@ -35,12 +36,14 @@ export default function Home() {
         <div id='sky'>
           {
             thoughts && thoughts.map(({slug, title}, index) => 
-              <div className={styles.cloud} key={slug} style={{
-                  animationDelay: `${index*10}s`,
-                  top: `${cloudTopPositions[Math.floor(Math.random()*cloudTopPositions.length)]}px`
-                }}>
-                <h3 className={styles.title}>{title}</h3>
-              </div>
+              <Link href={`/thoughts/${slug}`} key={slug}>
+                <div className={styles.cloud} style={{
+                    animationDelay: `${index*10}s`,
+                    top: `${cloudTopPositions[Math.floor(Math.random()*cloudTopPositions.length)]}px`
+                  }}>
+                  <h3 className={styles.title}>{title}</h3>
+                </div>
+              </Link>
             )
           }
         </div>
