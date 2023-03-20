@@ -13,4 +13,16 @@
     left: 0;
     right: 0;
     top: 0;
+    box-shadow: 8px 8px 2px #fecfcc;
+}
+
+.close {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.close, .close a {
+    color: red;
+    cursor: pointer;
+    text-decoration: none;
 }

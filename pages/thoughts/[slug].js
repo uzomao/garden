@@ -1,17 +1,22 @@
-import { getThoughtPaths, fetchGraphQLAsync, parseRichText } from "@/utils/contentful"
+import { getThoughtPaths, fetchGraphQLAsync } from "@/utils/contentful"
 import { queries } from "@/utils/query";
 import Home from '@/pages/index.js'
-import utilStyles from '@/styles/utils.module.css'
+import { useRouter } from "next/router";
+import ModalOverlay from "@/components/modal-overlay";
+import { useState } from "react";
 
 export default function Thought({ postContent }){
+
+    const router = useRouter()
+
     return (
-        <>
+        <span onClick={(e) => {
+            const homeElements = ['sky', 'ground']
+            homeElements.includes(e.target.id) && router.push('/')
+        }}>
             <Home />
-            <div className={utilStyles.overlay}>
-                <h2>{postContent.title}</h2>
-                <div dangerouslySetInnerHTML={{ __html: parseRichText(postContent.body.json) }} />
-            </div>
-        </>
+            <ModalOverlay postContent={postContent} />
+        </span>
     )
 }
 

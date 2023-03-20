@@ -5,12 +5,22 @@ import { useState, useEffect } from "react"
 import styles from '@/styles/Home.module.css'
 import Image from "next/image"
 import defaultImg from '@/public/images/default.jpg'
-import Link from "next/link"
+import { useRouter } from "next/router";
+import ModalOverlay from '@/components/modal-overlay'
 
 export default function Home() {
 
   const [thoughts, setThoughts] = useState(null)
   const [ideas, setIdeas] = useState(null)
+
+  const [modalState, setModalState] = useState({
+    isOpen: false,
+    contentSlug: ''
+  })
+
+  const changeModalState = (isOpen, slug) => setModalState({ isOpen, contentSlug: slug })
+
+  const cloud = 'cloud'
 
   useEffect(() => {
     fetchGraphQL(`{ ${queries.thoughts}, ${queries.ideas} }`)
@@ -18,11 +28,17 @@ export default function Home() {
         const data = content.data
         setThoughts(data.blogPostCollection.items)
         setIdeas(data.ideaCollection.items)
+
+        const routeParams = window.location.search
+        routeParams.includes(cloud) && changeModalState(true, routeParams.split('=')[1])
+        //split the search location params to look sth like ['?cloud', 'a-post-slug'] then take the slug obvs
       })
+
     return () => {}
   }, [])
 
   const cloudTopPositions = [10,20,30,40,50,60,70]
+  const router = useRouter()
 
   return (
     <>
@@ -36,14 +52,15 @@ export default function Home() {
         <div id='sky'>
           {
             thoughts && thoughts.map(({slug, title}, index) => 
-              <Link href={`/thoughts/${slug}`} key={slug}>
-                <div className={styles.cloud} style={{
+                <div className={styles.cloud} key={slug} style={{
                     animationDelay: `${index*10}s`,
                     top: `${cloudTopPositions[Math.floor(Math.random()*cloudTopPositions.length)]}px`
+                  }} onClick={() => {
+                    changeModalState(true, slug)
+                    router.push(`/?${cloud}=${slug}`, undefined, { shallow: true })
                   }}>
                   <h3 className={styles.title}>{title}</h3>
                 </div>
-              </Link>
             )
           }
         </div>
@@ -64,6 +81,12 @@ export default function Home() {
             })
           }
         </div>
+        { modalState.isOpen && 
+          <ModalOverlay 
+            postContent={thoughts.filter(({ slug }) => slug === modalState.contentSlug)[0]} 
+            setModalState={setModalState}
+          /> 
+        }
       </main>
     </>
   )
