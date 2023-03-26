@@ -20,7 +20,17 @@ export default function Home() {
 
   const changeModalState = (isOpen, slug) => setModalState({ isOpen, contentSlug: slug })
 
-  const cloud = 'cloud'
+  const [tooltip, setTooltip] = useState({
+    isOpen: false,
+    coords: {
+      x: 0,
+      y: 0
+    }
+  })
+
+  const changeTooltip = (isOpen, coords) => setTooltip({ isOpen, coords })
+
+  const [currentIdea, setCurrentIdea] = useState(null)
 
   useEffect(() => {
     fetchGraphQL(`{ ${queries.thoughts}, ${queries.ideas} }`)
@@ -39,6 +49,10 @@ export default function Home() {
 
   const cloudTopPositions = [10,20,30,40,50,60,70]
   const router = useRouter()
+
+  const ideaImgDimensions = 100
+
+  const cloud = 'cloud'
 
   return (
     <>
@@ -66,14 +80,18 @@ export default function Home() {
         </div>
         <div id='ground' className={styles.ideas}>
           {
-            ideas && ideas.map(({ title, imagesCollection, date }, index) => {
+            ideas && ideas.map((idea, index) => {
+              const { title, imagesCollection, date } = idea
               const image = imagesCollection.items[0]
-              return <div key={index} className={styles.idea}>
+              return <div key={index} className={styles.idea} onClick={ (e) => { 
+                changeTooltip(true, { x: e.target.x, y: e.target.y }) 
+                setCurrentIdea(idea)
+              }}>
                 <Image 
                   src={ image ? image.url : defaultImg } 
                   alt={ image ? image.fileName : "default image" }
-                  width={100} 
-                  height={100} 
+                  width={ideaImgDimensions} 
+                  height={ideaImgDimensions} 
                 />
                 <p>{title}</p>
                 <small>{date}</small>
@@ -86,6 +104,23 @@ export default function Home() {
             postContent={thoughts.filter(({ slug }) => slug === modalState.contentSlug)[0]} 
             setModalState={setModalState}
           /> 
+        }
+        {
+          tooltip.isOpen &&
+            <div style={{ top: `${tooltip.coords.y + (ideaImgDimensions/2)}px`, left: `${tooltip.coords.x + ideaImgDimensions}px` }} 
+                className={`${styles.tooltip} text-center`}
+            >
+              <h4>{currentIdea.title}</h4>
+              <div className="flex-horizontal space-between">
+                <p>{currentIdea.status}</p>
+                <p>{currentIdea.date}</p>
+              </div>
+              <p style={{maxHeight: '100px', overflowY: 'scroll'}}>{currentIdea.description}</p>
+              <div className="flex-horizontal space-between">
+                <button className="default-border-radius">Water</button>
+                <button className="default-border-radius">Delve deeper</button>
+              </div>
+            </div>
         }
       </main>
     </>

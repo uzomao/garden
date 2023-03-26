@@ -32,6 +32,26 @@ body {
   min-height: 50vh;
 }
 
+.flex-horizontal {
+  display: flex
+}
+
+.space-between {
+  justify-content: space-between;
+}
+
+.space-around {
+  justify-content: space-around;
+}
+
+.default-border-radius {
+  border-radius: var(--default-border-radius);
+}
+
+.text-center {
+  text-align: center;
+}
+
 @media (prefers-color-scheme: dark) {
   :root {
     
