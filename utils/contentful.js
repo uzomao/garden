@@ -48,17 +48,22 @@ async function getThoughtPaths (arg){
   return slugs
 }
 
-const parseRichText = (richText) => {
+const parseRichText = (richText, links=null) => {
   const options = {
-      // renderMark: {
-      //     [MARKS.BOLD]: text => `<custom-bold>${text}<custom-bold>`
-      // },
-      // renderNode: {
-      //     [BLOCKS.EMBEDDED_ASSET]: (node) => `<img src=https://${node.data.target.fields.file.url} alt={node.data.target.fields.description}>`
-      // }
+      renderMark: {
+          [MARKS.BOLD]: text => `<custom-bold>${text}<custom-bold>`
+      },
+      renderNode: {
+          // I had to write my own function, the one in the original documentation was not working
+          [BLOCKS.EMBEDDED_ASSET]: (node) => {
+            const assetId = node.data.target.sys.id
+            const asset = links.assets.block.filter((block) => block.sys.id === assetId)
+            return `<img src=${asset[0].url} width=${250} />`
+          }
+      }
   }
 
-  return documentToHtmlString(richText, options)
+  return links ? documentToHtmlString(richText, options): documentToHtmlString(richText)
 }
 
 export { fetchGraphQL, fetchGraphQLAsync, getAllContent, getThoughtPaths, parseRichText }

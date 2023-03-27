@@ -26,6 +26,40 @@ const queries = {
                         }
                     }
                 plantPosition
+                sys {
+                    id
+                }
+            }
+        }
+    `,
+    ideaUpdates: `
+        ideaUpdateCollection(limit:10) {
+            items {
+                title
+                body {
+                    json
+                    links {
+                        assets {
+                            block {
+                                sys {
+                                    id
+                                }
+                                url
+                                title
+                            }
+                        }
+                    }
+                }
+                date
+                idea {
+                    sys {
+                        id
+                    }
+                    title
+                }
+                sys {
+                    id
+                }
             }
         }
     `
