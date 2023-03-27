@@ -17,7 +17,9 @@
 }
 
 .ideaoverlay { 
-    width: 30%
+    width: 30%;
+    right: unset;
+    margin-left: 1rem;
 }
 
 .close {

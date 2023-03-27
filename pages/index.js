@@ -49,11 +49,13 @@ export default function Home() {
   }, [])
 
   const [isIdeaModalOpen, setIsIdeaModalOpen] = useState(false)
+  const [ ideaindex, setIdeaIndex ] = useState(0)
 
   const cloudTopPositions = [10,20,30,40,50,60,70]
   const router = useRouter()
 
   const ideaImgDimensions = 100
+  const ideaContainerWidth = 33.3
 
   const cloud = 'cloud'
 
@@ -86,7 +88,7 @@ export default function Home() {
             ideas && ideas.map((idea, index) => {
               const { title, imagesCollection, date } = idea
               const image = imagesCollection.items[0]
-              return <div key={index} className={styles.idea}>
+              return <div key={index} className={styles.idea} style={{width: `${ideaContainerWidth}%`}}>
                 <Image 
                   src={ image ? image.url : defaultImg } 
                   alt={ image ? image.fileName : "default image" }
@@ -96,6 +98,7 @@ export default function Home() {
                   onClick={ (e) => { 
                     changeTooltip(true, { x: e.target.x, y: e.target.y }) 
                     setCurrentIdea(idea)
+                    setIdeaIndex(index)
                   }}
                 />
                 <p>{title}</p>
@@ -135,6 +138,8 @@ export default function Home() {
             idea={currentIdea} 
             setIsIdeaModalOpen={setIsIdeaModalOpen} 
             modalCoords={tooltip.coords}
+            ideaImgDimensions={ideaImgDimensions}
+            topPosition={`${(Math.floor(ideaindex/(Math.floor(100/ideaContainerWidth)))) * 200}px`}
           /> 
         }
       </main>
