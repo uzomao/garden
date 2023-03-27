@@ -83,15 +83,20 @@ export default function Home() {
             ideas && ideas.map((idea, index) => {
               const { title, imagesCollection, date } = idea
               const image = imagesCollection.items[0]
-              return <div key={index} className={styles.idea} onClick={ (e) => { 
-                changeTooltip(true, { x: e.target.x, y: e.target.y }) 
-                setCurrentIdea(idea)
-              }}>
+              return <div key={index} className={styles.idea}>
                 <Image 
                   src={ image ? image.url : defaultImg } 
                   alt={ image ? image.fileName : "default image" }
                   width={ideaImgDimensions} 
                   height={ideaImgDimensions} 
+                  
+                  onMouseEnter={ (e) => { 
+                    changeTooltip(true, { x: e.target.x, y: e.target.y }) 
+                    setCurrentIdea(idea)
+                  }} onMouseLeave={ () => {
+                    changeTooltip(false, { x: 0, y: 0 })
+                    setCurrentIdea(null)
+                  }}
                 />
                 <p>{title}</p>
                 <small>{date}</small>
@@ -107,7 +112,7 @@ export default function Home() {
         }
         {
           tooltip.isOpen &&
-            <div style={{ top: `${tooltip.coords.y + (ideaImgDimensions/2)}px`, left: `${tooltip.coords.x + ideaImgDimensions}px` }} 
+            <div style={{ top: `${tooltip.coords.y - (ideaImgDimensions/2)}px`, left: `${tooltip.coords.x + ideaImgDimensions}px` }} 
                 className={`${styles.tooltip} text-center`}
             >
               <h4>{currentIdea.title}</h4>
