@@ -16,6 +16,10 @@
     box-shadow: 8px 8px 2px #fecfcc;
 }
 
+.ideaoverlay { 
+    width: 30%
+}
+
 .close {
     display: flex;
     justify-content: flex-end;

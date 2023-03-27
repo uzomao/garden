@@ -7,6 +7,7 @@ import Image from "next/image"
 import defaultImg from '@/public/images/default.jpg'
 import { useRouter } from "next/router";
 import ModalOverlay from '@/components/modal-overlay'
+import IdeaModal from "@/components/idea-modal"
 
 export default function Home() {
 
@@ -46,6 +47,8 @@ export default function Home() {
 
     return () => {}
   }, [])
+
+  const [isIdeaModalOpen, setIsIdeaModalOpen] = useState(false)
 
   const cloudTopPositions = [10,20,30,40,50,60,70]
   const router = useRouter()
@@ -90,12 +93,9 @@ export default function Home() {
                   width={ideaImgDimensions} 
                   height={ideaImgDimensions} 
                   
-                  onMouseEnter={ (e) => { 
+                  onClick={ (e) => { 
                     changeTooltip(true, { x: e.target.x, y: e.target.y }) 
                     setCurrentIdea(idea)
-                  }} onMouseLeave={ () => {
-                    changeTooltip(false, { x: 0, y: 0 })
-                    setCurrentIdea(null)
                   }}
                 />
                 <p>{title}</p>
@@ -123,9 +123,19 @@ export default function Home() {
               <p style={{maxHeight: '100px', overflowY: 'scroll'}}>{currentIdea.description}</p>
               <div className="flex-horizontal space-between">
                 <button className="default-border-radius">Water</button>
-                <button className="default-border-radius">Delve deeper</button>
+                <button className="default-border-radius" onClick={ () => {
+                  changeTooltip(false, { x: tooltip.coords.x, y: tooltip.coords.y })
+                  setIsIdeaModalOpen(true)
+                }}>Delve deeper</button>
               </div>
             </div>
+        }
+        { isIdeaModalOpen && 
+          <IdeaModal 
+            idea={currentIdea} 
+            setIsIdeaModalOpen={setIsIdeaModalOpen} 
+            modalCoords={tooltip.coords}
+          /> 
         }
       </main>
     </>
