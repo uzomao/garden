@@ -8,6 +8,7 @@ import defaultImg from '@/public/images/default.jpg'
 import { useRouter } from "next/router";
 import ModalOverlay from '@/components/modal-overlay'
 import IdeaModal from "@/components/idea-modal"
+import NavSignboard from "@/components/nav-signboard"
 
 export default function Home() {
 
@@ -84,6 +85,9 @@ export default function Home() {
           }
         </div>
         <div id='ground' className={styles.ideas}>
+          <div className={`${styles.idea} ${styles.signboardcontainer}`} style={{width: `${ideaContainerWidth}%`}}>
+            <NavSignboard />
+          </div>
           {
             ideas && ideas.map((idea, index) => {
               const { title, imagesCollection, date } = idea
