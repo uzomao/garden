@@ -32,6 +32,7 @@
 .ideas {
   display: flex;
   flex-wrap: wrap;
+  width: 100%;
 }
 
 .ideas .idea {

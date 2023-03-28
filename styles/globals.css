@@ -4,6 +4,7 @@
   --default-border-radius: 10px;
   --sky: #87C1E9;
   --grass: #89BA38;
+  --layout-width: 600%;
 }
 
 body {
@@ -15,7 +16,7 @@ body {
 #garden {
   display: flex;
   flex-direction: column;
-  width: 100%
+  width: 16.67%;
 }
 
 #sky {
