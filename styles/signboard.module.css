@@ -1,37 +1,38 @@
 #signboard {
     --signboard-width: 1em;
     width: var(--signboard-width);
+    background-image: url('../public/images/sign/pole.png');
+    background-repeat: no-repeat;
+    background-size: cover;
     padding: 1em 0;
     z-index: 1;
     height: 375px;
-    background-image: url('../public/images/sign/pole.png');
-    background-repeat: no-repeat;
 }
 
 .sign {
-    /* --sign-width: 5em; */
+    --sign-width: 5em;
     width: var(--sign-width);
     display: flex;
     align-content: center;
-    align-items: center;
-    margin-left: var(--signboard-width);
+    margin-left: var(--signboard-width); /* signboard width */
     margin-bottom: 1.5em;
 }
 
 .sign:nth-child(even) {
     transform: rotateY(180deg);
-    margin-right: var(--signboard-width);
+    margin-left: 0 !important;
     position: relative;
     left: calc(var(--sign-width)*-1); /* sign width */
 }
 
 .sign a, .sign p {
     margin: 0;
-    padding: 1em;
+    padding: .5em;
     color: inherit;
     text-decoration: none;
     background-image: url('../public/images/sign/sign-right.png');
     background-repeat: no-repeat;
+    width: 5em;
 }
 
 .sign:nth-child(even) > a {
