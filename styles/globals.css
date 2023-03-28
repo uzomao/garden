@@ -13,7 +13,7 @@ body {
   font-family: 'Courier New', Courier, monospace;
 }
 
-#garden {
+.garden {
   display: flex;
   flex-direction: column;
   width: 16.67%;
@@ -30,7 +30,8 @@ body {
   background-image: url('../public/images/grass.png');
   display: flex;
   flex-wrap: wrap;
-  min-height: 50vh;
+  height: 150vh;
+  overflow-y: scroll;
 }
 
 .flex-horizontal {

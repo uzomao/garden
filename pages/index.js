@@ -1,8 +1,11 @@
 import Head from "next/head"
 import Layout from "@/components/layout"
 import MainSpace from "@/components/spaces/main"
+import DreamSpace from "@/components/spaces/dream"
 
 export default function Home() {
+
+  const gardenSpaces = [<MainSpace />, <DreamSpace />]
 
   return (
     <>
@@ -13,9 +16,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout>
-        <main id='garden'>
-          <MainSpace />
-        </main>
+        { gardenSpaces.map((space) => <div className="garden">{space}</div>) }
       </Layout>
     </>
   )
