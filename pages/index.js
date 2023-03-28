@@ -1,11 +1,16 @@
 import Head from "next/head"
 import Layout from "@/components/layout"
+
+import { v4 as uuidv4 } from 'uuid';
+
 import MainSpace from "@/components/spaces/main"
 import DreamSpace from "@/components/spaces/dream"
 
 export default function Home() {
 
   const gardenSpaces = [<MainSpace />, <DreamSpace />]
+  const layoutContainerWidth = gardenSpaces.length * 100
+  const gardenSpaceWidth = layoutContainerWidth/gardenSpaces.length
 
   return (
     <>
@@ -15,8 +20,12 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Layout>
-        { gardenSpaces.map((space) => <div className="garden">{space}</div>) }
+      <Layout containerWidth={layoutContainerWidth}>
+        { gardenSpaces.map((space) => 
+          <div className="garden" style={{ width: `${gardenSpaceWidth}%` }} key={uuidv4()}>
+            {space}
+          </div>
+        )}
       </Layout>
     </>
   )

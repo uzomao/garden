@@ -16,7 +16,6 @@ body {
 .garden {
   display: flex;
   flex-direction: column;
-  width: 16.67%;
 }
 
 #sky {
