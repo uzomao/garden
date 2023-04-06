@@ -57,6 +57,16 @@ body {
   border-bottom: 1.5px solid #ccc;
 }
 
+.paragraph {
+  background: var(--modal-bg);
+  padding: 1.5rem;
+  border-radius: var(--default-border-radius);
+}
+
+.position-element {
+  position: absolute;
+}
+
 /* @media (prefers-color-scheme: dark) {
   :root {
     

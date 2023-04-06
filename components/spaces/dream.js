@@ -19,6 +19,16 @@ export default function DreamSpace() {
                     className={styles.dreamsign}
                 />
             </div>
+            <article className="paragraph position-element">
+                <p>How to stay in the energy of your dreams</p>
+                <ul>
+                    <li>Define</li>
+                    <li>Align</li>
+                    <li>Overcome</li>
+                    <li>Remain</li>
+                    <li>Repeat</li>
+                </ul>
+            </article>
         </Ground>
     </>
   )
