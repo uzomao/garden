@@ -3,6 +3,7 @@ import CloseBtn from './close-btn'
 import { fetchGraphQL, parseRichText } from '@/utils/contentful'
 import { useState, useEffect } from 'react'
 import { queries } from '@/utils/query'
+import { formatDate } from '@/utils/helpers'
 
 export default function IdeaModal({ idea, setIsIdeaModalOpen, modalCoords, ideaImgDimensions, topPosition }) {
     const { title, status, date } = idea
@@ -29,7 +30,7 @@ export default function IdeaModal({ idea, setIsIdeaModalOpen, modalCoords, ideaI
         <h3>{title}</h3>
         <div className="flex-horizontal space-between grey-border-bottom">
             <p>{status}</p>
-            <p>{date}</p>
+            <p>{formatDate(date)}</p>
         </div>
         <div>
             {

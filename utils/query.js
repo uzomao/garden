@@ -2,13 +2,14 @@ const queries = {
     thoughts: `
         blogPostCollection {
             items {
-            title
-            body {
-                json
-            }
-            slug
-            category
-            tags
+                title
+                body {
+                    json
+                }
+                slug
+                category
+                tags
+                publishDate
             }
         }
     `,

@@ -12,6 +12,8 @@ import ModalOverlay from '@/components/modal-overlay'
 import IdeaModal from "@/components/idea-modal"
 import NavSignboard from "@/components/nav-signboard"
 
+import { formatDate } from '@/utils/helpers.js'
+
 export default function MainSpace() {
 
     const [thoughts, setThoughts] = useState(null)
@@ -96,13 +98,13 @@ export default function MainSpace() {
                         height={ideaImgDimensions} 
                         
                         onClick={ (e) => { 
-                        changeTooltip(true, { x: e.target.x, y: e.target.y }) 
-                        setCurrentIdea(idea)
-                        setIdeaIndex(index)
+                          changeTooltip(true, { x: e.target.x, y: e.target.y }) 
+                          setCurrentIdea(idea)
+                          setIdeaIndex(index)
                         }}
                     />
                     <p>{title}</p>
-                    <small>{date}</small>
+                    <small>{formatDate(date)}</small>
                     </div>
                 })
                 }
@@ -124,7 +126,7 @@ export default function MainSpace() {
                 <h4>{currentIdea.title}</h4>
                 <div className="flex-horizontal space-between">
                     <p>{currentIdea.status}</p>
-                    <p>{currentIdea.date}</p>
+                    <p>{formatDate(currentIdea.date)}</p>
                 </div>
                 <p style={{maxHeight: '100px', overflowY: 'scroll'}}>{currentIdea.description}</p>
                 <div className="flex-horizontal space-between">
