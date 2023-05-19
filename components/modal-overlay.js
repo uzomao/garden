@@ -3,6 +3,7 @@ import { parseRichText } from '@/utils/contentful'
 import { useRouter } from 'next/router'
 import CloseBtn from './close-btn'
 import { formatDate } from '@/utils/helpers'
+import Sharer from './sharer'
 
 export default function ModalOverlay({ postContent, setModalState }) {
     const router = useRouter()
@@ -24,6 +25,7 @@ export default function ModalOverlay({ postContent, setModalState }) {
             <p>{formatDate(postContent.publishDate)}</p>
             <br />
             <div dangerouslySetInnerHTML={{ __html: parseRichText(postContent.body.json) }} />
+            <Sharer />
         </div>
     )
 }
