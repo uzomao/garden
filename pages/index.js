@@ -4,11 +4,11 @@ import Layout from "@/components/layout"
 import { v4 as uuidv4 } from 'uuid';
 
 import MainSpace from "@/components/spaces/main"
-import DreamSpace from "@/components/spaces/dream"
+// import DreamSpace from "@/components/spaces/dream"
 
 export default function Home() {
 
-  const gardenSpaces = [<MainSpace />, <DreamSpace />]
+  const gardenSpaces = [<MainSpace />]
   const layoutContainerWidth = gardenSpaces.length * 100
   const gardenSpaceWidth = layoutContainerWidth/gardenSpaces.length
 

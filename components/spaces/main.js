@@ -59,7 +59,7 @@ export default function MainSpace() {
   const cloudTopPositions = [10,20,30,40,50,60,70]
   const router = useRouter()
 
-  const ideaImgDimensions = 100
+  const ideaImgDimensions = 150
   const ideaContainerWidth = 33.3
 
   const cloud = 'cloud'

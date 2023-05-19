@@ -29,7 +29,7 @@ body {
   background-image: url('../public/images/grass.png');
   display: flex;
   flex-wrap: wrap;
-  height: 150vh;
+  min-height: 50vh;
   overflow-y: scroll;
 }
 
