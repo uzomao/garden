@@ -7,6 +7,8 @@ export default function Sharer() {
         cursor: 'pointer'
     }
 
+    const twitterLink = <a href={`https://twitter.com/intent/tweet?text=${window.location.href}`} target='_blank'>Share on Twitter</a>
+
     const copyURI = () => {
 
         navigator.clipboard.writeText(window.location.href)
@@ -23,6 +25,10 @@ export default function Sharer() {
     }
 
     return (
-        <p>Share: <span onClick={() => copyURI()} style={shareStyles} id='copy-link'>{copyLink}</span></p>
+        <div style={{marginTop: `2.5em`}}>
+            Share: 
+            <p onClick={() => copyURI()} style={shareStyles} id='copy-link'>{copyLink}</p>
+            <p>{twitterLink}</p>
+        </div>
     )
 }
