@@ -10,9 +10,12 @@ import MainSpace from "@/components/spaces/main"
 
 import NavIcons from "@/components/nav-icons";
 
+import NavSignboard from "@/components/nav-signboard";
+
 export default function Home() {
 
   const [ expandSky, setExpandSky ] = useState(false)
+  const [ showSignpost, setShowSignpost ] = useState(false)
 
   const gardenSpaces = [<MainSpace expandSky={expandSky} />]
   const layoutContainerWidth = gardenSpaces.length * 100
@@ -29,8 +32,11 @@ export default function Home() {
       <Layout containerWidth={layoutContainerWidth}>
         { gardenSpaces.map((space) => 
           <div className="garden" style={{ width: `${gardenSpaceWidth}%` }} key={uuidv4()}>
-            <NavIcons expandSky={expandSky} setExpandSky={setExpandSky}/>
+            <NavIcons expandSky={expandSky} setExpandSky={setExpandSky} 
+              showSignpost={showSignpost} setShowSignpost={setShowSignpost}
+            />
             {space}
+            { showSignpost && <NavSignboard />}
           </div>
         )}
       </Layout>
