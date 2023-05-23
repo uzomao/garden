@@ -1,0 +1,42 @@
+.container {
+    width: 100%;
+    height: 100%;
+    background-color: var(--sky);
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    scroll-behavior: unset;
+    z-index: 1;
+    padding: 2rem;
+    opacity: 0.85;
+}
+
+.contentsection {
+    color: #fff;
+    text-align: center;
+}
+
+.toggler {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 19px;
+}
+
+.toggler .divider {
+    margin: 0 1rem;
+}
+
+.toggler .active {
+    text-decoration: underline;
+}
+
+.content h2 {
+    cursor: pointer;
+}
+
+.content .piece {
+    margin: 1rem 0;
+}

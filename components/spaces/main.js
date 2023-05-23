@@ -10,13 +10,13 @@ import defaultImg from '@/public/images/default.jpg'
 import { useRouter } from "next/router";
 import ModalOverlay from '@/components/modal-overlay'
 import IdeaModal from "@/components/idea-modal"
-import NavSignboard from "@/components/nav-signboard"
+import ExpandedSky from "../expanded-sky"
 
 import { formatDate } from '@/utils/helpers.js'
 
 export default function MainSpace() {
 
-    const [thoughts, setThoughts] = useState(null)
+  const [thoughts, setThoughts] = useState(null)
   const [ideas, setIdeas] = useState(null)
 
   const [modalState, setModalState] = useState({
@@ -147,6 +147,7 @@ export default function MainSpace() {
                 topPosition={`${(Math.floor(ideaindex/(Math.floor(100/ideaContainerWidth)))) * 200}px`}
             /> 
         }
+        <ExpandedSky thoughts={thoughts} ideas={ideas} changeModalState={changeModalState} cloud={cloud} />
     </>
   )
 }
