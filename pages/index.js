@@ -1,14 +1,20 @@
 import Head from "next/head"
 import Layout from "@/components/layout"
 
+import { useState } from "react";
+
 import { v4 as uuidv4 } from 'uuid';
 
 import MainSpace from "@/components/spaces/main"
 // import DreamSpace from "@/components/spaces/dream"
 
+import NavIcons from "@/components/nav-icons";
+
 export default function Home() {
 
-  const gardenSpaces = [<MainSpace />]
+  const [ expandSky, setExpandSky ] = useState(false)
+
+  const gardenSpaces = [<MainSpace expandSky={expandSky} />]
   const layoutContainerWidth = gardenSpaces.length * 100
   const gardenSpaceWidth = layoutContainerWidth/gardenSpaces.length
 
@@ -23,6 +29,7 @@ export default function Home() {
       <Layout containerWidth={layoutContainerWidth}>
         { gardenSpaces.map((space) => 
           <div className="garden" style={{ width: `${gardenSpaceWidth}%` }} key={uuidv4()}>
+            <NavIcons expandSky={expandSky} setExpandSky={setExpandSky}/>
             {space}
           </div>
         )}

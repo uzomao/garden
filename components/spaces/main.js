@@ -14,7 +14,7 @@ import ExpandedSky from "../expanded-sky"
 
 import { formatDate } from '@/utils/helpers.js'
 
-export default function MainSpace() {
+export default function MainSpace({ expandSky }) {
 
   const [thoughts, setThoughts] = useState(null)
   const [ideas, setIdeas] = useState(null)
@@ -147,7 +147,7 @@ export default function MainSpace() {
                 topPosition={`${(Math.floor(ideaindex/(Math.floor(100/ideaContainerWidth)))) * 200}px`}
             /> 
         }
-        <ExpandedSky thoughts={thoughts} ideas={ideas} changeModalState={changeModalState} cloud={cloud} />
+        { expandSky && <ExpandedSky thoughts={thoughts} ideas={ideas} changeModalState={changeModalState} cloud={cloud} /> }
     </>
   )
 }
