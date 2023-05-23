@@ -5,6 +5,7 @@ import CloseBtn from './close-btn'
 import { formatDate } from '@/utils/helpers'
 import Sharer from './sharer'
 import Comment from './comment'
+import Reactions from './reactions'
 
 export default function ModalOverlay({ postContent, setModalState }) {
     const router = useRouter()
@@ -26,6 +27,8 @@ export default function ModalOverlay({ postContent, setModalState }) {
             <p>{formatDate(postContent.publishDate)}</p>
             <br />
             <div dangerouslySetInnerHTML={{ __html: parseRichText(postContent.body.json) }} />
+            
+            <Reactions postContent={postContent} />
             <Comment postContent={postContent} />
             <Sharer />
         </div>

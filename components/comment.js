@@ -52,12 +52,12 @@ export default function Comment ({ postContent }){
 
     return (
         <div className={commentStyles.section}>
+            <h3>Thoughts on {postContent.title}</h3>
             <small id='comment-notification' className={commentStyles.notification}>comment posted!</small>
             <div className={commentStyles.form}>
                 <input type="text" id='comment' placeholder='share your thoughts...'/>
                 <button onClick={() => submitComment()}>share</button>
             </div>
-            <h3>Thoughts on {postContent.title}</h3>
             {
                 comments && comments.reverse().map(({ text, created_at}) => 
                     <div className={commentStyles.comment}>
