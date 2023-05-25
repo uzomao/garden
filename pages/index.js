@@ -37,43 +37,30 @@ export default function Home() {
     {text: 'Intro', navigateToId: introId},
   ]
 
+  const [ currentSpaceId, setCurrentSpaceId ] = useState('')
+
   useEffect(() => {
 
     const gardenSpaceWidthPx = document.querySelector('.garden-space').getBoundingClientRect().width
     const scrollBarLength = gardenSpaceWidthPx - window.innerWidth
 
-    console.log(scrollBarLength)
+    const handleCurrentSpaceId = () => {
+      const id = spaceIds[Math.floor((window.scrollX + scrollBarLength)/gardenSpaceWidthPx)]
     
-    const getCurrentSpace = () => {
-      console.log(spaceIds[Math.floor((window.scrollX + scrollBarLength)/gardenSpaceWidthPx)])
+      if(currentSpaceId === id) return
+      else {
+        setCurrentSpaceId(id)
+        return
+      }
     }
 
-    window.addEventListener('scroll', getCurrentSpace)
+    window.addEventListener('scroll', handleCurrentSpaceId)
   
     return () => {
-      window.removeEventListener('scroll', getCurrentSpace)
+      window.removeEventListener('scroll', handleCurrentSpaceId)
     }
   }, [])
-  
-  
-  // useEffect(() => {
-  //   const spaces = document.querySelectorAll('.garden-space');
-  //   const currentSpaceId = ''
 
-  //   for (var i = 0; i < sections.length; i++) {
-  //     var space = spaces[i];
-  //     var rect = space.getBoundingClientRect();
-
-  //     if (rect.top <= 0 && rect.bottom > 0) {
-  //       currentSpaceId = space.id;
-  //       break;
-  //     }
-  //   }
-  
-  //   return () => {
-      
-  //   }
-  // }, [])
 
   return (
     <>
@@ -92,7 +79,7 @@ export default function Home() {
         <NavIcons expandSky={expandSky} setExpandSky={setExpandSky} 
           showSignpost={showSignpost} setShowSignpost={setShowSignpost}
         />
-        { showSignpost && <NavSignboard signs={signs} />}
+        { showSignpost && <NavSignboard signs={signs} spaceIds={spaceIds} currentSpaceId={currentSpaceId} />}
       </Layout>
     </>
   )
