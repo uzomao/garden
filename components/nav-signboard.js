@@ -1,24 +1,20 @@
-import signboardStyles from '@/styles/signboard.module.css'
-import Link from 'next/link'
+import styles from '@/styles/signboard.module.css'
+// import Link from 'next/link'
 
-export default function NavSignboard() {
+import { v4 as uuidv4 } from 'uuid';
+
+export default function NavSignboard({ signs }) {
   return (
-    <ul id={signboardStyles.signboard} className={signboardStyles.signboard}>
-        <li className={signboardStyles.sign}>
-            <Link href='/'>Learn</Link>
-        </li>
-        <li className={signboardStyles.sign}>
-            <Link href='/'>Dream</Link>
-        </li>
-        <li className={signboardStyles.sign}>
-            <Link href='/'>Rest</Link>
-        </li>
-        <li className={signboardStyles.sign}>
-            <Link href='/'>Explore</Link>
-        </li>
-        <li className={signboardStyles.sign}>
-            <Link href='/'>Dispatch</Link>
-        </li>
-    </ul>
+    <div className={styles.container}>
+        <div className={styles.signpost}>
+        {
+            signs.map(({ text, navigateToId }) => 
+                <a href={`#${navigateToId}`} className={styles['facing-left']} key={uuidv4()}>
+                    {text}
+                </a>
+            )
+        }
+        </div>
+    </div>
   )
 }

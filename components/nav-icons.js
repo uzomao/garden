@@ -12,7 +12,7 @@ export default function NavIcons ({ expandSky, setExpandSky, showSignpost, setSh
                 className={styles.icon} 
                 onClick={() => setExpandSky(!expandSky)} 
             />
-            <BsFillSignpostSplitFill style={{ bottom: iconSpacing, left: iconSpacing, fontSize: '28px' }}
+            <BsFillSignpostSplitFill style={{ bottom: iconSpacing, left: iconSpacing, fontSize: '32px' }}
                 className={styles.icon}
                 onClick={() => setShowSignpost(!showSignpost)}
             />

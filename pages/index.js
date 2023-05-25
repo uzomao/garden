@@ -1,12 +1,13 @@
 import Head from "next/head"
 import Layout from "@/components/layout"
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { v4 as uuidv4 } from 'uuid';
 
+import IntroSpace from "@/components/spaces/intro"
 import MainSpace from "@/components/spaces/main"
-// import DreamSpace from "@/components/spaces/dream"
+import DreamSpace from "@/components/spaces/dream"
 
 import NavIcons from "@/components/nav-icons";
 
@@ -17,9 +18,62 @@ export default function Home() {
   const [ expandSky, setExpandSky ] = useState(false)
   const [ showSignpost, setShowSignpost ] = useState(false)
 
-  const gardenSpaces = [<MainSpace expandSky={expandSky} />]
-  const layoutContainerWidth = gardenSpaces.length * 100
+  const spaceIds = ['main', 'dream', 'intro']
+
+  const [ mainId, dreamId, introId ] = spaceIds
+
+  const gardenSpaces = [
+    <MainSpace expandSky={expandSky}/>, 
+    <DreamSpace/>, 
+    <IntroSpace/>
+  ]
+
+  const layoutContainerWidth = gardenSpaces.length * 150
   const gardenSpaceWidth = layoutContainerWidth/gardenSpaces.length
+
+  const signs = [
+    {text: 'Main', navigateToId: mainId},
+    {text: 'Dream', navigateToId: dreamId},
+    {text: 'Intro', navigateToId: introId},
+  ]
+
+  useEffect(() => {
+
+    const gardenSpaceWidthPx = document.querySelector('.garden-space').getBoundingClientRect().width
+    const scrollBarLength = gardenSpaceWidthPx - window.innerWidth
+
+    console.log(scrollBarLength)
+    
+    const getCurrentSpace = () => {
+      console.log(spaceIds[Math.floor((window.scrollX + scrollBarLength)/gardenSpaceWidthPx)])
+    }
+
+    window.addEventListener('scroll', getCurrentSpace)
+  
+    return () => {
+      window.removeEventListener('scroll', getCurrentSpace)
+    }
+  }, [])
+  
+  
+  // useEffect(() => {
+  //   const spaces = document.querySelectorAll('.garden-space');
+  //   const currentSpaceId = ''
+
+  //   for (var i = 0; i < sections.length; i++) {
+  //     var space = spaces[i];
+  //     var rect = space.getBoundingClientRect();
+
+  //     if (rect.top <= 0 && rect.bottom > 0) {
+  //       currentSpaceId = space.id;
+  //       break;
+  //     }
+  //   }
+  
+  //   return () => {
+      
+  //   }
+  // }, [])
 
   return (
     <>
@@ -30,15 +84,15 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout containerWidth={layoutContainerWidth}>
-        { gardenSpaces.map((space) => 
-          <div className="garden" style={{ width: `${gardenSpaceWidth}%` }} key={uuidv4()}>
-            <NavIcons expandSky={expandSky} setExpandSky={setExpandSky} 
-              showSignpost={showSignpost} setShowSignpost={setShowSignpost}
-            />
+        { gardenSpaces.map((space, index) => 
+          <div id={spaceIds[index]} className={`garden-space`} style={{ width: `${gardenSpaceWidth}%` }} key={uuidv4()}>
             {space}
-            { showSignpost && <NavSignboard />}
           </div>
         )}
+        <NavIcons expandSky={expandSky} setExpandSky={setExpandSky} 
+          showSignpost={showSignpost} setShowSignpost={setShowSignpost}
+        />
+        { showSignpost && <NavSignboard signs={signs} />}
       </Layout>
     </>
   )
