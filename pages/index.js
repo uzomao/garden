@@ -8,6 +8,7 @@ import { v4 as uuidv4 } from 'uuid';
 import IntroSpace from "@/components/spaces/intro"
 import MainSpace from "@/components/spaces/main"
 import DreamSpace from "@/components/spaces/dream"
+import UpdatesSpace from "@/components/spaces/updates";
 
 import NavIcons from "@/components/nav-icons";
 
@@ -18,12 +19,14 @@ export default function Home() {
   const [ expandSky, setExpandSky ] = useState(false)
   const [ showSignpost, setShowSignpost ] = useState(false)
 
-  const spaceIds = ['main', 'dream', 'intro']
+  // TODO: Collapse spaceIds and signs into gardenSpaces
+  const spaceIds = ['main', 'updates', 'dream', 'intro']
 
-  const [ mainId, dreamId, introId ] = spaceIds
+  const [ mainId, dreamId, updatesId, introId ] = spaceIds
 
   const gardenSpaces = [
     <MainSpace expandSky={expandSky}/>, 
+    <UpdatesSpace />,
     <DreamSpace/>, 
     <IntroSpace/>
   ]
@@ -33,6 +36,7 @@ export default function Home() {
 
   const signs = [
     {text: 'Main', navigateToId: mainId},
+    {text: 'Updates', navigateToId: updatesId},
     {text: 'Dream', navigateToId: dreamId},
     {text: 'Intro', navigateToId: introId},
   ]

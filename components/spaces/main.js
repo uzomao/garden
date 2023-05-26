@@ -11,7 +11,7 @@ import ModalOverlay from '@/components/modal-overlay'
 import IdeaModal from "@/components/idea-modal"
 import ExpandedSky from "../expanded-sky"
 
-import { formatDate, contentTypes } from '@/utils/helpers.js'
+import { formatDate } from '@/utils/helpers.js'
 
 export default function MainSpace({ expandSky }) {
 
@@ -54,8 +54,6 @@ export default function MainSpace({ expandSky }) {
 
   const ideaImgDimensions = 150
   const ideaContainerWidth = 33.3
-
-  const cloud = 'cloud'
   
   return (
     <>

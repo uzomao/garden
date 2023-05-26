@@ -64,6 +64,23 @@ const queries = {
                 }
             }
         }
+    `,
+    updates: `
+        updatesCollection {
+          items {
+            title
+            date
+            body {
+              json
+            }
+            coverImage {
+              fileName
+              url
+            }
+            tag
+            slug
+          }
+        }
     `
 }
 
