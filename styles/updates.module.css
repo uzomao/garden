@@ -1,3 +1,93 @@
 .update img {
     border-radius: 20px;
 }
+
+.container {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    position: absolute;
+    top: 0;
+    padding: 10%;
+    padding-top: 0;
+    --rotation-degree: 2deg;
+    height: 100%;
+}
+
+.update {
+    cursor: pointer;
+}
+
+.animate {
+    -moz-transform: translateY(100%) rotate(var(--rotation-degree));
+    -webkit-transform: translateY(100%) rotate(var(--rotation-degree));
+    transform: translateY(100%) rotate(var(--rotation-degree));
+
+    -moz-animation: upward-scroll 10s linear infinite;
+    -webkit-animation: upward-scroll 10s linear infinite;
+    animation: upward-scroll 10s linear infinite;
+}
+
+.animation-paused {
+    animation-play-state: paused;
+}
+
+
+/* Animation */
+
+/* For 'to' translateY value, multiply # of merch rows by 100 */
+
+/* for Firefox */
+@-moz-keyframes upward-scroll {
+    from { -moz-transform: translateY(100%) rotate(var(--rotation-degree)); }
+    to { -moz-transform: translateY(-300px) rotate(var(--rotation-degree)); }
+  }
+
+  /* -300px is a 50px more than the image height */
+  
+  /* for Chrome */
+  @-webkit-keyframes upward-scroll {
+    from { -webkit-transform: translateY(100%) rotate(var(--rotation-degree)); }
+    to { -webkit-transform: translateY(-300px) rotate(var(--rotation-degree)); }
+  }
+  
+  @keyframes upward-scroll {
+    from {
+      -moz-transform: translateY(100%) rotate(var(--rotation-degree));
+      -webkit-transform: translateY(100%) rotate(var(--rotation-degree));
+      transform: translateY(100%) rotate(var(--rotation-degree));
+    }
+    to {
+      -moz-transform: translateY(-300px) rotate(var(--rotation-degree));
+      -webkit-transform: translateY(-300px) rotate(var(--rotation-degree));
+      transform: translateY(-300px) rotate(var(--rotation-degree));
+    }
+  }
+
+@media only screen and (max-width: 768px) {
+  @-moz-keyframes upward-scroll {
+    from { -moz-transform: translateY(100%) rotate(var(--rotation-degree)); }
+    to { -moz-transform: translateY(-1650%) rotate(var(--rotation-degree)); }
+  }
+  
+  /* for Chrome */
+  @-webkit-keyframes upward-scroll {
+    from { -webkit-transform: translateY(100%) rotate(var(--rotation-degree)); }
+    to { -webkit-transform: translateY(-1650%) rotate(var(--rotation-degree)); }
+  }
+  
+  @keyframes upward-scroll {
+    from {
+      -moz-transform: translateY(100%) rotate(var(--rotation-degree));
+      -webkit-transform: translateY(100%) rotate(var(--rotation-degree));
+      transform: translateY(100%) rotate(var(--rotation-degree));
+    }
+    to {
+      -moz-transform: translateY(-1650%) rotate(var(--rotation-degree));
+      -webkit-transform: translateY(-1650%) rotate(var(--rotation-degree));
+      transform: translateY(-1650%) rotate(var(--rotation-degree));
+    }
+  }
+
+}

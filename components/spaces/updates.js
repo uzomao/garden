@@ -9,6 +9,10 @@ import Image from "next/image"
 
 import styles from '@/styles/updates.module.css'
 
+import ModalOverlay from "../modal-overlay"
+
+import { contentTypes } from "@/utils/helpers"
+
 export default function UpdatesSpace () {
 
     const [modalState, setModalState] = useState({
@@ -30,14 +34,31 @@ export default function UpdatesSpace () {
           return () => {}
     }, [])
 
+    const pause = 'pause'
+    const play = 'play'
+
+    const toggleAnimation = (toggle) => {
+        const columns = document.getElementsByClassName('update')
+
+        if(toggle === pause) {
+            for (const column of columns) {
+                column.className += " animation-paused"
+            }
+        } else if(toggle === play){
+            for (const column of columns) {
+                column.classList.remove('animation-paused')
+            }
+        }
+    }
+
     return (
         <div>
             <Sky />
             <Ground />
-            <div>
+            <div className={styles.container}>
                 {
                     updates && updates.map(({ title, date, coverImage, slug }) => 
-                        <div className={styles.update}>
+                        <div className={`${styles.update} ${styles.animate} update`}>
                             <Image 
                                 src={ coverImage.url } 
                                 alt={ coverImage.fileName }
@@ -47,6 +68,7 @@ export default function UpdatesSpace () {
                                 onClick={ (e) => { 
                                     changeModalState(true, slug)
                                 }}
+                                onMouseOver={() => toggleAnimation(pause)} onMouseOut={() => toggleAnimation(play)}
                             />
                             <p>{title}</p>
                             <p>{date}</p>
@@ -55,8 +77,9 @@ export default function UpdatesSpace () {
                 }
                 { modalState.isOpen && 
                     <ModalOverlay 
-                        postContent={updates.filter(({ slug }) => slug === modalState.contentSlug)[0]} 
+                        postContent={updates.filter(({ slug }) => slug === modalState.contentSlug)[0]}
                         setModalState={setModalState}
+                        contentType={contentTypes.update}
                     /> 
                 }
             </div>

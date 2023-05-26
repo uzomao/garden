@@ -8,7 +8,7 @@ import Reactions from './reactions'
 import { contentTypes } from '@/utils/helpers'
 import ClickAway from './utils/click-away'
 
-export default function ModalOverlay({ postContent, setModalState }) {
+export default function ModalOverlay({ postContent, setModalState, contentType }) {
 
     let closeModal;
     if(setModalState){
@@ -26,13 +26,13 @@ export default function ModalOverlay({ postContent, setModalState }) {
                     <CloseBtn closeModalFunction={closeModal} />
                 </div>
                 <h2>{postContent.title}</h2>
-                <p>{formatDate(postContent.publishDate)}</p>
+                <p>{formatDate(postContent.date)}</p>
                 <br />
                 <div dangerouslySetInnerHTML={{ __html: parseRichText(postContent.body.json) }} />
                 
                 <Reactions contentId={slug} />
                 <Comment slug={slug} title={title} />
-                <Sharer contentType={contentTypes.thoughts} slug={slug} />
+                <Sharer contentType={!contentType ? contentTypes.thoughts : contentType} slug={slug} />
             </div>
         </ClickAway>
     )

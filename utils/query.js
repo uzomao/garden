@@ -9,7 +9,7 @@ const queries = {
                 slug
                 category
                 tags
-                publishDate
+                date: publishDate
             }
         }
     `,

@@ -6,7 +6,8 @@ const formatDate = (date) => {
 
 const contentTypes = {
     thoughts: 'thoughts',
-    ideas: 'ideas'
+    ideas: 'ideas',
+    updates: 'updates'
 }
 
 export { formatDate, contentTypes }
