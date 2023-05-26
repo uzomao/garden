@@ -9,9 +9,10 @@ import Sharer from './sharer'
 import Comment from './comment'
 import Reactions from './reactions'
 
+import ClickAway from './utils/click-away'
+
 export default function IdeaModal({ positionModalInGarden, idea, setIsIdeaModalOpen, modalCoords, ideaImgDimensions, topPosition }) {
     const { slug, title, status, date } = idea
-    console.log(slug)
 
     const closeModal = () => {
         setIsIdeaModalOpen(false)
@@ -32,29 +33,31 @@ export default function IdeaModal({ positionModalInGarden, idea, setIsIdeaModalO
     const modalClassName = positionModalInGarden ? `${utilsStyles.overlay} ${utilsStyles.ideaoverlay} text-center` : `${utilsStyles.overlay} text-center`
     
   return (
-    <div className={modalClassName} style={ positionModalInGarden ? { left: `${modalCoords.x + ideaImgDimensions}px`, top: topPosition } : {} }>
-        { setIsIdeaModalOpen ? <CloseBtn closeModalFunction={closeModal} /> : <CloseBtn /> }
-        <h3>{title}</h3>
-        <div className="flex-horizontal space-between grey-border-bottom">
-            <p>{status}</p>
-            <p>{formatDate(date)}</p>
+    <ClickAway setModalOpenFn={setIsIdeaModalOpen}>
+        <div className={modalClassName} style={ positionModalInGarden ? { left: `${modalCoords.x + ideaImgDimensions}px`, top: topPosition } : {} }>
+            { setIsIdeaModalOpen ? <CloseBtn closeModalFunction={closeModal} /> : <CloseBtn /> }
+            <h3>{title}</h3>
+            <div className="flex-horizontal space-between grey-border-bottom">
+                <p>{status}</p>
+                <p>{formatDate(date)}</p>
+            </div>
+            <div>
+                {
+                    ideaUpdates ? ideaUpdates.map((update) => 
+                            <div key={update.sys.id} className={`${utilsStyles.ideaupdate} grey-border-bottom`}>
+                                <h4>{update.title}</h4>
+                                <small>{formatDate(update.date)}</small>
+                                <div dangerouslySetInnerHTML={{ __html: parseRichText(update.body.json, update.body.links) }} />
+                            </div>
+                        )
+                        :
+                        <p>Loading ideas...</p>
+                }
+                <Reactions contentId={slug} />
+                <Comment slug={slug} title={title} />
+                <Sharer contentType={contentTypes.ideas} slug={slug} />
+            </div>
         </div>
-        <div>
-            {
-                ideaUpdates ? ideaUpdates.map((update) => 
-                        <div key={update.sys.id} className={`${utilsStyles.ideaupdate} grey-border-bottom`}>
-                            <h4>{update.title}</h4>
-                            <small>{formatDate(update.date)}</small>
-                            <div dangerouslySetInnerHTML={{ __html: parseRichText(update.body.json, update.body.links) }} />
-                        </div>
-                    )
-                    :
-                    <p>Loading ideas...</p>
-            }
-            <Reactions contentId={slug} />
-            <Comment slug={slug} title={title} />
-            <Sharer contentType={contentTypes.ideas} slug={slug} />
-        </div>
-    </div>
+    </ClickAway>
   )
 }

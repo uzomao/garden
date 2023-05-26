@@ -1,6 +1,6 @@
 .overlay {
     position: absolute;
-    z-index: 2;
+    z-index: 20;
     background: var(--modal-bg);
     transform: translateY(10%);
     padding: 1.5rem;

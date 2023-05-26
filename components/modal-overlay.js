@@ -6,6 +6,7 @@ import Sharer from './sharer'
 import Comment from './comment'
 import Reactions from './reactions'
 import { contentTypes } from '@/utils/helpers'
+import ClickAway from './utils/click-away'
 
 export default function ModalOverlay({ postContent, setModalState }) {
 
@@ -19,18 +20,20 @@ export default function ModalOverlay({ postContent, setModalState }) {
     const { slug, title } = postContent
 
     return (
-        <div className={utilStyles.overlay}>
-            <div className={utilStyles.close}>
-                <CloseBtn closeModalFunction={closeModal} />
+        <ClickAway>
+            <div className={utilStyles.overlay}>
+                <div className={utilStyles.close}>
+                    <CloseBtn closeModalFunction={closeModal} />
+                </div>
+                <h2>{postContent.title}</h2>
+                <p>{formatDate(postContent.publishDate)}</p>
+                <br />
+                <div dangerouslySetInnerHTML={{ __html: parseRichText(postContent.body.json) }} />
+                
+                <Reactions contentId={slug} />
+                <Comment slug={slug} title={title} />
+                <Sharer contentType={contentTypes.thoughts} slug={slug} />
             </div>
-            <h2>{postContent.title}</h2>
-            <p>{formatDate(postContent.publishDate)}</p>
-            <br />
-            <div dangerouslySetInnerHTML={{ __html: parseRichText(postContent.body.json) }} />
-            
-            <Reactions contentId={slug} />
-            <Comment slug={slug} title={title} />
-            <Sharer contentType={contentTypes.thoughts} slug={slug} />
-        </div>
+        </ClickAway>
     )
 }

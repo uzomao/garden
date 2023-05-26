@@ -3,19 +3,17 @@ import { queries } from "@/utils/query";
 import Home from '@/pages/index.js'
 import { useRouter } from "next/router";
 import ModalOverlay from "@/components/modal-overlay";
+import ClickAway from "@/components/utils/click-away";
 
 export default function Thought({ postContent }){
 
     const router = useRouter()
 
     return (
-        <span onClick={(e) => {
-            const homeElements = ['sky', 'ground']
-            homeElements.includes(e.target.id) && router.push('/')
-        }}>
+        <ClickAway>
             <Home />
             <ModalOverlay postContent={postContent} />
-        </span>
+        </ClickAway>
     )
 }
 
