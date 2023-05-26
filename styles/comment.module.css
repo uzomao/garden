@@ -17,7 +17,7 @@
 }
 
 .form button {
-    width: 3rem;
+    max-width: 20%;
 }
 
 .notification {

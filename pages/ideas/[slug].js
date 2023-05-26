@@ -1,10 +1,10 @@
-import { getThoughtPaths, fetchGraphQLAsync } from "@/utils/contentful"
+import { getIdeaPaths, fetchGraphQLAsync } from "@/utils/contentful"
 import { queries } from "@/utils/query";
 import Home from '@/pages/index.js'
 import { useRouter } from "next/router";
-import ModalOverlay from "@/components/modal-overlay";
+import IdeaModal from "@/components/idea-modal";
 
-export default function Thought({ postContent }){
+export default function Thought({ modalContent }){
 
     const router = useRouter()
 
@@ -14,13 +14,14 @@ export default function Thought({ postContent }){
             homeElements.includes(e.target.id) && router.push('/')
         }}>
             <Home />
-            <ModalOverlay postContent={postContent} />
+            {/* TODO: Change this to Idea Tooltip modal */}
+            <IdeaModal positionModalInGarden={false} idea={modalContent} setIsIdeaModalOpen={null} />
         </span>
     )
 }
 
 export async function getStaticPaths() {
-    const paths = await getThoughtPaths()
+    const paths = await getIdeaPaths()
     return {
         paths,
         fallback: false,
@@ -28,14 +29,14 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps ({ params }) {
-    const query = `{ ${queries.thoughts} }`
+    const query = `{ ${queries.ideas} }`
 
     const content = await fetchGraphQLAsync(query)
-    const postContent = content.data.blogPostCollection.items.filter(({ slug }) => slug === params.slug)[0]
+    const modalContent = content.data.ideaCollection.items.filter(({ slug }) => slug === params.slug)[0]
 
     return {
         props: {
-          postContent,
+          modalContent,
         },
       };
 }

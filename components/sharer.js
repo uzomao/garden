@@ -1,4 +1,13 @@
-export default function Sharer() {
+import { useState, useEffect } from 'react'
+
+export default function Sharer({ contentType, slug }) {
+
+    const [ pageLink, setPageLink ] = useState(null)
+
+    useEffect(() => { 
+        setPageLink(`${window.location.origin}/${contentType}/${slug}`)
+    }, [])
+    
 
     const copyLink = 'Copy link'
 
@@ -7,11 +16,11 @@ export default function Sharer() {
         cursor: 'pointer'
     }
 
-    const twitterLink = <a href={`https://twitter.com/intent/tweet?text=${window.location.href}`} target='_blank'>Share on Twitter</a>
+    const twitterLink = <a href={`https://twitter.com/intent/tweet?text=${pageLink}`} target='_blank'>Share on Twitter</a>
 
     const copyURI = () => {
 
-        navigator.clipboard.writeText(window.location.href)
+        navigator.clipboard.writeText(pageLink)
 
         const copyLinkDiv = document.getElementById('copy-link')
 

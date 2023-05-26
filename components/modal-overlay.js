@@ -1,20 +1,18 @@
 import utilStyles from '@/styles/utils.module.css'
 import { parseRichText } from '@/utils/contentful'
-import { useRouter } from 'next/router'
 import CloseBtn from './close-btn'
 import { formatDate } from '@/utils/helpers'
 import Sharer from './sharer'
 import Comment from './comment'
 import Reactions from './reactions'
+import { contentTypes } from '@/utils/helpers'
 
 export default function ModalOverlay({ postContent, setModalState }) {
-    const router = useRouter()
 
     let closeModal;
     if(setModalState){
         closeModal = () => {
             setModalState({isOpen: false, contentSlug: ''})
-            router.push(`/`, undefined, { shallow: true })
         }
     }
 
@@ -28,9 +26,9 @@ export default function ModalOverlay({ postContent, setModalState }) {
             <br />
             <div dangerouslySetInnerHTML={{ __html: parseRichText(postContent.body.json) }} />
             
-            <Reactions postContent={postContent} />
+            <Reactions contentId={postContent.slug} />
             <Comment postContent={postContent} />
-            <Sharer />
+            <Sharer contentType={contentTypes.thoughts} slug={postContent.slug} />
         </div>
     )
 }

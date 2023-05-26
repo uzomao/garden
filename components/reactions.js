@@ -2,7 +2,7 @@ import reactionStyles from '@/styles/reaction.module.css'
 import { supabase } from '@/utils/supabase'
 import { useEffect, useState } from 'react'
 
-export default function Reactions({ postContent }) {
+export default function Reactions({ contentId }) {
     const reactions = {
         hot: '🤩',
         warm: '👍🏾',
@@ -15,7 +15,7 @@ export default function Reactions({ postContent }) {
         const { data, error } = await supabase
             .from('reactions')
             .insert([
-                { post_id: postContent.slug, hot: 0, warm: 0, cold: 0 },
+                { post_id: contentId, hot: 0, warm: 0, cold: 0 },
             ])
             if(error){console.log(error)}
             else {
@@ -28,7 +28,7 @@ export default function Reactions({ postContent }) {
         let { data: reactions, error } = await supabase
         .from('reactions')
         .select('*')
-        .eq('post_id', postContent.slug)
+        .eq('post_id', contentId)
         if(error){console.log(error)}
         else if(reactions.length === 0){
             createPostReactions()
@@ -61,7 +61,7 @@ export default function Reactions({ postContent }) {
         const { data, error } = await supabase
             .from('reactions')
             .update(newReactionsCount)
-            .eq('post_id', postContent.slug)
+            .eq('post_id', contentId)
             if(error){console.log(error)}
             else {
                 console.log(data)

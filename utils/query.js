@@ -30,6 +30,7 @@ const queries = {
                 sys {
                     id
                 }
+                slug
             }
         }
     `,

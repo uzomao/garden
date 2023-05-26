@@ -4,4 +4,9 @@ const formatDate = (date) => {
     return format(parseISO(date), 'LLLL do, yyyy')
 }
 
-export { formatDate}
+const contentTypes = {
+    thoughts: 'thoughts',
+    ideas: 'ideas'
+}
+
+export { formatDate, contentTypes }

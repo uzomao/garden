@@ -7,12 +7,11 @@ import { useState, useEffect } from "react"
 import styles from '@/styles/Home.module.css'
 import Image from "next/image"
 import defaultImg from '@/public/images/default.jpg'
-import { useRouter } from "next/router";
 import ModalOverlay from '@/components/modal-overlay'
 import IdeaModal from "@/components/idea-modal"
 import ExpandedSky from "../expanded-sky"
 
-import { formatDate } from '@/utils/helpers.js'
+import { formatDate, contentTypes } from '@/utils/helpers.js'
 
 export default function MainSpace({ expandSky }) {
 
@@ -44,20 +43,16 @@ export default function MainSpace({ expandSky }) {
         const data = content.data
         setThoughts(data.blogPostCollection.items)
         setIdeas(data.ideaCollection.items)
-
-        const routeParams = window.location.search
-        routeParams.includes(cloud) && changeModalState(true, routeParams.split('=')[1])
-        //split the search location params to look sth like ['?cloud', 'a-post-slug'] then take the slug obvs
       })
-
-    return () => {}
+      
+      console.log('component mounted ')
+      return () => {}
   }, [])
 
   const [isIdeaModalOpen, setIsIdeaModalOpen] = useState(false)
   const [ ideaindex, setIdeaIndex ] = useState(0)
 
   const cloudTopPositions = [10,20,30,40,50,60,70]
-  const router = useRouter()
 
   const ideaImgDimensions = 150
   const ideaContainerWidth = 33.3
@@ -74,7 +69,6 @@ export default function MainSpace({ expandSky }) {
                       top: `${cloudTopPositions[Math.floor(Math.random()*cloudTopPositions.length)]}px`
                     }} onClick={() => {
                       changeModalState(true, slug)
-                      router.push(`/?${cloud}=${slug}`, undefined, { shallow: true })
                     }}>
                     <h3 className={styles.title}>{title}</h3>
                   </div>
@@ -120,6 +114,7 @@ export default function MainSpace({ expandSky }) {
         }
         {
             tooltip.isOpen &&
+                // TODO: Create a component for this
                 <div style={{ top: `${tooltip.coords.y - (ideaImgDimensions/2)}px`, left: `${tooltip.coords.x + ideaImgDimensions}px` }} 
                     className={`${styles.tooltip} text-center`}
                 >
@@ -129,8 +124,7 @@ export default function MainSpace({ expandSky }) {
                     <p>{formatDate(currentIdea.date)}</p>
                 </div>
                 <p style={{maxHeight: '100px', overflowY: 'scroll'}}>{currentIdea.description}</p>
-                <div className="flex-horizontal space-between">
-                    <button className="default-border-radius">Water</button>
+                <div className="flex-horizontal center">
                     <button className="default-border-radius" onClick={ () => {
                     changeTooltip(false, { x: tooltip.coords.x, y: tooltip.coords.y })
                     setIsIdeaModalOpen(true)
@@ -140,6 +134,7 @@ export default function MainSpace({ expandSky }) {
         }
         { isIdeaModalOpen && 
             <IdeaModal 
+                positionModalInGarden={!expandSky ? true : false}
                 idea={currentIdea} 
                 setIsIdeaModalOpen={setIsIdeaModalOpen} 
                 modalCoords={tooltip.coords}
@@ -147,7 +142,15 @@ export default function MainSpace({ expandSky }) {
                 topPosition={`${(Math.floor(ideaindex/(Math.floor(100/ideaContainerWidth)))) * 200}px`}
             /> 
         }
-        { expandSky && <ExpandedSky thoughts={thoughts} ideas={ideas} changeModalState={changeModalState} cloud={cloud} /> }
+        { expandSky && 
+          <ExpandedSky 
+            thoughts={thoughts} 
+            ideas={ideas} 
+            changeModalState={changeModalState} 
+            setIsIdeaModalOpen={setIsIdeaModalOpen} 
+            setCurrentIdea={setCurrentIdea}
+          /> 
+        }
     </>
   )
 }

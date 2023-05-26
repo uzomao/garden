@@ -48,6 +48,19 @@ async function getThoughtPaths (arg){
   return slugs
 }
 
+async function getIdeaPaths (arg){
+  const content = await getAllContent()
+  const slugs = []
+  content.data.ideaCollection.items.forEach(item => {
+    slugs.push({
+      params: {
+        slug: item.slug
+      }
+    })
+  })
+  return slugs
+}
+
 const parseRichText = (richText, links=null) => {
   const options = {
       renderMark: {
@@ -66,5 +79,5 @@ const parseRichText = (richText, links=null) => {
   return links ? documentToHtmlString(richText, options): documentToHtmlString(richText)
 }
 
-export { fetchGraphQL, fetchGraphQLAsync, getAllContent, getThoughtPaths, parseRichText }
+export { fetchGraphQL, fetchGraphQLAsync, getAllContent, getThoughtPaths, getIdeaPaths, parseRichText }
 

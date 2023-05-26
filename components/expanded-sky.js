@@ -1,16 +1,8 @@
 import styles from '@/styles/expanded-sky.module.css'
 import { useState } from 'react'
-import { useRouter } from "next/router";
-import { formatDate } from '@/utils/helpers';
+import { formatDate, contentTypes } from '@/utils/helpers';
 
-export default function ExpandedSky({ thoughts, ideas, changeModalState, cloud }) {
-
-    const contentTypes = {
-        thoughts: 'thoughts',
-        ideas: 'ideas'
-    }
-
-    const router = useRouter()
+export default function ExpandedSky({ thoughts, ideas, changeModalState, setIsIdeaModalOpen, setCurrentIdea }) {
 
     const [ activeContentType, setActiveContentType ] = useState(contentTypes.thoughts)
 
@@ -33,14 +25,16 @@ export default function ExpandedSky({ thoughts, ideas, changeModalState, cloud }
                                 <div className={styles.piece}>
                                     <h2 onClick={() => {
                                         changeModalState(true, slug)
-                                        router.push(`/?${cloud}=${slug}`, undefined, { shallow: true })
                                     }}>{title}</h2>
                                     <p>{formatDate(publishDate)}</p>
                                 </div>
                             )
                         :
-                        ideas && ideas.map(({title}) =>
-                            <h2>{title}</h2>
+                        ideas && ideas.map((idea) =>
+                            <h2 onClick={() => {
+                                setIsIdeaModalOpen(true)
+                                setCurrentIdea(idea)
+                            }}>{idea.title}</h2>
                         )
                     }
                 </div>

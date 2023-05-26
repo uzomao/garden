@@ -5,9 +5,9 @@ import { useState, useEffect } from 'react'
 import { queries } from '@/utils/query'
 import { formatDate } from '@/utils/helpers'
 
-export default function IdeaModal({ idea, setIsIdeaModalOpen, modalCoords, ideaImgDimensions, topPosition }) {
+export default function IdeaModal({ positionModalInGarden, idea, setIsIdeaModalOpen, modalCoords, ideaImgDimensions, topPosition }) {
     const { title, status, date } = idea
-    const { x } = modalCoords
+
     const closeModal = () => {
         setIsIdeaModalOpen(false)
     }
@@ -23,10 +23,13 @@ export default function IdeaModal({ idea, setIsIdeaModalOpen, modalCoords, ideaI
                 setIdeaUpdates(ideaUpdatesCollection.filter(({ idea: referenceIdea }) => referenceIdea.sys.id == ideaId )) //idea.sys.id = id of the idea that the update references
             })
     }, [])
+
+    const modalClassName = positionModalInGarden ? `${utilsStyles.overlay} ${utilsStyles.ideaoverlay} text-center` : `${utilsStyles.overlay} text-center`
+    console.log(positionModalInGarden)
     
   return (
-    <div className={`${utilsStyles.overlay} ${utilsStyles.ideaoverlay} text-center`} style={{ left: `${x + ideaImgDimensions}px`, top: topPosition }}>
-        <CloseBtn closeModalFunction={closeModal} />
+    <div className={modalClassName} style={ positionModalInGarden ? { left: `${modalCoords.x + ideaImgDimensions}px`, top: topPosition } : {} }>
+        { setIsIdeaModalOpen ? <CloseBtn closeModalFunction={closeModal} /> : <CloseBtn /> }
         <h3>{title}</h3>
         <div className="flex-horizontal space-between grey-border-bottom">
             <p>{status}</p>
@@ -37,7 +40,7 @@ export default function IdeaModal({ idea, setIsIdeaModalOpen, modalCoords, ideaI
                 ideaUpdates ? ideaUpdates.map((update) => 
                         <div key={update.sys.id} className={`${utilsStyles.ideaupdate} grey-border-bottom`}>
                             <h4>{update.title}</h4>
-                            <small>{update.date}</small>
+                            <small>{formatDate(update.date)}</small>
                             <div dangerouslySetInnerHTML={{ __html: parseRichText(update.body.json, update.body.links) }} />
                         </div>
                     )
