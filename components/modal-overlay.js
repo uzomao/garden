@@ -16,6 +16,8 @@ export default function ModalOverlay({ postContent, setModalState }) {
         }
     }
 
+    const { slug, title } = postContent
+
     return (
         <div className={utilStyles.overlay}>
             <div className={utilStyles.close}>
@@ -26,9 +28,9 @@ export default function ModalOverlay({ postContent, setModalState }) {
             <br />
             <div dangerouslySetInnerHTML={{ __html: parseRichText(postContent.body.json) }} />
             
-            <Reactions contentId={postContent.slug} />
-            <Comment postContent={postContent} />
-            <Sharer contentType={contentTypes.thoughts} slug={postContent.slug} />
+            <Reactions contentId={slug} />
+            <Comment slug={slug} title={title} />
+            <Sharer contentType={contentTypes.thoughts} slug={slug} />
         </div>
     )
 }

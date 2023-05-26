@@ -2,7 +2,7 @@ import commentStyles from '@/styles/comment.module.css'
 import { supabase } from '@/utils/supabase'
 import { useEffect, useState } from 'react'
 
-export default function Comment ({ postContent }){
+export default function Comment ({ slug, title }){
 
     const submitComment = async () => {
         const commentField = document.getElementById('comment')
@@ -10,7 +10,7 @@ export default function Comment ({ postContent }){
         const { error } = await supabase
             .from('comments')
             .insert([
-                { text: commentField.value, post_id: postContent.slug },
+                { text: commentField.value, post_id: slug },
         ])
         if(error) console.log(error)
         else {
@@ -32,7 +32,7 @@ export default function Comment ({ postContent }){
         let { data: comments, error } = await supabase
             .from('comments')
             .select('*')
-            .eq('post_id', postContent.slug)
+            .eq('post_id', slug)
             .order('created_at', { ascending: false })
             if(error) console.log(error)
             else {
@@ -52,7 +52,7 @@ export default function Comment ({ postContent }){
 
     return (
         <div className={commentStyles.section}>
-            <h3>Thoughts on {postContent.title}</h3>
+            <h3>Thoughts on {title}</h3>
             <small id='comment-notification' className={commentStyles.notification}>comment posted!</small>
             <div className={commentStyles.form}>
                 <input type="text" id='comment' placeholder='share your thoughts...'/>

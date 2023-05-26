@@ -3,10 +3,15 @@ import CloseBtn from './close-btn'
 import { fetchGraphQL, parseRichText } from '@/utils/contentful'
 import { useState, useEffect } from 'react'
 import { queries } from '@/utils/query'
-import { formatDate } from '@/utils/helpers'
+import { formatDate, contentTypes } from '@/utils/helpers'
+
+import Sharer from './sharer'
+import Comment from './comment'
+import Reactions from './reactions'
 
 export default function IdeaModal({ positionModalInGarden, idea, setIsIdeaModalOpen, modalCoords, ideaImgDimensions, topPosition }) {
-    const { title, status, date } = idea
+    const { slug, title, status, date } = idea
+    console.log(slug)
 
     const closeModal = () => {
         setIsIdeaModalOpen(false)
@@ -25,7 +30,6 @@ export default function IdeaModal({ positionModalInGarden, idea, setIsIdeaModalO
     }, [])
 
     const modalClassName = positionModalInGarden ? `${utilsStyles.overlay} ${utilsStyles.ideaoverlay} text-center` : `${utilsStyles.overlay} text-center`
-    console.log(positionModalInGarden)
     
   return (
     <div className={modalClassName} style={ positionModalInGarden ? { left: `${modalCoords.x + ideaImgDimensions}px`, top: topPosition } : {} }>
@@ -47,6 +51,9 @@ export default function IdeaModal({ positionModalInGarden, idea, setIsIdeaModalO
                     :
                     <p>Loading ideas...</p>
             }
+            <Reactions contentId={slug} />
+            <Comment slug={slug} title={title} />
+            <Sharer contentType={contentTypes.ideas} slug={slug} />
         </div>
     </div>
   )

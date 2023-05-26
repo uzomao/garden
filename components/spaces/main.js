@@ -44,8 +44,6 @@ export default function MainSpace({ expandSky }) {
         setThoughts(data.blogPostCollection.items)
         setIdeas(data.ideaCollection.items)
       })
-      
-      console.log('component mounted ')
       return () => {}
   }, [])
 
