@@ -37,7 +37,8 @@ export default function Home() {
     {text: 'Intro', navigateToId: introId},
   ]
 
-  const [ currentSpaceId, setCurrentSpaceId ] = useState('')
+  // TODO: Don't just use main, check for the current id from the url
+  const [ currentSpaceId, setCurrentSpaceId ] = useState('main')
 
   useEffect(() => {
 
@@ -79,7 +80,14 @@ export default function Home() {
         <NavIcons expandSky={expandSky} setExpandSky={setExpandSky} 
           showSignpost={showSignpost} setShowSignpost={setShowSignpost}
         />
-        { showSignpost && <NavSignboard signs={signs} spaceIds={spaceIds} currentSpaceId={currentSpaceId} />}
+        { 
+          showSignpost && 
+            <NavSignboard 
+              signs={signs} 
+              spaceIds={spaceIds} 
+              currentSpaceId={currentSpaceId} 
+              setCurrentSpaceId={setCurrentSpaceId}
+            />}
       </Layout>
     </>
   )
