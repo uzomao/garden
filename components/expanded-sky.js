@@ -21,12 +21,12 @@ export default function ExpandedSky({ thoughts, ideas, changeModalState, setIsId
                 <div className={styles.content}>
                     {
                         activeContentType === contentTypes.thoughts ?
-                            thoughts && thoughts.map(({title, slug, publishDate }) => 
+                            thoughts && thoughts.map(({title, slug, date }) => 
                                 <div className={styles.piece}>
                                     <h2 onClick={() => {
                                         changeModalState(true, slug)
                                     }}>{title}</h2>
-                                    <p>{formatDate(publishDate)}</p>
+                                    <p>{formatDate(date)}</p>
                                 </div>
                             )
                         :
