@@ -42,11 +42,11 @@ export default function UpdatesSpace () {
 
         if(toggle === pause) {
             for (const column of columns) {
-                column.className += " animation-paused"
+                column.className += ` ${styles['animation-paused']}`
             }
         } else if(toggle === play){
             for (const column of columns) {
-                column.classList.remove('animation-paused')
+                column.classList.remove(styles['animation-paused'])
             }
         }
     }
@@ -57,30 +57,29 @@ export default function UpdatesSpace () {
             <Ground />
             <div className={styles.container}>
                 {
-                    updates && updates.map(({ title, date, coverImage, slug }) => 
+                    updates && updates.map(({ title, coverImage, slug }) => 
                         <div className={`${styles.update} ${styles.animate} update`}>
                             <Image 
                                 src={ coverImage.url } 
                                 alt={ coverImage.fileName }
                                 width={250} 
-                                height={250} 
-                                
-                                onClick={ (e) => { 
+                                height={250}  
+                                onClick={ () => { 
                                     changeModalState(true, slug)
                                 }}
-                                onMouseOver={() => toggleAnimation(pause)} onMouseOut={() => toggleAnimation(play)}
+                                onMouseOver={() => toggleAnimation(pause)} 
+                                onMouseOut={() => !modalState.isOpen && toggleAnimation(play)}
                             />
-                            <p>{title}</p>
-                            <p>{date}</p>
+                            <h3 className={styles.title}>{title}</h3>
                         </div>
                     )
                 }
-                { modalState.isOpen && 
+                { modalState.isOpen &&
                     <ModalOverlay 
                         postContent={updates.filter(({ slug }) => slug === modalState.contentSlug)[0]}
                         setModalState={setModalState}
-                        contentType={contentTypes.update}
-                    /> 
+                        contentType={contentTypes.updates}
+                    />
                 }
             </div>
         </div>
