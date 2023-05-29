@@ -20,30 +20,31 @@ export default function Home() {
   const [ showSignpost, setShowSignpost ] = useState(false)
 
   // TODO: Collapse spaceIds and signs into gardenSpaces
-  const spaceIds = ['main', 'updates', 'dream', 'intro']
+  const spaceIds = ['intro', 'main', 'updates', 'dream']
 
   const [ mainId, dreamId, updatesId, introId ] = spaceIds
 
   const gardenSpaces = [
+    <IntroSpace/>,
     <MainSpace expandSky={expandSky}/>, 
     <UpdatesSpace />,
-    <DreamSpace/>, 
-    <IntroSpace/>
+    <DreamSpace/>
   ]
 
   const layoutContainerWidth = gardenSpaces.length * 150
   const gardenSpaceWidth = layoutContainerWidth/gardenSpaces.length
 
   const signs = [
+    {text: 'Intro', navigateToId: introId},
     {text: 'Main', navigateToId: mainId},
     {text: 'Updates', navigateToId: updatesId},
     {text: 'Dream', navigateToId: dreamId},
-    {text: 'Intro', navigateToId: introId},
   ]
 
   // TODO: Don't just use main, check for the current id from the url
   const [ currentSpaceId, setCurrentSpaceId ] = useState('main')
 
+  // TODO: Think about changing movement between spaces from scroll through sections to navigate to different pages
   useEffect(() => {
 
     const gardenSpaceWidthPx = document.querySelector('.garden-space').getBoundingClientRect().width
