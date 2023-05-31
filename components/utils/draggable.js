@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import styles from '@/styles/utils/draggable.module.css'
 
-const Draggable = ({ children }) => {
+const Draggable = ({ children, updateElementPagePosition, elementId, setInitialPosition, position }) => {
   const draggableRef = useRef(null);
   const containerRef = useRef(null);
   let offsetX, offsetY, isDragging = false;
@@ -11,6 +11,11 @@ const Draggable = ({ children }) => {
     isDragging = true;
     offsetX = event.clientX - draggableRef.current.getBoundingClientRect().left;
     offsetY = event.clientY - draggableRef.current.getBoundingClientRect().top;
+
+    console.log(draggableRef.current.children[0])
+
+    containerRef.current.classList.remove(styles['drag-inactive'])
+    containerRef.current.className += ` ${styles['drag-active']}`
   };
 
   // Function to drag the element
@@ -26,26 +31,42 @@ const Draggable = ({ children }) => {
 
     draggableRef.current.style.left = `${x}px`;
     draggableRef.current.style.top = `${y}px`;
+
+    // TODO: Doing this check everytime the mouse moves, is there a more efficient way?
+    if(draggableRef.current.classList.contains(styles['initial-position'])){
+
+      draggableRef.current.classList.remove(styles['initial-position'])
+
+    }
   };
 
   // Function to stop dragging
   const stopDrag = () => {
+    if (!isDragging) return;
     isDragging = false;
 
-    containerRef.current.classList += ` ${styles['drag-inactive']}`
+    containerRef.current.className += ` ${styles['drag-inactive']}`
+    containerRef.current.classList.remove(styles['drag-active'])
+
+    console.log([draggableRef.current.style.left, draggableRef.current.style.top])
+    updateElementPagePosition([draggableRef.current.style.left, draggableRef.current.style.top], elementId)
   };
 
+  const className = setInitialPosition ? `${styles.draggable} ${styles['initial-position']}` : styles.draggable
+  // const dragStatusOnInit = setInitialPosition ? `${styles['drag-active']}` : `${styles['drag-inactive']}`
+
   return (
-    <div className={styles.container} ref={containerRef}>
+    <div className={`${styles['drag-active']}`} ref={containerRef}>
       <div
           ref={draggableRef}
-          className={styles.draggable}
+          className={className}
           onMouseDown={startDrag}
           onMouseMove={drag}
           onMouseUp={stopDrag}
           onMouseLeave={stopDrag}
+          style={ position ? { left: position.x, top: position.y } : {} }
       >
-          { children }
+        { children }
       </div>
     </div>
   );
