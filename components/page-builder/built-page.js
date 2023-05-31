@@ -9,7 +9,7 @@ import { updateElementPagePosition, pageElementTypes } from './builder'
 export default function BuiltPage ({ pageTitle }) {
 
     const [ pageElements, setPageElements ] = useState(null)
-    const [ isBuildMode, setIsBuildMode ] = useState(false)
+    const [ isBuildMode, setIsBuildMode ] = useState(true)
 
     const { image, text, embed } = pageElementTypes
 

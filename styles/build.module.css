@@ -1,3 +1,8 @@
+.builder {
+    position: relative;
+    z-index: 999;
+}
+
 .build-options {
     border: 1.5px solid #fff;
     border-radius: 20px;

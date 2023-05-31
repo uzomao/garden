@@ -65,7 +65,7 @@ export default function Builder ({ pageTitle }) {
         switch (formContentType) {
             case text:
                 return <Draggable updateElementPagePosition={updateElementPagePosition} elementId={elementId} setInitialPosition={true}>
-                            {content}
+                            <p id={elementId} className='page-text'>{content}</p>
                         </Draggable>
             case image:
                 return
@@ -90,38 +90,40 @@ export default function Builder ({ pageTitle }) {
     }
 
     return (
-        <div>
-            {
-                isFormOpen ?
-                    <div className={styles.form}>
-                        <CloseBtn closeModalFunction={setIsFormOpen} />
-                        { getInputBoxForContentType(formContentType) }
-                        <button onClick={(event) => submitForm(event)}>upload</button>
-                    </div>
-                    :
-                    showBuildOptions ?
-                        <div className={styles['build-options']}>
-                            <CloseBtn closeModalFunction={setShowBuildOptions} />
-                            <div className={styles.options}>
-                                <div onClick={() => openForm(image)}>
-                                    <span>🖼️</span>
-                                    <p>Image</p>
-                                </div>
-                                <div onClick={() => openForm(text)}>
-                                    <span>🇹</span>
-                                    <p>Text</p>
-                                </div>
-                                <div onClick={() => openForm(embed)}>
-                                    <span>📥</span>
-                                    <p>Embed</p>
-                                </div>
-                            </div>
+        <>
+            <div className={styles.builder}>
+                {
+                    isFormOpen ?
+                        <div className={styles.form}>
+                            <CloseBtn closeModalFunction={setIsFormOpen} />
+                            { getInputBoxForContentType(formContentType) }
+                            <button onClick={(event) => submitForm(event)}>upload</button>
                         </div>
                         :
-                        <button onClick={() => setShowBuildOptions(true)}>Build</button>
-            }
-            { newPageElement && newPageElement }
-        </div>
+                        showBuildOptions ?
+                            <div className={styles['build-options']}>
+                                <CloseBtn closeModalFunction={setShowBuildOptions} />
+                                <div className={styles.options}>
+                                    <div onClick={() => openForm(image)}>
+                                        <span>🖼️</span>
+                                        <p>Image</p>
+                                    </div>
+                                    <div onClick={() => openForm(text)}>
+                                        <span>🇹</span>
+                                        <p>Text</p>
+                                    </div>
+                                    <div onClick={() => openForm(embed)}>
+                                        <span>📥</span>
+                                        <p>Embed</p>
+                                    </div>
+                                </div>
+                            </div>
+                            :
+                            <button onClick={() => setShowBuildOptions(true)}>Build</button>
+                }
+            </div>
+        { newPageElement && newPageElement }
+        </>
     )
 
 }

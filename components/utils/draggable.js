@@ -53,7 +53,6 @@ const Draggable = ({ children, updateElementPagePosition, elementId, setInitialP
   };
 
   const className = setInitialPosition ? `${styles.draggable} ${styles['initial-position']}` : styles.draggable
-  // const dragStatusOnInit = setInitialPosition ? `${styles['drag-active']}` : `${styles['drag-inactive']}`
 
   return (
     <div className={`${styles['drag-active']}`} ref={containerRef}>
