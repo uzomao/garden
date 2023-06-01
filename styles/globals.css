@@ -85,8 +85,11 @@ button:hover {
   filter: brightness(0.95)
 }
 
-.page-text {
+.page-element {
   position: absolute;
+}
+
+.page-text {
   color: white;
 }
 

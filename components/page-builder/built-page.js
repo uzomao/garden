@@ -33,11 +33,12 @@ export default function BuiltPage ({ pageTitle }) {
     }, [])
 
     const renderPageElement = (content, contentType, elementId, elementPosition) => {
+        const elementStyle = !isBuildMode ? {left: elementPosition.x, top: elementPosition.y} : { left: 0, top: 0}
         switch (contentType) {
             case text:
-                return <p id={elementId} style={ !isBuildMode ? {left: elementPosition.x, top: elementPosition.y} : { left: 0, top: 0}} className='page-text'>{content}</p>
+                return <p id={elementId} style={elementStyle} className='page-element page-text'>{content}</p>
             case image:
-                return
+                return <img id={elementId} src={content} style={elementStyle} className='page-element' />
             case embed:
                 return
             default:

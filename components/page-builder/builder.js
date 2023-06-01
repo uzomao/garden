@@ -62,24 +62,26 @@ export default function Builder ({ pageTitle }) {
     }
 
     const createDraggableElement = (formContentType, content, elementId) => {
+        let contentHtml;
         switch (formContentType) {
             case text:
-                return <Draggable updateElementPagePosition={updateElementPagePosition} elementId={elementId} setInitialPosition={true}>
-                            <p id={elementId} className='page-text'>{content}</p>
-                        </Draggable>
+                contentHtml = <p id={elementId} className='page-element page-text'>{content}</p>
             case image:
-                return
+                contentHtml = <img id={elementId} src={content} className='page-element' />
             case embed:
                 return
             default:
                 break;
         }
+        return  <Draggable updateElementPagePosition={updateElementPagePosition} elementId={elementId} setInitialPosition={true}>
+                    { contentHtml }           
+                </Draggable>
     }
 
     const getInputBoxForContentType = (contentType) => {
         switch (contentType) {
             case image:
-                return <input type="file" id="content" />
+                return <input type="text" id="content" placeholder="link to hosted image url" />
             case text:
                 return <input type="textarea" id="content" />
             case embed:
