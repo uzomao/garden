@@ -1,0 +1,16 @@
+.container {
+    position: relative;
+    width: 400px;
+    height: 300px;
+    overflow: hidden;
+    resize: both;
+    border: 1px dashed #fff;
+    padding: 0.25rem;
+    border-radius: 10px;
+}
+
+.image {
+    width: 100%;
+    height: 100%;
+    object-fit: scale-down;
+}

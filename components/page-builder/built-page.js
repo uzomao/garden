@@ -4,12 +4,13 @@ import Ground from "../elements/ground"
 import { supabase } from '@/utils/supabase'
 import Draggable from '../utils/draggable'
 import Builder from './builder'
-import { updateElementPagePosition, pageElementTypes } from './builder'
+import { updateElementPagePosition, pageElementTypes, updateElementPageSize } from './builder'
+import ResizableImage from './resizable-image'
 
 export default function BuiltPage ({ pageTitle }) {
 
     const [ pageElements, setPageElements ] = useState(null)
-    const [ isBuildMode, setIsBuildMode ] = useState(true)
+    const [ isBuildMode, setIsBuildMode ] = useState(false)
 
     const { image, text, embed } = pageElementTypes
 
@@ -23,6 +24,7 @@ export default function BuiltPage ({ pageTitle }) {
         .eq('page', pageTitle)
         if(error) console.log(error)
         else {
+            console.log(data)
             setPageElements(data)
         }
 
@@ -32,13 +34,18 @@ export default function BuiltPage ({ pageTitle }) {
         getPageElements()
     }, [])
 
-    const renderPageElement = (content, contentType, elementId, elementPosition) => {
-        const elementStyle = !isBuildMode ? {left: elementPosition.x, top: elementPosition.y} : { left: 0, top: 0}
+    const renderPageElement = (content, contentType, elementId, elementPosition, elementSize=undefined) => {
+        const positions = !isBuildMode ? {left: elementPosition.x, top: elementPosition.y} : { left: 0, top: 0 }
         switch (contentType) {
             case text:
-                return <p id={elementId} style={elementStyle} className='page-element page-text'>{content}</p>
+                return <p id={elementId} style={positions} className='page-element page-text'>{content}</p>
             case image:
-                return <img id={elementId} src={content} style={elementStyle} className='page-element' />
+                const { width, height } = elementSize
+                const elementStyle = {width, height, ...positions}
+                return isBuildMode ? <ResizableImage id={elementId} src={content} 
+                                        style={elementStyle} alt='' 
+                                        updateElementPageSize={updateElementPageSize} elementId={elementId} /> 
+                                    : <img id={elementId} src={content} style={elementStyle} className='page-element' />
             case embed:
                 return
             default:
@@ -54,12 +61,12 @@ export default function BuiltPage ({ pageTitle }) {
             </Sky>
             <Ground />
             {
-                pageElements && pageElements.map(({ content, content_type, element_id, element_position}) => 
+                pageElements && pageElements.map(({ content, content_type, element_id, element_position, element_size }) => 
                     !isBuildMode ? 
-                        renderPageElement(content, content_type, element_id, element_position)
+                        renderPageElement(content, content_type, element_id, element_position, element_size)
                         :
                         <Draggable updateElementPagePosition={updateElementPagePosition} elementId={element_id} setInitialPosition={false} position={element_position}>
-                            { renderPageElement(content, content_type, element_id, element_position) }
+                            { renderPageElement(content, content_type, element_id, element_position, element_size) }
                         </Draggable>
                 )
             }

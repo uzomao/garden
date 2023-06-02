@@ -8,7 +8,6 @@ export default function ClickAway ({ children, setModalOpenFn }) {
 
     const clickAway = () => {
         if(setModalOpenFn){
-            console.log('hi')
             setModalOpenFn(false)
         } else {
             router.push('/')

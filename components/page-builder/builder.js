@@ -4,6 +4,7 @@ import { supabase } from '@/utils/supabase'
 import CloseBtn from '../close-btn'
 import { v4 as uuidv4 } from 'uuid';
 import Draggable from '../utils/draggable';
+import ResizableImage from './resizable-image';
 
 export const updateElementPagePosition = async (elementCoords, elementId) => {
     const { data, error } = await supabase
@@ -13,6 +14,17 @@ export const updateElementPagePosition = async (elementCoords, elementId) => {
         if(error) console.log(error)
         else {
             console.log('element position updated', data)
+        }
+}
+
+export const updateElementPageSize = async (elementSize, elementId) => {
+    const { data, error } = await supabase
+        .from('page builder')
+        .update({ element_size: {width: elementSize[0], height: elementSize[1]} })
+        .eq('element_id', elementId)
+        if(error) console.log(error)
+        else {
+            console.log('element size updated', data)
         }
 }
 
@@ -67,7 +79,7 @@ export default function Builder ({ pageTitle }) {
             case text:
                 contentHtml = <p id={elementId} className='page-element page-text'>{content}</p>
             case image:
-                contentHtml = <img id={elementId} src={content} className='page-element' />
+                contentHtml = <ResizableImage id={elementId} src={content} alt='' />
             case embed:
                 return
             default:

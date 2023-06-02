@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef } from 'react';
 import styles from '@/styles/utils/draggable.module.css'
 
 const Draggable = ({ children, updateElementPagePosition, elementId, setInitialPosition, position }) => {
@@ -11,8 +11,6 @@ const Draggable = ({ children, updateElementPagePosition, elementId, setInitialP
     isDragging = true;
     offsetX = event.clientX - draggableRef.current.getBoundingClientRect().left;
     offsetY = event.clientY - draggableRef.current.getBoundingClientRect().top;
-
-    console.log(draggableRef.current.children[0])
 
     containerRef.current.classList.remove(styles['drag-inactive'])
     containerRef.current.className += ` ${styles['drag-active']}`
@@ -48,7 +46,6 @@ const Draggable = ({ children, updateElementPagePosition, elementId, setInitialP
     containerRef.current.className += ` ${styles['drag-inactive']}`
     containerRef.current.classList.remove(styles['drag-active'])
 
-    console.log([draggableRef.current.style.left, draggableRef.current.style.top])
     updateElementPagePosition([draggableRef.current.style.left, draggableRef.current.style.top], elementId)
   };
 
