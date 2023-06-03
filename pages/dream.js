@@ -1,5 +1,5 @@
-import Sky from "../elements/sky"
-import Ground from "../elements/ground"
+import Sky from "@/components/elements/sky"
+import Ground from "@/components/elements/ground"
 import Image from "next/image"
 
 import dream from '@/public/images/sign/dream.png'

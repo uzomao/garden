@@ -6,9 +6,9 @@ import { useState, useEffect } from "react";
 import { v4 as uuidv4 } from 'uuid';
 
 import IntroSpace from "@/pages/intro"
-import MainSpace from "@/components/spaces/main"
-import DreamSpace from "@/components/spaces/dream"
-import UpdatesSpace from "@/components/spaces/updates";
+import MainSpace from "@/pages/main"
+import DreamSpace from "@/pages/dream"
+import UpdatesSpace from "@/pages/updates";
 
 import NavIcons from "@/components/nav-icons";
 
@@ -25,7 +25,7 @@ export default function Home() {
   const gardenSpaces = [
     {name: 'intro', component: <IntroSpace/>},
     {name: 'main', component: <MainSpace expandSky={expandSky}/>}, 
-    {name: 'updates', component: <UpdatesSpace />},
+    {name: 'updates', component: <UpdatesSpace/>},
     {name: 'dream', component: <DreamSpace/>}
   ]
 

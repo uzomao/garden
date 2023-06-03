@@ -1,5 +1,5 @@
-import Sky from "../elements/sky"
-import Ground from "../elements/ground"
+import Sky from "@/components/elements/sky"
+import Ground from "@/components/elements/ground"
 
 import { fetchGraphQL } from "@/utils/contentful"
 import { queries } from '@/utils/query'
@@ -9,7 +9,7 @@ import Image from "next/image"
 import defaultImg from '@/public/images/default.jpg'
 import ModalOverlay from '@/components/modal-overlay'
 import IdeaModal from "@/components/idea-modal"
-import ExpandedSky from "../expanded-sky"
+import ExpandedSky from "@/components/expanded-sky"
 
 import { formatDate } from '@/utils/helpers.js'
 
