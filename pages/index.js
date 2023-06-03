@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 
 import { v4 as uuidv4 } from 'uuid';
 
-import IntroSpace from "@/components/spaces/intro"
+import IntroSpace from "@/pages/intro"
 import MainSpace from "@/components/spaces/main"
 import DreamSpace from "@/components/spaces/dream"
 import UpdatesSpace from "@/components/spaces/updates";
@@ -19,54 +19,34 @@ export default function Home() {
   const [ expandSky, setExpandSky ] = useState(false)
   const [ showSignpost, setShowSignpost ] = useState(false)
 
-  // TODO: Collapse spaceIds and signs into gardenSpaces
-  const spaceIds = ['intro', 'main', 'updates', 'dream']
-
-  const [ mainId, dreamId, updatesId, introId ] = spaceIds
+  // TODO: Don't just use main, check for the current id from the url
+  const [ currentSpaceIndex, setCurrentSpaceIndex ] = useState(0)
 
   const gardenSpaces = [
-    <IntroSpace/>,
-    <MainSpace expandSky={expandSky}/>, 
-    <UpdatesSpace />,
-    <DreamSpace/>
+    {id: 'intro', component: <IntroSpace/>},
+    {id: 'main', component: <MainSpace expandSky={expandSky}/>}, 
+    {id: 'updates', component: <UpdatesSpace />},
+    {id: 'dream', component: <DreamSpace/>}
   ]
 
-  const layoutContainerWidth = gardenSpaces.length * 150
-  const gardenSpaceWidth = layoutContainerWidth/gardenSpaces.length
+  const layoutContainerWidth = 150
 
-  const signs = [
-    {text: 'Intro', navigateToId: introId},
-    {text: 'Main', navigateToId: mainId},
-    {text: 'Updates', navigateToId: updatesId},
-    {text: 'Dream', navigateToId: dreamId},
-  ]
+  const renderNavSigns = () => {
+    const prev = <button onClick={() => setCurrentSpaceIndex(currentSpaceIndex - 1)}>Go to previous space</button>
+    const next = <button onClick={() => setCurrentSpaceIndex(currentSpaceIndex + 1)}>Go to next space</button>
 
-  // TODO: Don't just use main, check for the current id from the url
-  const [ currentSpaceId, setCurrentSpaceId ] = useState('main')
-
-  // TODO: Think about changing movement between spaces from scroll through sections to navigate to different pages
-  useEffect(() => {
-
-    const gardenSpaceWidthPx = document.querySelector('.garden-space').getBoundingClientRect().width
-    const scrollBarLength = gardenSpaceWidthPx - window.innerWidth
-
-    const handleCurrentSpaceId = () => {
-      const id = spaceIds[Math.floor((window.scrollX + scrollBarLength)/gardenSpaceWidthPx)]
-    
-      if(currentSpaceId === id) return
-      else {
-        setCurrentSpaceId(id)
-        return
-      }
+    const style = {
+      display: 'flex',
+      justifyContent: currentSpaceIndex > 0 && currentSpaceIndex < gardenSpaces.length ? 'space-between' : 'flex-end',
+      position: 'absolute',
+      width: '100%',
+      top: '50%'
     }
 
-    // window.addEventListener('scroll', handleCurrentSpaceId)
-  
-    return () => {
-      // window.removeEventListener('scroll', handleCurrentSpaceId)
-    }
-  }, [])
-
+    if(currentSpaceIndex === 0){ return <div style={style}>{next}</div> }
+    else if(currentSpaceIndex === gardenSpaces.length -1 ){ return <div style={style}>{prev}</div> }
+    else return <div style={style}>{prev}{next}</div>
+  }
 
   return (
     <>
@@ -77,11 +57,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout containerWidth={layoutContainerWidth}>
-        { gardenSpaces.map((space, index) => 
-          <div id={spaceIds[index]} className={`garden-space`} style={{ width: `${gardenSpaceWidth}%` }} key={uuidv4()}>
-            {space}
-          </div>
-        )}
+        { gardenSpaces[currentSpaceIndex].component }
         <NavIcons expandSky={expandSky} setExpandSky={setExpandSky} 
           showSignpost={showSignpost} setShowSignpost={setShowSignpost}
         />
@@ -92,7 +68,9 @@ export default function Home() {
               spaceIds={spaceIds} 
               currentSpaceId={currentSpaceId} 
               setCurrentSpaceId={setCurrentSpaceId}
-            />}
+            />
+        }
+        { renderNavSigns() }
       </Layout>
     </>
   )
