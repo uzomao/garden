@@ -5,18 +5,18 @@ import { supabase } from '@/utils/supabase'
 import Draggable from '../utils/draggable'
 import Builder from './builder'
 import { updateElementPagePosition, pageElementTypes, updateElementPageSize } from './builder'
-import ResizableImage from './resizable-image'
+import ResizableContent from './resizable-content'
 
 export default function BuiltPage ({ pageTitle }) {
 
     const [ pageElements, setPageElements ] = useState(null)
-    const [ isBuildMode, setIsBuildMode ] = useState(false)
+    const [ isBuildMode, setIsBuildMode ] = useState(true)
 
     const { image, text, embed } = pageElementTypes
 
-    const contentRef = useState(null)
-
     const getPageElements = async () => {
+
+        console.log('getting...')
 
         let { data, error } = await supabase
         .from('page builder')
@@ -24,7 +24,6 @@ export default function BuiltPage ({ pageTitle }) {
         .eq('page', pageTitle)
         if(error) console.log(error)
         else {
-            console.log(data)
             setPageElements(data)
         }
 
@@ -35,19 +34,28 @@ export default function BuiltPage ({ pageTitle }) {
     }, [])
 
     const renderPageElement = (content, contentType, elementId, elementPosition, elementSize=undefined) => {
+        console.log('rendering...')
         const positions = !isBuildMode ? {left: elementPosition.x, top: elementPosition.y} : { left: 0, top: 0 }
+
+        let elementStyle;
+        if(elementSize){
+            const { width, height } = elementSize
+            elementStyle = {width, height, ...positions}
+        }
+
         switch (contentType) {
             case text:
                 return <p id={elementId} style={positions} className='page-element page-text'>{content}</p>
             case image:
-                const { width, height } = elementSize
-                const elementStyle = {width, height, ...positions}
-                return isBuildMode ? <ResizableImage id={elementId} src={content} 
+                return isBuildMode ? <ResizableContent contentType={image} id={elementId} src={content} 
                                         style={elementStyle} alt='' 
                                         updateElementPageSize={updateElementPageSize} elementId={elementId} /> 
                                     : <img id={elementId} src={content} style={elementStyle} className='page-element' />
             case embed:
-                return
+                return isBuildMode ? <ResizableContent contentType={embed} id={elementId} src={content} 
+                                        style={elementStyle} alt='' 
+                                        updateElementPageSize={updateElementPageSize} elementId={elementId} /> 
+                                    : <iframe id={elementId} src={content} style={elementStyle} className='page-element' />
             default:
                 break;
         }

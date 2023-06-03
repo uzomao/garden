@@ -60,10 +60,10 @@ export default function Home() {
       }
     }
 
-    window.addEventListener('scroll', handleCurrentSpaceId)
+    // window.addEventListener('scroll', handleCurrentSpaceId)
   
     return () => {
-      window.removeEventListener('scroll', handleCurrentSpaceId)
+      // window.removeEventListener('scroll', handleCurrentSpaceId)
     }
   }, [])
 

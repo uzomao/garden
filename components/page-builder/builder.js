@@ -4,7 +4,7 @@ import { supabase } from '@/utils/supabase'
 import CloseBtn from '../close-btn'
 import { v4 as uuidv4 } from 'uuid';
 import Draggable from '../utils/draggable';
-import ResizableImage from './resizable-image';
+import ResizableContent from './resizable-content';
 
 export const updateElementPagePosition = async (elementCoords, elementId) => {
     const { data, error } = await supabase
@@ -48,6 +48,8 @@ export default function Builder ({ pageTitle }) {
 
     const { text, image, embed } = pageElementTypes
 
+    const defaultDimensions = 100
+
     const submitForm = async (event) => {
         event.preventDefault()
         const contentField = document.getElementById('content')
@@ -61,7 +63,8 @@ export default function Builder ({ pageTitle }) {
                     content_type: formContentType,
                     content: contentField.value,
                     element_id: elementId,
-                    element_position: {x: 0, y: 0}
+                    element_position: {x: 0, y: 0},
+                    element_size: formContentType !== text ? {width: defaultDimensions, height: defaultDimensions} : null
                 },
             ])
             if(error) console.log(error)
@@ -75,13 +78,18 @@ export default function Builder ({ pageTitle }) {
 
     const createDraggableElement = (formContentType, content, elementId) => {
         let contentHtml;
+        const elementStyle = { width: defaultDimensions, height: defaultDimensions, left: 0, top: 0 }
         switch (formContentType) {
             case text:
                 contentHtml = <p id={elementId} className='page-element page-text'>{content}</p>
             case image:
-                contentHtml = <ResizableImage id={elementId} src={content} alt='' />
+                contentHtml = <ResizableContent contentType={image} id={elementId} src={content} alt='' 
+                                    style={elementStyle} updateElementPageSize={updateElementPageSize} 
+                                />
             case embed:
-                return
+                contentHtml = <ResizableContent contentType={embed} id={elementId} src={content} alt='' 
+                                    style={elementStyle} updateElementPageSize={updateElementPageSize} 
+                                />
             default:
                 break;
         }
