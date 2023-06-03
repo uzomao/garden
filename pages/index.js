@@ -23,10 +23,10 @@ export default function Home() {
   const [ currentSpaceIndex, setCurrentSpaceIndex ] = useState(0)
 
   const gardenSpaces = [
-    {id: 'intro', component: <IntroSpace/>},
-    {id: 'main', component: <MainSpace expandSky={expandSky}/>}, 
-    {id: 'updates', component: <UpdatesSpace />},
-    {id: 'dream', component: <DreamSpace/>}
+    {name: 'intro', component: <IntroSpace/>},
+    {name: 'main', component: <MainSpace expandSky={expandSky}/>}, 
+    {name: 'updates', component: <UpdatesSpace />},
+    {name: 'dream', component: <DreamSpace/>}
   ]
 
   const layoutContainerWidth = 150
@@ -64,10 +64,10 @@ export default function Home() {
         { 
           showSignpost && 
             <NavSignboard 
-              signs={signs} 
-              spaceIds={spaceIds} 
-              currentSpaceId={currentSpaceId} 
-              setCurrentSpaceId={setCurrentSpaceId}
+              gardenSpaces={gardenSpaces}
+              currentSpaceIndex={currentSpaceIndex}
+              setCurrentSpaceIndex={setCurrentSpaceIndex}
+              setShowSignpost={setShowSignpost}
             />
         }
         { renderNavSigns() }
