@@ -16,8 +16,6 @@ export default function BuiltPage ({ pageTitle }) {
 
     const getPageElements = async () => {
 
-        console.log('getting...')
-
         let { data, error } = await supabase
         .from('page builder')
         .select('*')
@@ -34,7 +32,6 @@ export default function BuiltPage ({ pageTitle }) {
     }, [])
 
     const renderPageElement = (content, contentType, elementId, elementPosition, elementSize=undefined) => {
-        console.log('rendering...')
         const positions = !isBuildMode ? {left: elementPosition.x, top: elementPosition.y} : { left: 0, top: 0 }
 
         let elementStyle;

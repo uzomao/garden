@@ -1,9 +1,7 @@
 import Head from "next/head"
 import Layout from "@/components/layout"
 
-import { useState, useEffect } from "react";
-
-import { v4 as uuidv4 } from 'uuid';
+import { useState } from "react";
 
 import IntroSpace from "@/pages/intro"
 import MainSpace from "@/pages/main"
@@ -29,7 +27,7 @@ export default function Home() {
     {name: 'dream', component: <DreamSpace/>}
   ]
 
-  const layoutContainerWidth = 150
+  const layoutContainerWidth = 1010
 
   const renderNavSigns = () => {
     const prev = <button onClick={() => setCurrentSpaceIndex(currentSpaceIndex - 1)}>Go to previous space</button>
@@ -40,7 +38,8 @@ export default function Home() {
       justifyContent: currentSpaceIndex > 0 && currentSpaceIndex < gardenSpaces.length ? 'space-between' : 'flex-end',
       position: 'absolute',
       width: '100%',
-      top: '50%'
+      top: '50%',
+      zIndex: '9999'
     }
 
     if(currentSpaceIndex === 0){ return <div style={style}>{next}</div> }

@@ -13,6 +13,7 @@
     padding-top: 0;
     --rotation-degree: 2deg;
     height: 100%;
+    z-index: 999;
 }
 
 .update {
