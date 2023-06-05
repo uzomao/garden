@@ -1,35 +1,21 @@
+// This is a copy of the index page with Build Mode enabled
+
 import { useContext, useEffect } from 'react'
-import { AppStateContext } from "@/pages/_app"
+import { AppStateContext } from '@/pages/_app'
+
+import Index from "@/pages/index"
 
 export default function Build () {
 
-    const context = useContext(AppStateContext);
-    const { appState, setAppState } = context
-    const { isBuildMode } = appState
-
-    const toggleBuildMode = () => {
-        const newAppState = { ...appState, isBuildMode: !isBuildMode }
-        setAppState(newAppState)
-        window.sessionStorage.setItem('appState', JSON.stringify(newAppState))
-    }
+    const { appState, setAppState } = useContext(AppStateContext);
 
     useEffect(() => {
-        const ssIsBuildMode = JSON.parse(window.sessionStorage.getItem('appState')).isBuildMode
-        ssIsBuildMode && setIsBuildMode(ssIsBuildMode)
-    
+        setAppState({ ...appState, isBuildMode: true })
+        
       return () => {}
-    }, [third])
-    
+    }, [])
 
     return (
-        <main style={{padding: '1rem'}}>
-            <h1>Toggle Build Mode</h1>
-
-            <div>
-                <p>Build Mode is: <span>{ isBuildMode ? 'on' : 'off' }</span></p>
-            </div>
-
-            <button onClick={() => toggleBuildMode()}>toggle build mode</button>
-        </main>
+        <Index />
     )
 }

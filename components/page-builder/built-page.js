@@ -11,8 +11,7 @@ import { AppStateContext } from "@/pages/_app"
 export default function BuiltPage ({ pageTitle }) {
 
     const { appState } = useContext(AppStateContext);
-
-    const [isBuildMode, setIsBuildMode] = useState(appState.isBuildMode)
+    const { isBuildMode } = appState
 
     const [ pageElements, setPageElements ] = useState(null)
 
@@ -33,9 +32,6 @@ export default function BuiltPage ({ pageTitle }) {
 
     useEffect(() => { 
         getPageElements()
-
-        const ssIsBuildMode = JSON.parse(window.sessionStorage.getItem('appState')).isBuildMode
-        ssIsBuildMode && setIsBuildMode(ssIsBuildMode)
     }, [])
 
     const renderPageElement = (content, contentType, elementId, elementPosition, elementSize=undefined) => {
@@ -69,7 +65,7 @@ export default function BuiltPage ({ pageTitle }) {
         <>
             <Sky>
                 <h1 style={{color: 'white'}}>{`${pageTitle} Space`}</h1>
-                <Builder pageTitle={pageTitle} />
+                { isBuildMode && <Builder pageTitle={pageTitle} /> }
             </Sky>
             <Ground />
             {

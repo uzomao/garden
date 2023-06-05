@@ -17,7 +17,6 @@ export default function Home() {
   const [ expandSky, setExpandSky ] = useState(false)
   const [ showSignpost, setShowSignpost ] = useState(false)
 
-  // TODO: Don't just use main, check for the current id from the url
   const [ currentSpaceIndex, setCurrentSpaceIndex ] = useState(0)
 
   const gardenSpaces = [
