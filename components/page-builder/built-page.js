@@ -45,12 +45,9 @@ export default function BuiltPage ({ pageTitle }) {
 
     const renderPageElement = (content, contentType, elementId, elementPosition, elementSize=undefined) => {
 
-        console.log(elementPosition)
-        console.log(screenSizes)
         const responsivePositions = getResponsiveDimensions(elementPosition.x, screenSizes.width, elementPosition.y, screenSizes.height)
         
         const positions = !isBuildMode ? { left: responsivePositions[0], top: responsivePositions[1] } : { left: 0, top: 0 }
-        console.log(positions)
         
         let elementStyle;
         if(elementSize){

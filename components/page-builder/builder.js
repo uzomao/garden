@@ -79,21 +79,14 @@ export default function Builder ({ pageTitle }) {
     const createDraggableElement = (formContentType, content, elementId) => {
         let contentHtml;
         const elementStyle = { width: defaultDimensions, height: defaultDimensions, left: 0, top: 0 }
-        switch (formContentType) {
-            case text:
-                contentHtml = <p id={elementId} className='page-element page-text'>{content}</p>
-            case image:
-                contentHtml = <ResizableContent contentType={image} id={elementId} src={content} alt='' 
-                                    style={elementStyle} updateElementPageSize={updateElementPageSize} 
-                                />
-            case embed:
-                contentHtml = <ResizableContent contentType={embed} id={elementId} src={content} alt='' 
-                                    style={elementStyle} updateElementPageSize={updateElementPageSize} 
-                                />
-            default:
-                break;
+        if(formContentType === text){
+            contentHtml = <p id={elementId} className='page-element page-text'>{content}</p>
+        } else {
+            contentHtml = <ResizableContent contentType={formContentType} id={elementId} src={content} alt='' 
+                                style={elementStyle} updateElementPageSize={updateElementPageSize} 
+                            />
         }
-        return  <Draggable updateElementPagePosition={updateElementPagePosition} elementId={elementId} setInitialPosition={true}>
+        return <Draggable updateElementPagePosition={updateElementPagePosition} elementId={elementId} setInitialPosition={true}>
                     { contentHtml }           
                 </Draggable>
     }
