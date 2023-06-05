@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import Sky from "../elements/sky"
 import Ground from "../elements/ground"
 import { supabase } from '@/utils/supabase'
@@ -6,11 +6,15 @@ import Draggable from '../utils/draggable'
 import Builder from './builder'
 import { updateElementPagePosition, pageElementTypes, updateElementPageSize } from './builder'
 import ResizableContent from './resizable-content'
+import { AppStateContext } from "@/pages/_app"
 
 export default function BuiltPage ({ pageTitle }) {
 
+    const { appState } = useContext(AppStateContext);
+
+    const [isBuildMode, setIsBuildMode] = useState(appState.isBuildMode)
+
     const [ pageElements, setPageElements ] = useState(null)
-    const [ isBuildMode, setIsBuildMode ] = useState(true)
 
     const { image, text, embed } = pageElementTypes
 
@@ -29,6 +33,9 @@ export default function BuiltPage ({ pageTitle }) {
 
     useEffect(() => { 
         getPageElements()
+
+        const ssIsBuildMode = JSON.parse(window.sessionStorage.getItem('appState')).isBuildMode
+        ssIsBuildMode && setIsBuildMode(ssIsBuildMode)
     }, [])
 
     const renderPageElement = (content, contentType, elementId, elementPosition, elementSize=undefined) => {
