@@ -27,7 +27,7 @@ export default function Home() {
     {name: 'dream', component: <DreamSpace/>}
   ]
 
-  const layoutContainerWidth = 1010
+  const layoutContainerWidth = 125
 
   const renderNavSigns = () => {
     const prev = <button onClick={() => setCurrentSpaceIndex(currentSpaceIndex - 1)}>Go to previous space</button>
@@ -37,7 +37,7 @@ export default function Home() {
       display: 'flex',
       justifyContent: currentSpaceIndex > 0 && currentSpaceIndex < gardenSpaces.length ? 'space-between' : 'flex-end',
       position: 'absolute',
-      width: '100%',
+      width: `${layoutContainerWidth}%`,
       top: '50%',
       zIndex: '9999'
     }
