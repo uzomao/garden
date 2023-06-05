@@ -88,6 +88,9 @@ button:hover {
 .page-element {
   position: absolute;
 }
+img.page-element {
+  object-fit: scale-down;
+}
 
 .page-text {
   color: white;

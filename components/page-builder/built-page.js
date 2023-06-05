@@ -7,6 +7,7 @@ import Builder from './builder'
 import { updateElementPagePosition, pageElementTypes, updateElementPageSize } from './builder'
 import ResizableContent from './resizable-content'
 import { AppStateContext } from "@/pages/_app"
+import { getResponsiveDimensions } from '@/utils/helpers'
 
 export default function BuiltPage ({ pageTitle }) {
 
@@ -30,16 +31,32 @@ export default function BuiltPage ({ pageTitle }) {
 
     }
 
+    const [ screenSizes, setScreenSizes ] = useState({})
+
     useEffect(() => { 
+
+        const screenWidth = window.outerWidth
+        const screenHeight = window.outerHeight
+
+        setScreenSizes({ width: screenWidth, height: screenHeight })
+
         getPageElements()
     }, [])
 
     const renderPageElement = (content, contentType, elementId, elementPosition, elementSize=undefined) => {
-        const positions = !isBuildMode ? {left: elementPosition.x, top: elementPosition.y} : { left: 0, top: 0 }
 
+        console.log(elementPosition)
+        console.log(screenSizes)
+        const responsivePositions = getResponsiveDimensions(elementPosition.x, screenSizes.width, elementPosition.y, screenSizes.height)
+        
+        const positions = !isBuildMode ? { left: responsivePositions[0], top: responsivePositions[1] } : { left: 0, top: 0 }
+        console.log(positions)
+        
         let elementStyle;
         if(elementSize){
-            const { width, height } = elementSize
+            const responsiveSizes = getResponsiveDimensions(elementSize.width, screenSizes.width, elementSize.height, screenSizes.height)
+            // use responsive sizing to render elements only when not in Build mode. So as to avoid the resized element dimensions being saved to the db
+            const [ width, height ] = !isBuildMode ? responsiveSizes : [elementSize.width, elementSize.height]
             elementStyle = {width, height, ...positions}
         }
 
