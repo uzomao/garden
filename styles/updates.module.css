@@ -7,23 +7,27 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    align-items: center;
     position: absolute;
-    top: 0;
-    padding: 10%;
-    padding-top: 0;
+    top: 5%;
     --rotation-degree: 2deg;
-    height: 100%;
-    z-index: 999;
 }
 
 .update {
     cursor: pointer;
+    transform: rotate(var(--rotation-degree));
+    margin-bottom: 2rem;
+    text-align: center
 }
 
 .title {
     color: white;
-    font-size: 18px;
+    font-size: 24px;
     text-align: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .animate {
@@ -72,7 +76,12 @@
     }
   }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 900px) {
+  .update img {
+    width: 175px;
+    height: 175px;
+  }
+
   @-moz-keyframes rain {
     from { -moz-transform: translateY(100%) rotate(var(--rotation-degree)); }
     to { -moz-transform: translateY(-1650%) rotate(var(--rotation-degree)); }

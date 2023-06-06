@@ -26,7 +26,7 @@ export default function Home() {
     {name: 'dream', component: <DreamSpace/>}
   ]
 
-  const layoutContainerWidth = 125
+  const layoutContainerWidth = 100
 
   const renderNavSigns = () => {
     const prev = <button onClick={() => setCurrentSpaceIndex(currentSpaceIndex - 1)}>Go to previous space</button>

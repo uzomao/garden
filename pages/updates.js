@@ -51,14 +51,27 @@ export default function UpdatesSpace () {
         }
     }
 
+    const [ title, setTitle ] = useState('')
+
+    let groundContainerHeight = '100vh'
+    const numColumns = 3
+    
+    if(updates){
+        groundContainerHeight = `${200 * (Math.floor(updates.length/numColumns))}vh`
+    }
+
     return (
         <div>
             <Sky />
-            <Ground />
+            <div style={{ height: groundContainerHeight}}>
+                <Ground />
+            </div>
             <div className={styles.container}>
+                { title && <h3 className={styles.title}>{title}</h3>}
+                <h1 style={{color: 'white', width: '100%', textAlign: 'center'}}>{`Updatesss`}</h1>
                 {
                     updates && updates.map(({ title, coverImage, slug }) => 
-                        <div className={`${styles.update} ${styles.animate} update`}>
+                        <div className={`${styles.update} update`} style={{width: `${100/numColumns}%`}}>
                             <Image 
                                 src={ coverImage.url } 
                                 alt={ coverImage.fileName }
@@ -67,10 +80,11 @@ export default function UpdatesSpace () {
                                 onClick={ () => { 
                                     changeModalState(true, slug)
                                 }}
-                                onMouseOver={() => toggleAnimation(pause)} 
-                                onMouseOut={() => !modalState.isOpen && toggleAnimation(play)}
+                                // onMouseOver={() => toggleAnimation(pause)} 
+                                // onMouseOut={() => !modalState.isOpen && toggleAnimation(play)}
+                                onMouseOver={() => setTitle(title)} 
+                                onMouseOut={() => setTitle('')}
                             />
-                            <h3 className={styles.title}>{title}</h3>
                         </div>
                     )
                 }

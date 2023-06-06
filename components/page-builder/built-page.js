@@ -78,7 +78,6 @@ export default function BuiltPage ({ pageTitle }) {
     return (
         <>
             <Sky>
-                <h1 style={{color: 'white'}}>{`${pageTitle} Space`}</h1>
                 { isBuildMode && <Builder pageTitle={pageTitle} /> }
             </Sky>
             <Ground />
