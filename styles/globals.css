@@ -97,6 +97,14 @@ img.page-element {
   color: white;
 }
 
+input {
+  background: none;
+  border: 1.5px solid #fff;
+  border-radius: 10px;
+  outline: none;
+  padding: .5rem;
+  font-family: inherit;
+}
 /* @media (prefers-color-scheme: dark) {
   :root {
     

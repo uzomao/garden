@@ -5,7 +5,10 @@ export const AppStateContext = createContext();
 
 export default function App({ Component, pageProps }) {
   
-  const [ appState, setAppState ] = useState({ isBuildMode: false })
+  const [ appState, setAppState ] = useState({ 
+    isBuildMode: false,
+    currentVisitor: null
+  })
 
   return <AppStateContext.Provider value={{ appState, setAppState }}>
             <Component {...pageProps} />

@@ -36,11 +36,6 @@
 }
 
 .form input {
-    background: none;
-    border: 1.5px solid #fff;
-    border-radius: 10px;
-    outline: none;
-    padding: .5rem;
     margin: 1rem 0;
     width: 80%;
     font-family: inherit;

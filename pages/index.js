@@ -1,7 +1,7 @@
 import Head from "next/head"
 import Layout from "@/components/layout"
 
-import { useState } from 'react'
+import { useState, useEffect, useContext } from 'react'
 
 import IntroSpace from "@/pages/intro"
 import MainSpace from "@/pages/main"
@@ -11,6 +11,8 @@ import UpdatesSpace from "@/pages/updates";
 import NavIcons from "@/components/nav-icons";
 
 import NavSignboard from "@/components/nav-signboard";
+
+import { AppStateContext } from "@/pages/_app"
 
 export default function Home() {
 
@@ -45,6 +47,25 @@ export default function Home() {
     else if(currentSpaceIndex === gardenSpaces.length -1 ){ return <div style={style}>{prev}</div> }
     else return <div style={style}>{prev}{next}</div>
   }
+
+  const [ currentVisitor, setCurrentVisitor ] = useState(null)
+  const { setAppState } = useContext(AppStateContext)
+
+  useEffect(() => {
+    //Set the current visitor in component state + app-wide state on component mount
+    const currentVisitor = JSON.parse(window.localStorage.getItem('currentVisitor'))
+    setCurrentVisitor(currentVisitor)
+    setAppState((prevState) => ({
+      ...prevState,
+      currentVisitor
+    }));
+    console.log('index mounted!')
+
+    return () => {
+      
+    }
+  }, [])
+  
 
   return (
     <>
