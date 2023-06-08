@@ -20,7 +20,7 @@ export default function NavSignboard({ gardenSpaces, currentSpaceIndex, setCurre
                     return currentSpaceIndex !== index && <p
                         className={ isSignFacingLeft(index) ? styles['facing-left'] : styles['facing-right'] } 
                         key={uuidv4()}
-                        onClick={() => setCurrentSpaceIndex(index)}
+                        onClick={() => { setCurrentSpaceIndex(index); setShowSignpost(false) }}
                     >
                         {name}
                     </p>
