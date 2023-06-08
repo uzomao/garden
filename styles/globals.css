@@ -105,6 +105,11 @@ input {
   padding: .5rem;
   font-family: inherit;
 }
+
+iframe {
+  border: 1.5px solid #fff;
+  border-radius: 10px;
+}
 /* @media (prefers-color-scheme: dark) {
   :root {
     
