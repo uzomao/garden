@@ -17,8 +17,7 @@
   animation-play-state: running;
 
   cursor: pointer;
-
-  backdrop-filter: blur(6px);
+  
   opacity: 0.75;
 }
 

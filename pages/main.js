@@ -12,6 +12,7 @@ import IdeaModal from "@/components/idea-modal"
 import ExpandedSky from "@/components/expanded-sky"
 
 import { formatDate } from '@/utils/helpers.js'
+import { cloudTopPositions } from "@/components/elements/clouds"
 
 export default function MainSpace({ expandSky }) {
 
@@ -49,8 +50,6 @@ export default function MainSpace({ expandSky }) {
 
   const [isIdeaModalOpen, setIsIdeaModalOpen] = useState(false)
   const [ ideaindex, setIdeaIndex ] = useState(0)
-
-  const cloudTopPositions = [10,20,30,40,50,60,70]
 
   const ideaImgDimensions = 150
   const ideaContainerWidth = 33.3

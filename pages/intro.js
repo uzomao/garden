@@ -1,7 +1,6 @@
 import BuiltPage from "@/components/page-builder/built-page";
 import Welcome from "@/components/interactions/welcome";
-
-import { useState } from 'react'
+import Clouds from "@/components/elements/clouds"
 
 export default function Intro ({ showWelcome, setShowWelcome }) {
 
@@ -9,6 +8,7 @@ export default function Intro ({ showWelcome, setShowWelcome }) {
         <>
             <BuiltPage pageTitle='intro' />
             { showWelcome && <Welcome setShowWelcome={setShowWelcome} /> }
+            <Clouds numClouds={3} />
         </>
     )
 }
