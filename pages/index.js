@@ -44,7 +44,7 @@ export default function Home() {
       position: 'absolute',
       width: `${layoutContainerWidth}%`,
       top: '50%',
-      zIndex: '9999'
+      // zIndex: '9999'
     }
 
     if(currentSpaceIndex === 0){ return <div style={style}>{next}</div> }
