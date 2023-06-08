@@ -5,8 +5,9 @@ import { useState, useEffect, useContext } from 'react'
 
 import IntroSpace from "@/pages/intro"
 import MainSpace from "@/pages/main"
-import DreamSpace from "@/pages/dream"
+// import DreamSpace from "@/pages/dream"
 import UpdatesSpace from "@/pages/updates";
+import WorkSpace from "@/pages/work"
 
 import NavIcons from "@/components/nav-icons";
 
@@ -27,7 +28,8 @@ export default function Home() {
     {name: 'intro', component: <IntroSpace showWelcome={showWelcome} setShowWelcome={setShowWelcome} />},
     {name: 'main', component: <MainSpace expandSky={expandSky}/>}, 
     {name: 'updates', component: <UpdatesSpace/>},
-    {name: 'dream', component: <DreamSpace/>}
+    {name: 'work', component: <WorkSpace />}
+    // {name: 'dream', component: <DreamSpace/>}
   ]
 
   const layoutContainerWidth = 100
