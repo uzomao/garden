@@ -1,15 +1,25 @@
 import styles from '@/styles/interactions/welcome.module.css'
 import utilStyles from '@/styles/utils.module.css'
 import CloseBtn from '../close-btn'
-
+import { AppStateContext } from "@/pages/_app"
+import { useContext } from 'react'
 
 export default function Welcome ({ setShowWelcome }) {
+
+    const { setAppState } = useContext(AppStateContext)
 
     const submitForm = () => {
         const name = document.getElementById('name').value
         const currentVisitor = { name }
         if(name !== ''){
             window.localStorage.setItem('currentVisitor', JSON.stringify(currentVisitor))
+            setAppState((prevState) => ({
+                ...prevState,
+                currentVisitor
+            }));
+            setShowWelcome(false)
+        } else {
+            alert('a name is a roadmap to destiny...')
         }
     }
 

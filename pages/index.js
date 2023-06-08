@@ -21,8 +21,10 @@ export default function Home() {
 
   const [ currentSpaceIndex, setCurrentSpaceIndex ] = useState(0)
 
+  const [ showWelcome, setShowWelcome ] = useState(false)
+
   const gardenSpaces = [
-    {name: 'intro', component: <IntroSpace/>},
+    {name: 'intro', component: <IntroSpace showWelcome={showWelcome} setShowWelcome={setShowWelcome} />},
     {name: 'main', component: <MainSpace expandSky={expandSky}/>}, 
     {name: 'updates', component: <UpdatesSpace/>},
     {name: 'dream', component: <DreamSpace/>}
@@ -48,24 +50,26 @@ export default function Home() {
     else return <div style={style}>{prev}{next}</div>
   }
 
-  const [ currentVisitor, setCurrentVisitor ] = useState(null)
-  const { setAppState } = useContext(AppStateContext)
+  const { appState, setAppState } = useContext(AppStateContext)
 
   useEffect(() => {
-    //Set the current visitor in component state + app-wide state on component mount
     const currentVisitor = JSON.parse(window.localStorage.getItem('currentVisitor'))
-    setCurrentVisitor(currentVisitor)
-    setAppState((prevState) => ({
-      ...prevState,
-      currentVisitor
-    }));
+    
+    //Set the current visitor in app-wide state on component mount
+    if(currentVisitor){
+      setAppState((prevState) => ({
+        ...prevState,
+        currentVisitor
+      }));
+    } else {
+      setShowWelcome(true)
+    }
     console.log('index mounted!')
 
     return () => {
       
     }
   }, [])
-  
 
   return (
     <>

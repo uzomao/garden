@@ -3,9 +3,7 @@ import Welcome from "@/components/interactions/welcome";
 
 import { useState } from 'react'
 
-export default function Intro () {
-
-    const [ showWelcome, setShowWelcome ] = useState(true)
+export default function Intro ({ showWelcome, setShowWelcome }) {
 
     return (
         <>
