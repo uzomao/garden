@@ -56,7 +56,7 @@ export default function Welcome ({ setShowWelcome }) {
                             <p>What's your name</p>
                             <input type="text" id="name" />
                         </div>
-                        <p>Choose an avatar</p>
+                        {/* <p>Choose an avatar</p> */}
                         <button onClick={() => submitForm()}>Let's go</button>
                         {/* avatar */}
                     </>
