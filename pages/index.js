@@ -50,7 +50,7 @@ export default function Home() {
     else return <div style={style}>{prev}{next}</div>
   }
 
-  const { appState, setAppState } = useContext(AppStateContext)
+  const { setAppState } = useContext(AppStateContext)
 
   useEffect(() => {
     const currentVisitor = JSON.parse(window.localStorage.getItem('currentVisitor'))
@@ -64,7 +64,6 @@ export default function Home() {
     } else {
       setShowWelcome(true)
     }
-    console.log('index mounted!')
 
     return () => {
       
