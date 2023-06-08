@@ -1,25 +1,25 @@
-import { getIdeaPaths, fetchGraphQLAsync } from "@/utils/contentful"
+import { getUpdatePaths, fetchGraphQLAsync } from "@/utils/contentful"
 import { queries } from "@/utils/query";
 import Home from '@/pages/index.js'
 import { useRouter } from "next/router";
-import IdeaModal from "@/components/idea-modal";
+import ModalOverlay from "@/components/modal-overlay";
 import ClickAway from "@/components/utils/click-away";
+import { contentTypes } from "@/utils/helpers";
 
-export default function Idea({ modalContent }){
+export default function Update({ postContent }){
 
     const router = useRouter()
 
     return (
         <ClickAway>
             <Home />
-            {/* TODO: Change this to Idea Tooltip modal */}
-            <IdeaModal positionModalInGarden={false} idea={modalContent} setIsIdeaModalOpen={null} />
+            <ModalOverlay postContent={postContent} contentType={contentTypes.updates} />
         </ClickAway>
     )
 }
 
 export async function getStaticPaths() {
-    const paths = await getIdeaPaths()
+    const paths = await getUpdatePaths()
     return {
         paths,
         fallback: false,
@@ -27,14 +27,14 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps ({ params }) {
-    const query = `{ ${queries.ideas} }`
+    const query = `{ ${queries.updates} }`
 
     const content = await fetchGraphQLAsync(query)
-    const modalContent = content.data.ideaCollection.items.filter(({ slug }) => slug === params.slug)[0]
+    const postContent = content.data.updatesCollection.items.filter(({ slug }) => slug === params.slug)[0]
 
     return {
         props: {
-          modalContent,
+          postContent,
         },
       };
 }

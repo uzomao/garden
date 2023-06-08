@@ -31,7 +31,7 @@ async function fetchGraphQLAsync(query) {
 }
 
 async function getAllContent() {
-  const content = await fetchGraphQL(`{ ${queries.thoughts}, ${queries.ideas} }`)
+  const content = await fetchGraphQL(`{ ${queries.thoughts}, ${queries.ideas} ${queries.updates} }`)
   return content
 }
 
@@ -50,8 +50,22 @@ async function getThoughtPaths (arg){
 
 async function getIdeaPaths (arg){
   const content = await getAllContent()
+  console.log(content)
   const slugs = []
   content.data.ideaCollection.items.forEach(item => {
+    slugs.push({
+      params: {
+        slug: item.slug
+      }
+    })
+  })
+  return slugs
+}
+
+async function getUpdatePaths (arg){
+  const content = await getAllContent()
+  const slugs = []
+  content.data.updatesCollection.items.forEach(item => {
     slugs.push({
       params: {
         slug: item.slug
@@ -79,5 +93,5 @@ const parseRichText = (richText, links=null) => {
   return links ? documentToHtmlString(richText, options): documentToHtmlString(richText)
 }
 
-export { fetchGraphQL, fetchGraphQLAsync, getAllContent, getThoughtPaths, getIdeaPaths, parseRichText }
+export { fetchGraphQL, fetchGraphQLAsync, getAllContent, getThoughtPaths, getIdeaPaths, getUpdatePaths, parseRichText }
 
