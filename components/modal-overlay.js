@@ -26,6 +26,7 @@ export default function ModalOverlay({ postContent, setModalState, contentType }
                     <CloseBtn closeModalFunction={closeModal} />
                 </div>
                 <h2>{postContent.title}</h2>
+                { contentType === contentTypes.updates && <p className={utilStyles.tag}>{postContent.tag}</p>}
                 <p>{formatDate(postContent.date)}</p>
                 <br />
                 <div dangerouslySetInnerHTML={{ __html: parseRichText(postContent.body.json) }} />

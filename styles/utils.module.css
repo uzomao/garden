@@ -39,3 +39,11 @@
     cursor: pointer;
     text-decoration: none;
 }
+
+.tag {
+    padding: 0.5em;
+    border: 1px solid #000;
+    display: inline-block;
+    border-radius: 20px;
+    margin: 0;
+}
