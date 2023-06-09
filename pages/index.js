@@ -11,6 +11,8 @@ import WorkSpace from "@/pages/work"
 
 import NavIcons from "@/components/nav-icons";
 
+import { ImArrowRight, ImArrowLeft } from "react-icons/im";
+
 import NavSignboard from "@/components/nav-signboard";
 
 import { AppStateContext } from "@/pages/_app"
@@ -26,23 +28,25 @@ export default function Home() {
 
   const gardenSpaces = [
     {name: 'intro', component: <IntroSpace showWelcome={showWelcome} setShowWelcome={setShowWelcome} />},
-    {name: 'main', component: <MainSpace expandSky={expandSky}/>}, 
-    {name: 'updates', component: <UpdatesSpace/>},
-    {name: 'work', component: <WorkSpace />}
+    {name: 'main', component: <MainSpace expandSky={expandSky}/>, spaceTitle: 'Thoughts & Ideas'}, 
+    {name: 'updates', component: <UpdatesSpace/>, spaceTitle: 'Updatesss'},
+    {name: 'work', component: <WorkSpace />, spaceTitle: 'Work'}
     // {name: 'dream', component: <DreamSpace/>}
   ]
 
   const layoutContainerWidth = 100
 
   const renderNavSigns = () => {
-    const prev = <button onClick={() => setCurrentSpaceIndex(currentSpaceIndex - 1)}>Go to previous space</button>
-    const next = <button onClick={() => setCurrentSpaceIndex(currentSpaceIndex + 1)}>Go to next space</button>
+    const prev = <button onClick={() => setCurrentSpaceIndex(currentSpaceIndex - 1)}><ImArrowLeft /></button>
+    const next = <button onClick={() => setCurrentSpaceIndex(currentSpaceIndex + 1)}><ImArrowRight /></button>
 
+    const margin = 1
     const style = {
       display: 'flex',
       justifyContent: currentSpaceIndex > 0 && currentSpaceIndex < gardenSpaces.length ? 'space-between' : 'flex-end',
       position: 'absolute',
-      width: `${layoutContainerWidth}%`,
+      margin: `0 ${margin}%`,
+      width: `${layoutContainerWidth - (margin*2)}%`,
       top: '50%',
       // zIndex: '9999'
     }
@@ -72,6 +76,8 @@ export default function Home() {
     }
   }, [])
 
+  const currentSpace = gardenSpaces[currentSpaceIndex]
+
   return (
     <>
       <Head>
@@ -81,7 +87,10 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Layout containerWidth={layoutContainerWidth}>
-        { gardenSpaces[currentSpaceIndex].component }
+        { currentSpace.spaceTitle && 
+          <h1 style={{color: 'white', width: '100%', textAlign: 'center', position: 'absolute'}}>{currentSpace.spaceTitle}</h1>
+        }
+        { currentSpace.component }
         <NavIcons expandSky={expandSky} setExpandSky={setExpandSky} 
           showSignpost={showSignpost} setShowSignpost={setShowSignpost}
         />

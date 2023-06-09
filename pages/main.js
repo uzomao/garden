@@ -65,7 +65,8 @@ export default function MainSpace({ expandSky }) {
                     }} onClick={() => {
                       changeModalState(true, slug)
                     }}>
-                    <h3 className={styles.title}>{title}</h3>
+                    <h3 className={styles.title}>{title} <span><br /><small>*click me*</small></span></h3>
+                    {/* TODO: Get rid of click me text */}
                   </div>
               )
             }

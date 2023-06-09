@@ -68,10 +68,9 @@ export default function UpdatesSpace () {
             </div>
             <div className={styles.container}>
                 { title && <h3 className={styles.title}>{title}</h3>}
-                <h1 style={{color: 'white', width: '100%', textAlign: 'center'}}>{`Updatesss`}</h1>
                 {
                     updates && updates.map(({ title, coverImage, slug }) => 
-                        <div className={`${styles.update} update`} style={{width: `${100/numColumns}%`}}>
+                        <div className={`${styles.update} ${styles.animate} update`} style={{width: `${100/numColumns}%`}}>
                             <Image 
                                 src={ coverImage.url } 
                                 alt={ coverImage.fileName }
