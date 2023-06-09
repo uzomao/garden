@@ -71,10 +71,17 @@ export default function Home() {
       setShowWelcome(true)
     }
 
-    return () => {
-      
-    }
+    return () => {}
   }, [])
+
+  useEffect(() => {
+      const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+      const isPortrait = window.matchMedia('(orientation: portrait)').matches;
+
+      if (isMobile && isPortrait) {
+        alert('Hey! You may enjoy the garden more if you rotate your phone and refresh');
+      }
+  }, []);
 
   const currentSpace = gardenSpaces[currentSpaceIndex]
 
