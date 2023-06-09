@@ -5,7 +5,7 @@ import { useState, useEffect, useContext } from 'react'
 
 import IntroSpace from "@/pages/intro"
 import MainSpace from "@/pages/main"
-// import DreamSpace from "@/pages/dream"
+import DreamSpace from "@/pages/dream"
 import UpdatesSpace from "@/pages/updates";
 import WorkSpace from "@/pages/work"
 
@@ -30,6 +30,7 @@ export default function Home() {
     {name: 'intro', component: <IntroSpace showWelcome={showWelcome} setShowWelcome={setShowWelcome} />},
     {name: 'main', component: <MainSpace expandSky={expandSky}/>, spaceTitle: 'Thoughts & Ideas'}, 
     {name: 'updates', component: <UpdatesSpace/>, spaceTitle: 'Updatesss'},
+    {name: 'dream', component: <DreamSpace />, spaceTitle: 'Dreamsss *solange voice*'},
     {name: 'work', component: <WorkSpace />, spaceTitle: 'Work'}
     // {name: 'dream', component: <DreamSpace/>}
   ]
