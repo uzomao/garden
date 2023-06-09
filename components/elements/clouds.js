@@ -1,5 +1,5 @@
 export const cloudTopPositions = [10,20,30,40,50,60,70]
-import styles from '@/styles/Home.module.css'
+import styles from '@/styles/elements/clouds.module.css'
 
 export default function Clouds ({ numClouds }) {
 
