@@ -3,6 +3,7 @@ import utilStyles from '@/styles/utils.module.css'
 import CloseBtn from '../close-btn'
 import { AppStateContext } from "@/pages/_app"
 import { useContext, useEffect, useState } from 'react'
+import { supabase } from '@/utils/supabase'
 
 export default function Welcome ({ setShowWelcome }) {
 
@@ -10,6 +11,16 @@ export default function Welcome ({ setShowWelcome }) {
 
     const [ greeting, setGreeting ] = useState('')
     const [ showGreeting, setShowGreeting ] = useState(false)
+
+    const saveVisitorToDb = async (name) => {
+        const { data, error } = await supabase
+        .from('people')
+        .insert([ { name } ])
+        if(error) console.log(error)
+        else {
+            console.log('Visitor saved successfully ', data)
+        }
+    }
 
     const submitForm = () => {
         const name = document.getElementById('name').value
@@ -22,6 +33,7 @@ export default function Welcome ({ setShowWelcome }) {
             }));
             setGreeting(`Welcome to the garden ${name} 🌻`)
             setShowGreeting(true)
+            saveVisitorToDb(name)
         } else {
             alert('a name is a roadmap to destiny...')
         }
