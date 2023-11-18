@@ -40,7 +40,6 @@
   margin: 1.5rem 0;
   display: flex;
   flex-direction: column;
-  align-items: center;
 }
 
 .idea p, .idea small {
@@ -60,9 +59,12 @@
 }
 
 .soil {
+  width: 66.6%;
   background-color: rgba(109, 148, 45, 0.5);
-  border-radius: 20%;
-  cursor: pointer
+  cursor: pointer;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
 }
 
 @keyframes drift {

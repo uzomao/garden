@@ -66,7 +66,28 @@ export default function MainSpace({ expandSky }) {
     const updates = ideaUpdates.filter((update) => update.idea.sys.id === ideaId)
     if(updates.length > 0){
       // TODO: Determine plant type by how time since the update was created
-      return <span role="img" aria-label="plant emoji" style={{fontSize: '48px'}}>{plants.seedling}</span>
+      return <>
+              <span role="img" aria-label="plant emoji" style={{fontSize: '48px'}}>{plants.seedling}</span>
+              <span role="img" aria-label="plant emoji" style={{fontSize: '48px'}}>{plants.seedling}</span>
+              <span role="img" aria-label="plant emoji" style={{fontSize: '48px'}}>{plants.seedling}</span>
+            </>
+    }
+  }
+
+  const oddRow = 'odd-row'
+  const evenRow = 'even-row'
+
+  const getAlignment = (rowType, index) => {
+    if(rowType === evenRow){
+      if(index % 3 === 0){
+        return `flex-end`
+      } else if((index-2) % 3 === 0){
+        return `flex-start`
+      } else {
+        return `center`
+      }
+    } else {
+      return `center`
     }
   }
 
@@ -95,7 +116,10 @@ export default function MainSpace({ expandSky }) {
           {
             ideas && ideas.map((idea, index) => {
               const { title, imagesCollection, date, sys } = idea
-              return <div key={index} className={styles.idea} style={{ width: `${ideaContainerWidth}%` }}>
+              // determine the row number (columns of 3):
+              const rowNum = Math.ceil((index+1)/3)
+              const rowType = rowNum % 2 === 0 ? evenRow : oddRow
+              return <div key={index} className={`${styles.idea} ${rowType}`} style={{ width: `${ideaContainerWidth}%`, alignItems: getAlignment(rowType, index)}}>
                 <div className={styles.soil}
                   onClick={(e) => {
                     changeTooltip(true, { x: e.target.offsetLeft, y: e.target.offsetTop })
@@ -103,8 +127,8 @@ export default function MainSpace({ expandSky }) {
                     setIdeaIndex(index)
                   }}
                   style={{
-                    width: `${ideaImgDimensions}px`,
-                    height: `${ideaImgDimensions}px`
+                    height: `${ideaImgDimensions}px`,
+                    marginTop: (index+2) % 3 === 0 ? `5em` : '0'
                   }}
                 >
                   {generatePlants(sys.id)}
