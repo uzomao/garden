@@ -81,6 +81,18 @@ const queries = {
             slug
           }
         }
+    `,
+    getParentIdea: `
+        ideaUpdateCollection {
+            items {
+                idea {
+                    sys {
+                        id
+                    }
+                    title
+                }
+            }
+        }
     `
 }
 
