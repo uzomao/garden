@@ -27,7 +27,6 @@ const queries = {
                         }
                     }
                 plantPosition
-                plant
                 sys {
                     id
                 }
