@@ -60,7 +60,7 @@
 
 .soil {
   width: 66.6%;
-  background-color: rgba(109, 148, 45, 0.5);
+  background-color: rgba(109, 148, 45, 0.25);
   cursor: pointer;
   display: flex;
   align-items: flex-end;

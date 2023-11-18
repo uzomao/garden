@@ -93,6 +93,7 @@ const queries = {
                     title
                 }
                 date
+                plant
             }
         }
     `
