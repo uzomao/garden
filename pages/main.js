@@ -14,6 +14,8 @@ import { cloudTopPositions } from "@/components/elements/clouds"
 
 import CloseBtn from "@/components/close-btn"
 
+import { differenceInMonths, parseJSON } from 'date-fns'
+
 export default function MainSpace({ expandSky }) {
 
   const [thoughts, setThoughts] = useState(null)
@@ -57,19 +59,23 @@ export default function MainSpace({ expandSky }) {
   const ideaContainerWidth = 33.3
 
   const plants = {
-    seedling: '🌱'
+    seedling: '🌱',
+    mature: '🌳'
   }
 
   // Generate emoji plants based on the number of updates an idea has
-  const generatePlants = (ideaId) => {
+  const generatePlants = (ideaId, plant) => {
     // Get all updates pertaining to an idea
     const updates = ideaUpdates.filter((update) => update.idea.sys.id === ideaId)
+    // How many (real) months does it take a seedling to grow into a plant in the garden?
+    const maturityPeriod = 1
     if(updates.length > 0){
       // TODO: Determine plant type by how time since the update was created
+      const monthsDiff = differenceInMonths(new Date(), parseJSON(updates[0].date))
       return <>
-              <span role="img" aria-label="plant emoji" style={{fontSize: '48px'}}>{plants.seedling}</span>
-              <span role="img" aria-label="plant emoji" style={{fontSize: '48px'}}>{plants.seedling}</span>
-              <span role="img" aria-label="plant emoji" style={{fontSize: '48px'}}>{plants.seedling}</span>
+              <span role="img" aria-label="plant emoji" style={{fontSize: '48px'}}>{monthsDiff > maturityPeriod ? plant : plants.seedling}</span>
+              <span role="img" aria-label="plant emoji" style={{fontSize: '48px'}}>{monthsDiff > maturityPeriod ? plant : plants.seedling}</span>
+              <span role="img" aria-label="plant emoji" style={{fontSize: '48px'}}>{monthsDiff > maturityPeriod ? plant : plants.seedling}</span>
             </>
     }
   }
@@ -115,7 +121,7 @@ export default function MainSpace({ expandSky }) {
                 </div> */}
           {
             ideas && ideas.map((idea, index) => {
-              const { title, imagesCollection, date, sys } = idea
+              const { title, imagesCollection, date, sys, plant } = idea
               // determine the row number (columns of 3):
               const rowNum = Math.ceil((index+1)/3)
               const rowType = rowNum % 2 === 0 ? evenRow : oddRow
@@ -131,7 +137,7 @@ export default function MainSpace({ expandSky }) {
                     marginTop: (index+2) % 3 === 0 ? `5em` : '0'
                   }}
                 >
-                  {generatePlants(sys.id)}
+                  {generatePlants(sys.id, plant)}
                 </div>
                 <p>{title}</p>
                 <small>{formatDate(date)}</small>
