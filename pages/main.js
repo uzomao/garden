@@ -15,12 +15,14 @@ import { cloudTopPositions } from "@/components/elements/clouds"
 import CloseBtn from "@/components/close-btn"
 
 import { differenceInMonths, parseJSON } from 'date-fns'
+import { queryDatasources } from "@/utils/helpers.js"
 
 export default function MainSpace({ expandSky }) {
 
   const [thoughts, setThoughts] = useState(null)
   const [ideas, setIdeas] = useState(null)
   const [ideaUpdates, setIdeaUpdates] = useState(null)
+  const [visualPortfolio, setVisualPortfolio] = useState(null)
 
   const [modalState, setModalState] = useState({
     isOpen: false,
@@ -42,12 +44,19 @@ export default function MainSpace({ expandSky }) {
   const [currentIdea, setCurrentIdea] = useState(null)
 
   useEffect(() => {
+    // Get content fromn the Garden Contentful space
     fetchGraphQL(`{ ${queries.thoughts}, ${queries.ideas}, ${queries.getParentIdea} }`)
       .then((content) => {
         const data = content.data
         setThoughts(data.blogPostCollection.items)
         setIdeas(data.ideaCollection.items)
         setIdeaUpdates(data.ideaUpdateCollection.items)
+      })
+    // Get content from my pre-existing portfolio Contentful space
+    fetchGraphQL(`{ ${queries.portfolioVisuals} }`, queryDatasources.portfolioContentful)
+      .then((content) => {
+        const data = content.data
+        setVisualPortfolio(data.workCollection.items)
       })
     return () => { }
   }, [])
@@ -121,10 +130,20 @@ export default function MainSpace({ expandSky }) {
                 <NavSignboard />
                 </div> */}
           {
+            visualPortfolio && 
+              <div className={`${styles.idea} ${oddRow}`} style={{ width: `${ideaContainerWidth}%`, alignItems: getAlignment(oddRow, 0)}}>
+                <div className={styles.soil} style={{height: '100px'}}>
+                </div>
+                <p>Visual Portfolio</p>
+              </div>
+          }
+          {
             ideas && ideas.map((idea, index) => {
               const { title, imagesCollection, date, sys } = idea
+              // Creates a new index that takes into account visual portfolio as the first item
+              const newIndex = index + 1
               // determine the row number (columns of 3):
-              const rowNum = Math.ceil((index+1)/3)
+              const rowNum = Math.ceil((newIndex+1)/3)
               const rowType = rowNum % 2 === 0 ? evenRow : oddRow
               return <div key={index} className={`${styles.idea} ${rowType}`} style={{ width: `${ideaContainerWidth}%`, alignItems: getAlignment(rowType, index)}}>
                 <div className={styles.soil}

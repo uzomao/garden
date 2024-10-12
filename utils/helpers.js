@@ -40,4 +40,9 @@ const getResponsiveDimensions = (elementWidth, screenWidth, elementHeight, scree
     return [ responsiveWidth, responsiveHeight ]
 }
 
-export { formatDate, contentTypes, getResponsiveDimensions }
+const queryDatasources = {
+    gardenContentful: 'GARDEN',
+    portfolioContentful: 'PORTFOLIO'
+}
+
+export { formatDate, contentTypes, getResponsiveDimensions, queryDatasources }

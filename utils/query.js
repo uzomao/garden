@@ -26,7 +26,6 @@ const queries = {
                         url
                         }
                     }
-                plantPosition
                 sys {
                     id
                 }
@@ -93,6 +92,23 @@ const queries = {
                 }
                 date
                 plant
+            }
+        }
+    `,
+    portfolioVisuals: `
+        workCollection {
+            items {
+                title
+                imagesCollection {
+                    items {
+                    url
+                    fileName
+                    title
+                    }
+                }
+                text
+                category
+                year
             }
         }
     `
