@@ -122,17 +122,18 @@ export default function MainSpace({ expandSky }) {
   const evenRow = 'even-row'
 
   const getAlignment = (rowType, index) => {
-    if(rowType === evenRow){
-      if(index % 3 === 0){
-        return `flex-end`
-      } else if((index-2) % 3 === 0){
-        return `flex-start`
-      } else {
-        return `center`
-      }
-    } else {
-      return `center`
-    }
+    // if(rowType === evenRow){
+    //   if(index % 3 === 0){
+    //     return `flex-end`
+    //   } else if((index-2) % 3 === 0){
+    //     return `flex-start`
+    //   } else {
+    //     return `center`
+    //   }
+    // } else {
+    //   return `center`
+    // }
+    return 'center' //need to look into why this fn isn't working
   }
 
   const openPortfolioModal = (portfolioType) => {
@@ -146,7 +147,7 @@ export default function MainSpace({ expandSky }) {
   const portfolioTypeTech = 'tech'
 
   const portfolioDivInGarden = (portfolioTitle, portfolioType, plant, plantCount) => {
-    return <div className={`${styles.idea} ${oddRow}`} style={{ width: `${ideaContainerWidth}%`, alignItems: getAlignment(oddRow, 0) }}>
+    return <div className={`${styles.idea} ${oddRow}`} style={{ width: `${ideaContainerWidth}%`, justifyContent: getAlignment(oddRow, 0), alignItems: 'center' }}>
       <div className={styles.soil} style={{
           height: `${ideaImgDimensions}px`,
           marginTop: `5em`
@@ -192,12 +193,12 @@ export default function MainSpace({ expandSky }) {
           {
             ideas && ideas.map((idea, index) => {
               const { title, imagesCollection, date, sys } = idea
-              // Creates a new index that takes into account visual portfolio as the first item
-              const newIndex = index + 1
+              // Creates a new index that takes into account visual portfolio and tech portfolio as the first items
+              const newIndex = index + 2
               // determine the row number (columns of 3):
               const rowNum = Math.ceil((newIndex+1)/3)
               const rowType = rowNum % 2 === 0 ? evenRow : oddRow
-              return <div key={index} className={`${styles.idea} ${rowType}`} style={{ width: `${ideaContainerWidth}%`, alignItems: getAlignment(rowType, index)}}>
+              return <div key={index} className={`${styles.idea} ${rowType}`} style={{ width: `${ideaContainerWidth}%`, justifyContent: getAlignment(rowType, index), alignItems: 'center'}}>
                 <div className={styles.soil}
                   onClick={(e) => {
                     changeTooltip(true, { x: e.target.offsetLeft, y: e.target.offsetTop })

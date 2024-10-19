@@ -9,7 +9,7 @@ const Cloud = ({ title, slug, index, cloudTopPositions, onClick }) => {
         onClick={onClick}
       >
         <h3 className={styles.title}>
-          {title} <span><br /><small>*click me*</small></span>
+          {title}
         </h3>
       </div>
     );
