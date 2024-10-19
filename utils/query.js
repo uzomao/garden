@@ -109,6 +109,7 @@ const queries = {
                 text
                 category
                 year
+                slug
             }
         }
     `

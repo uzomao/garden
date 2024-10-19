@@ -16,6 +16,7 @@ import CloseBtn from "@/components/close-btn"
 
 import { differenceInMonths, parseJSON } from 'date-fns'
 import { queryDatasources } from "@/utils/helpers.js"
+import PortfolioModal from "@/components/portfolio-modal"
 
 export default function MainSpace({ expandSky }) {
 
@@ -23,6 +24,7 @@ export default function MainSpace({ expandSky }) {
   const [ideas, setIdeas] = useState(null)
   const [ideaUpdates, setIdeaUpdates] = useState(null)
   const [visualPortfolio, setVisualPortfolio] = useState(null)
+  const [isPortfolioModalOpen, setIsPortfolioModalOpen] = useState(false)
 
   const [modalState, setModalState] = useState({
     isOpen: false,
@@ -107,6 +109,10 @@ export default function MainSpace({ expandSky }) {
     }
   }
 
+  const openVisualPortfolio = () => {
+    setIsPortfolioModalOpen(true)
+  }
+
   return (
     <>
       <Sky>
@@ -132,10 +138,21 @@ export default function MainSpace({ expandSky }) {
           {
             visualPortfolio && 
               <div className={`${styles.idea} ${oddRow}`} style={{ width: `${ideaContainerWidth}%`, alignItems: getAlignment(oddRow, 0)}}>
-                <div className={styles.soil} style={{height: '100px'}}>
+                <div className={styles.soil} style={{
+                    height: `${ideaImgDimensions}px`,
+                    marginTop: `5em`
+                  }}
+                  onClick={() => openVisualPortfolio()}>
                 </div>
                 <p>Visual Portfolio</p>
               </div>
+          }
+          {
+            isPortfolioModalOpen &&
+              <PortfolioModal 
+                portfolio={visualPortfolio} 
+                setIsPortfolioModalOpen={setIsPortfolioModalOpen} 
+              />
           }
           {
             ideas && ideas.map((idea, index) => {

@@ -47,3 +47,34 @@
     border-radius: 20px;
     margin: 0;
 }
+
+.portfolio-list-item {
+    display: flex;
+    align-items: center;
+    border: .5px solid grey;
+    border-left: none;
+    border-right: none;
+    padding: 10px 10px 20px 10px;
+}
+
+.portfolio-list-item img {
+    margin-right: 2.5rem;
+    object-fit: contain;
+}
+
+.portfolio-list-item-data {
+    display: flex;
+    height: 130px; /* matches image height set in component file */
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.portfolio-list-item-data h4 {
+    margin: 0;
+}
+
+.portfolio-list-metadata p {
+    font-size: 15px;
+    margin: 0;
+    color: #5f5f5f;
+}
