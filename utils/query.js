@@ -99,17 +99,36 @@ const queries = {
         workCollection {
             items {
                 title
-                imagesCollection {
+                imagesCollection(limit: 1) {
                     items {
-                    url
-                    fileName
-                    title
+                        url
+                        fileName
+                        title
                     }
                 }
                 text
                 category
                 year
                 slug
+            }
+        }
+    `,
+    portfolioTech: `
+        techCollection {
+            items {
+            title
+            imageCollection(limit: 1) {
+                items {
+                    url
+                    fileName
+                    title
+                }
+            }
+            description
+            dateCompleted
+            projectType
+            tags
+            slug
             }
         }
     `

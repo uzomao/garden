@@ -18,13 +18,19 @@ import { differenceInMonths, parseJSON } from 'date-fns'
 import { queryDatasources } from "@/utils/helpers.js"
 import PortfolioModal from "@/components/portfolio-modal"
 
+import Cloud from "@/components/elements/cloud"
+
 export default function MainSpace({ expandSky }) {
 
   const [thoughts, setThoughts] = useState(null)
   const [ideas, setIdeas] = useState(null)
   const [ideaUpdates, setIdeaUpdates] = useState(null)
   const [visualPortfolio, setVisualPortfolio] = useState(null)
-  const [isPortfolioModalOpen, setIsPortfolioModalOpen] = useState(false)
+  const [techPortfolio, setTechPortfolio] = useState(null)
+  const [portfolioModalState, setPortfolioModalState] = useState({
+    portfolioType: '', //used to set whether tech or visual portfolio modal is open
+    isOpen: false,
+  })
 
   const [modalState, setModalState] = useState({
     isOpen: false,
@@ -55,10 +61,11 @@ export default function MainSpace({ expandSky }) {
         setIdeaUpdates(data.ideaUpdateCollection.items)
       })
     // Get content from my pre-existing portfolio Contentful space
-    fetchGraphQL(`{ ${queries.portfolioVisuals} }`, queryDatasources.portfolioContentful)
+    fetchGraphQL(`{ ${queries.portfolioVisuals}, ${queries.portfolioTech} }`, queryDatasources.portfolioContentful)
       .then((content) => {
         const data = content.data
         setVisualPortfolio(data.workCollection.items)
+        setTechPortfolio(data.techCollection.items)
       })
     return () => { }
   }, [])
@@ -71,6 +78,7 @@ export default function MainSpace({ expandSky }) {
 
   const plants = {
     seedling: '🌱',
+    cherryBlossom: '🌸',
     mature: '🌳'
   }
 
@@ -81,6 +89,7 @@ export default function MainSpace({ expandSky }) {
     // How many (real) months does it take a seedling to grow into a plant in the garden?
     const maturityPeriod = 1
     if(updates.length > 0){
+      // the cms contains a 'plant' entry for every update which is what is being used here
       return updates.map(({ date, plant }, index) => {
         const monthsDiff = differenceInMonths(new Date(), parseJSON(date))
         return <div key={index}>
@@ -90,6 +99,23 @@ export default function MainSpace({ expandSky }) {
               </div>
       })
     }
+  }
+
+  const generatePlantsForPortfolio = (plant, count=3) => {
+    return (
+      <div>
+        {Array.from({ length: count }).map((_, index) => (
+          <span
+            key={index}
+            role="img"
+            aria-label="plant emoji"
+            style={{ fontSize: '48px' }}
+          >
+            {plant}
+          </span>
+        ))}
+      </div>
+    );
   }
 
   const oddRow = 'odd-row'
@@ -109,24 +135,42 @@ export default function MainSpace({ expandSky }) {
     }
   }
 
-  const openVisualPortfolio = () => {
-    setIsPortfolioModalOpen(true)
+  const openPortfolioModal = (portfolioType) => {
+    setPortfolioModalState({
+      portfolioType,
+      isOpen: true,
+    })
+  }
+
+  const portfolioTypeVisual = 'visual'
+  const portfolioTypeTech = 'tech'
+
+  const portfolioDivInGarden = (portfolioTitle, portfolioType, plant, plantCount) => {
+    return <div className={`${styles.idea} ${oddRow}`} style={{ width: `${ideaContainerWidth}%`, alignItems: getAlignment(oddRow, 0) }}>
+      <div className={styles.soil} style={{
+          height: `${ideaImgDimensions}px`,
+          marginTop: `5em`
+        }}
+        onClick={() => openPortfolioModal(portfolioType)}>
+        {generatePlantsForPortfolio(plant, plantCount)}
+      </div>
+      <p>{portfolioTitle}</p>
+    </div>
   }
 
   return (
     <>
       <Sky>
         {
-          thoughts && thoughts.map(({ slug, title }, index) =>
-            <div className={styles.cloud} key={slug} style={{
-              animationDelay: `${index * 10}s`,
-              top: `${cloudTopPositions[Math.floor(Math.random() * cloudTopPositions.length)]}px`
-            }} onClick={() => {
-              changeModalState(true, slug)
-            }}>
-              <h3 className={styles.title}>{title} <span><br /><small>*click me*</small></span></h3>
-              {/* TODO: Get rid of click me text */}
-            </div>
+          thoughts && thoughts.map((thought, index) =>
+            <Cloud
+              key={thought.slug}
+              title={thought.title}
+              slug={thought.slug}
+              index={index}
+              cloudTopPositions={cloudTopPositions}
+              onClick={() => setModalState({ isOpen: true, contentSlug: thought.slug })}
+            />
           )
         }
       </Sky>
@@ -135,23 +179,14 @@ export default function MainSpace({ expandSky }) {
           {/* <div className={`${styles.idea} ${styles.signboardcontainer}`} style={{width: `${ideaContainerWidth}%`}}>
                 <NavSignboard />
                 </div> */}
+          { visualPortfolio && portfolioDivInGarden('Visual Portfolio', portfolioTypeVisual, plants.seedling, 15) }
+          { techPortfolio && portfolioDivInGarden('Tech Portfolio', portfolioTypeTech, plants.cherryBlossom, 15)}
           {
-            visualPortfolio && 
-              <div className={`${styles.idea} ${oddRow}`} style={{ width: `${ideaContainerWidth}%`, alignItems: getAlignment(oddRow, 0)}}>
-                <div className={styles.soil} style={{
-                    height: `${ideaImgDimensions}px`,
-                    marginTop: `5em`
-                  }}
-                  onClick={() => openVisualPortfolio()}>
-                </div>
-                <p>Visual Portfolio</p>
-              </div>
-          }
-          {
-            isPortfolioModalOpen &&
+            portfolioModalState.isOpen &&
               <PortfolioModal 
-                portfolio={visualPortfolio} 
-                setIsPortfolioModalOpen={setIsPortfolioModalOpen} 
+                portfolio={portfolioModalState.portfolioType === 'visual' ? visualPortfolio : techPortfolio}
+                portfolioModalState={portfolioModalState}
+                setPortfolioModalState={setPortfolioModalState} 
               />
           }
           {
