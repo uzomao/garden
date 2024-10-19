@@ -1,109 +1,36 @@
-.update img {
-    border-radius: 20px;
-}
-
-.container {
-    width: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-    position: absolute;
-    top: 5%;
-    --rotation-degree: 2deg;
+.updates {
+  margin: 2rem 0;
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .update {
-    cursor: pointer;
-    transform: rotate(var(--rotation-degree));
-    margin-bottom: 2rem;
-    text-align: center
+  margin: 1rem 2rem;
+  width: 15%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+  cursor: pointer;
+  background-color: rgba(109, 148, 45, 0.15);;
 }
 
-.title {
-    color: white;
-    font-size: 24px;
-    text-align: center;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+.update:hover {
+  background: rgb(222, 247, 214);
+  color: #222;
+  border-radius: 10px;
 }
 
-.animate {
-    -moz-transform: translateY(100%) rotate(var(--rotation-degree));
-    -webkit-transform: translateY(100%) rotate(var(--rotation-degree));
-    transform: translateY(100%) rotate(var(--rotation-degree));
-
-    -moz-animation: rain 15s linear infinite;
-    -webkit-animation: rain 15s linear infinite;
-    animation: rain 15s linear infinite;
+.update-data {
+  margin-top: 10px;
+  text-align: center;
 }
 
-.animation-paused {
-    animation-play-state: paused;
+.update-data p {
+  margin: 5px 0;
 }
 
-
-/* Animation */
-
-/* For 'to' translateY value, multiply # of merch rows by 100 */
-
-/* for Firefox */
-@-moz-keyframes rain {
-    from { -moz-transform: translateY(-300px) rotate(var(--rotation-degree)); }
-    to { -moz-transform: translateY(300%) rotate(var(--rotation-degree)); }
-  }
-
-  /* -300px is 50px more than the image height */
-  
-  /* for Chrome */
-  @-webkit-keyframes rain {
-    from { -webkit-transform: translateY(-300px) rotate(var(--rotation-degree)); }
-    to { -webkit-transform: translateY(300%) rotate(var(--rotation-degree)); }
-  }
-  
-  @keyframes rain {
-    from {
-      -moz-transform: translateY(-300px) rotate(var(--rotation-degree));
-      -webkit-transform: translateY(-300px) rotate(var(--rotation-degree));
-      transform: translateY(-300px) rotate(var(--rotation-degree));
-    }
-    to {
-      -moz-transform: translateY(300%) rotate(var(--rotation-degree));
-      -webkit-transform: translateY(300%) rotate(var(--rotation-degree));
-      transform: translateY(300%) rotate(var(--rotation-degree));
-    }
-  }
-
-@media only screen and (max-width: 900px) {
-  .update img {
-    width: 175px;
-    height: 175px;
-  }
-
-  @-moz-keyframes rain {
-    from { -moz-transform: translateY(-300px) rotate(var(--rotation-degree)); }
-    to { -moz-transform: translateY(250%) rotate(var(--rotation-degree)); }
-  }
-  
-  /* for Chrome */
-  @-webkit-keyframes rain {
-    from { -webkit-transform: translateY(-300px) rotate(var(--rotation-degree)); }
-    to { -webkit-transform: translateY(250%) rotate(var(--rotation-degree)); }
-  }
-  
-  @keyframes rain {
-    from {
-      -moz-transform: translateY(-300px) rotate(var(--rotation-degree));
-      -webkit-transform: translateY(-300px) rotate(var(--rotation-degree));
-      transform: translateY(-300px) rotate(var(--rotation-degree));
-    }
-    to {
-      -moz-transform: translateY(250%) rotate(var(--rotation-degree));
-      -webkit-transform: translateY(250%) rotate(var(--rotation-degree));
-      transform: translateY(250%) rotate(var(--rotation-degree));
-    }
-  }
-
+.update-data-project {
+  color: #494e47;
+  font-size: 14px;
 }

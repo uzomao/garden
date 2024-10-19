@@ -28,10 +28,10 @@ export default function Home() {
 
   const gardenSpaces = [
     {name: 'intro', component: <IntroSpace showWelcome={showWelcome} setShowWelcome={setShowWelcome} />},
-    {name: 'main', component: <MainSpace expandSky={expandSky}/>, spaceTitle: 'Thoughts & Ideas'}, 
+    {name: 'projects', component: <MainSpace expandSky={expandSky}/>, spaceTitle: 'Thoughts & Ideas'}, 
     {name: 'updates', component: <UpdatesSpace/>, spaceTitle: 'Updatesss'},
-    {name: 'dream', component: <DreamSpace />, spaceTitle: 'Dreamsss *solange voice*'},
-    {name: 'work', component: <WorkSpace />, spaceTitle: 'Work'}
+    // {name: 'dream', component: <DreamSpace />, spaceTitle: 'Dreamsss *solange voice*'},
+    // {name: 'work', component: <WorkSpace />, spaceTitle: 'Work'}
     // {name: 'dream', component: <DreamSpace/>}
   ]
 

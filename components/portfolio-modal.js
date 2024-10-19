@@ -4,6 +4,8 @@ import ClickAway from './utils/click-away'
 import CloseBtn from './close-btn'
 import Image from 'next/image'
 
+import { sortPortfolioByYearDescending } from '@/utils/helpers'
+
 const PortfolioModal = ({ portfolio, portfolioModalState, setPortfolioModalState }) => {
 
   const closeModal = () => {
@@ -15,9 +17,7 @@ const PortfolioModal = ({ portfolio, portfolioModalState, setPortfolioModalState
 
   const isVisualPortfolio = portfolioModalState.portfolioType === 'visual'
 
-  const sortPortfolioByYearDescending = (portfolio) => {
-    return portfolio.sort((a, b) => parseInt(b.year) - parseInt(a.year));
-  }
+  sortPortfolioByYearDescending(portfolio)
 
   const linkToPortfolio = `https://uzomaorji.com/${isVisualPortfolio ? 'visual' : 'tech'}`
 

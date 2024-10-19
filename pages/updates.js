@@ -9,64 +9,82 @@ import Image from "next/image"
 
 import styles from '@/styles/updates.module.css'
 
+import Clouds from "@/components/elements/clouds"
 import ModalOverlay from "@/components/modal-overlay"
 
-import { contentTypes } from "@/utils/helpers"
+import { formatDate } from "@/utils/helpers"
+
+import { sortByDateDescending } from "@/utils/helpers"
+import useModal from "@/hooks/use-modal"
 
 export default function UpdatesSpace () {
 
-    const [modalState, setModalState] = useState({
-        isOpen: false,
-        contentSlug: ''
-      })
-    
-    const changeModalState = (isOpen, slug) => setModalState({ isOpen, contentSlug: slug })
+    const [ updates, setUpdates ] = useState([])
 
-    const [ updates, setUpdates ] = useState(null)
+    const { modalState, setModalState, changeModalState } = useModal()
+
+    const limit = 10;
+    const [ skip, setSkip ] = useState(0)
+
+    const queryString = `query($limit: Int!, $skip: Int!){ ${queries.ideaUpdates2} }`
+
+    const fetchUpdates = (skip, queryString) => {
+        fetchGraphQL(queryString, { limit, skip })
+            .then((content) => {
+                const data = sortByDateDescending(content.data.ideaUpdateCollection.items)
+                setUpdates((prevUpdates) => [...prevUpdates, ...data])
+        })
+    }
 
     useEffect(() => {
-        fetchGraphQL(`{ ${queries.updates} }`)
-          .then((content) => {
-            const data = content.data
-            console.log(content)
-            setUpdates(data.updatesCollection.items)
-          })
-          return () => {}
+        fetchGraphQL(queryString, { limit, skip })
+            .then((content) => {
+                const data = sortByDateDescending(content.data.ideaUpdateCollection.items)
+                setUpdates(data)
+        })
+        return () => {}
     }, [])
 
-    const pause = 'pause'
-    const play = 'play'
-
-    const toggleAnimation = (toggle) => {
-        const columns = document.getElementsByClassName('update')
-
-        if(toggle === pause) {
-            for (const column of columns) {
-                column.className += ` ${styles['animation-paused']}`
-            }
-        } else if(toggle === play){
-            for (const column of columns) {
-                column.classList.remove(styles['animation-paused'])
-            }
-        }
-    }
-
-    const [ title, setTitle ] = useState('')
-
-    let groundContainerHeight = '100vh'
-    const numColumns = 3
-    
-    if(updates){
-        groundContainerHeight = `${200 * (Math.floor(updates.length/numColumns))}vh`
-    }
+    const loadMore = () => {
+        setSkip(prevSkip => {
+            const newSkip = prevSkip + limit;
+            fetchUpdates(newSkip, queryString);  // Call with the updated skip value
+            return newSkip;
+        });
+    };
 
     return (
         <div>
-            <Sky />
-            <div style={{ height: groundContainerHeight}}>
-                <Ground />
-            </div>
-            <div className={styles.container}>
+            <Sky>
+                <Clouds numClouds={5} />
+            </Sky>
+
+            <Ground>
+                <div className={styles.updates}>
+                    {
+                        updates && updates.map(({ plant, title, date, idea }, index) => 
+                            <div key={index} className={styles.update} onClick={() => { 
+                                changeModalState(true, title)
+                            }}>
+                                <span role="img" aria-label="plant emoji" style={{fontSize: '48px'}}>{plant}</span>
+                                <div className={styles['update-data']}>
+                                    <p>{title}</p>
+                                    <p className={styles['update-data-project']}>{idea.title}</p>
+                                    <p>{formatDate(date)}</p>
+                                </div>
+                            </div>
+                        )
+                    }
+                </div>
+                <button onClick={() => loadMore()}>Load more...</button>
+            </Ground>
+            { modalState.isOpen &&
+                <ModalOverlay 
+                    postContent={updates.filter(({ title }) => title === modalState.contentSlug)[0]}
+                    setModalState={setModalState}
+                />
+            }
+            {/* <div className={styles.container}>
                 { title && <h3 className={styles.title}>{title}</h3>}
                 {
                     updates && updates.map(({ title, coverImage, slug }) => 
@@ -94,7 +112,7 @@ export default function UpdatesSpace () {
                         contentType={contentTypes.updates}
                     />
                 }
-            </div>
+            </div> */}
         </div>
     )
 }

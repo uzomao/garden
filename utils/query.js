@@ -61,6 +61,39 @@ const queries = {
                 sys {
                     id
                 }
+                plant
+            }
+        }
+    `,
+    ideaUpdates2: `
+        ideaUpdateCollection(limit: $limit, skip: $skip) {
+            items {
+                title
+                body {
+                    json
+                    links {
+                        assets {
+                            block {
+                                sys {
+                                    id
+                                }
+                                url
+                                title
+                            }
+                        }
+                    }
+                }
+                date
+                idea {
+                    sys {
+                        id
+                    }
+                    title
+                }
+                sys {
+                    id
+                }
+                plant
             }
         }
     `,

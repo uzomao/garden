@@ -19,7 +19,7 @@ const getApiRequestCredentials = (dataSource) => {
   }
 };
 
-const fetchGraphQL = (query, dataSource=gardenContentful) => {
+const fetchGraphQL = (query, variables, dataSource=gardenContentful) => {
     const { spaceId, accessToken} = getApiRequestCredentials(dataSource)
 
     return fetch(
@@ -30,7 +30,7 @@ const fetchGraphQL = (query, dataSource=gardenContentful) => {
           "Content-Type": "application/json",
           Authorization: `Bearer ${accessToken}`,
         },
-        body: JSON.stringify({ query }),
+        body: JSON.stringify({ query, variables }),
       }
     ).then((response) => response.json());
 }

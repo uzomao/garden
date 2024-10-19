@@ -19,6 +19,7 @@ import { queryDatasources } from "@/utils/helpers.js"
 import PortfolioModal from "@/components/portfolio-modal"
 
 import Cloud from "@/components/elements/cloud"
+import useModal from "@/hooks/use-modal"
 
 export default function MainSpace({ expandSky }) {
 
@@ -32,12 +33,7 @@ export default function MainSpace({ expandSky }) {
     isOpen: false,
   })
 
-  const [modalState, setModalState] = useState({
-    isOpen: false,
-    contentSlug: ''
-  })
-
-  const changeModalState = (isOpen, slug) => setModalState({ isOpen, contentSlug: slug })
+  const { modalState, setModalState, changeModalState } = useModal()
 
   const [tooltip, setTooltip] = useState({
     isOpen: false,
@@ -61,7 +57,7 @@ export default function MainSpace({ expandSky }) {
         setIdeaUpdates(data.ideaUpdateCollection.items)
       })
     // Get content from my pre-existing portfolio Contentful space
-    fetchGraphQL(`{ ${queries.portfolioVisuals}, ${queries.portfolioTech} }`, queryDatasources.portfolioContentful)
+    fetchGraphQL(`{ ${queries.portfolioVisuals}, ${queries.portfolioTech} }`, {}, queryDatasources.portfolioContentful)
       .then((content) => {
         const data = content.data
         setVisualPortfolio(data.workCollection.items)

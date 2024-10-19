@@ -45,4 +45,12 @@ const queryDatasources = {
     portfolioContentful: 'PORTFOLIO'
 }
 
-export { formatDate, contentTypes, getResponsiveDimensions, queryDatasources }
+const sortPortfolioByYearDescending = (portfolio) => {
+    return portfolio.sort((a, b) => parseInt(b.year) - parseInt(a.year));
+}
+
+const sortByDateDescending = (portfolio) => {
+    return portfolio.sort((a, b) => parseInt(b.date) - parseInt(a.date));
+}
+
+export { formatDate, contentTypes, getResponsiveDimensions, queryDatasources, sortPortfolioByYearDescending, sortByDateDescending }
