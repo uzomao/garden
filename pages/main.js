@@ -197,7 +197,7 @@ export default function MainSpace({ expandSky }) {
               return <div key={index} className={`${styles.idea} ${rowType}`} style={{ width: `${ideaContainerWidth}%`, justifyContent: getAlignment(rowType, index), alignItems: 'center'}}>
                 <div className={styles.soil}
                   onClick={(e) => {
-                    changeTooltip(true, { x: e.target.offsetLeft, y: e.target.offsetTop })
+                    setIsIdeaModalOpen(true)
                     setCurrentIdea(idea)
                     setIdeaIndex(index)
                   }}
@@ -223,30 +223,9 @@ export default function MainSpace({ expandSky }) {
           setModalState={setModalState}
         />
       }
-      {
-        tooltip && tooltip.isOpen &&
-        // TODO: Create a component for this
-        <div style={{ top: `${tooltip.coords.y}px`, left: `${tooltip.coords.x + ideaImgDimensions}px` }}
-          className={`${styles.tooltip} text-center`}
-        >
-          <CloseBtn closeModalFunction={setTooltip} />
-          <h4>{currentIdea.title}</h4>
-          <div className="flex-horizontal space-between">
-            <p>{currentIdea.status}</p>
-            <p>{formatDate(currentIdea.date)}</p>
-          </div>
-          <p style={{ maxHeight: '100px', overflowY: 'scroll' }}>{currentIdea.description}</p>
-          <div className="flex-horizontal center">
-            <button className="default-border-radius" onClick={() => {
-              changeTooltip(false, { x: tooltip.coords.x, y: tooltip.coords.y })
-              setIsIdeaModalOpen(true)
-            }}>Delve deeper</button>
-          </div>
-        </div>
-      }
       {isIdeaModalOpen &&
         <IdeaModal
-          positionModalInGarden={!expandSky ? true : false}
+          positionModalInGarden={false}
           idea={currentIdea}
           setIsIdeaModalOpen={setIsIdeaModalOpen}
           modalCoords={tooltip.coords}

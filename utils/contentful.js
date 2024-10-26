@@ -103,7 +103,7 @@ const parseRichText = (richText, links=null) => {
           [BLOCKS.EMBEDDED_ASSET]: (node) => {
             const assetId = node.data.target.sys.id
             const asset = links.assets.block.filter((block) => block.sys.id === assetId)
-            return `<img src=${asset[0].url} width=${250} />`
+            return `<img src=${asset[0].url} />`
           }
       }
   }

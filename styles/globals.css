@@ -1,6 +1,6 @@
 :root {
   --wood-color: #cd6133;
-  --modal-bg: rgba(255, 255, 255, 0.8);
+  --modal-bg: rgba(255, 255, 255, 0.95);
   --default-border-radius: 10px;
   --sky: #87C1E9;
   --grass: #89BA38;
@@ -52,6 +52,10 @@ body {
 
 .text-center {
   text-align: center;
+}
+
+.text-left {
+  text-align: left;
 }
 
 .grey-border-bottom {
@@ -109,6 +113,14 @@ input {
 iframe {
   border: 1.5px solid #fff;
   border-radius: 10px;
+}
+
+.padding-lg {
+  padding: 3rem 0;
+}
+
+.padding-md {
+  padding: 1.5rem 0;
 }
 /* @media (prefers-color-scheme: dark) {
   :root {

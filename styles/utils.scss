@@ -1,4 +1,4 @@
-.overlay {
+.idea-modal-overlay {
     position: absolute;
     z-index: 20;
     background: var(--modal-bg);
@@ -16,22 +16,40 @@
     box-shadow: 8px 8px 2px #fecfcc;
 }
 
-.ideaoverlay { 
+.idea-overlay { 
     width: 30%;
     right: unset;
     margin-left: 1rem;
 }
 
-.ideaupdate {
-    padding: 1rem 0;
+.idea-update {
+    padding-top: .5rem;
     cursor: pointer;
-    display: flex;
-}
 
-.ideaupdate
+    .header-section {
+        display: flex;
+        align-items: center;
 
-.ideaupdate:hover {
-    background: rgb(254, 207, 204, 0.5);
+        .caret {
+            padding-left: .25rem;
+            margin-right: 1rem;
+        }
+
+        &:hover {
+            background: rgb(254, 207, 204, 0.5);;
+        }
+    }
+
+    .body-section {
+        img {
+            padding: 1rem;
+            width: calc(100% - 2rem);
+        }
+
+        width: 90%;
+        margin-left: 5%;
+        padding: 2rem 0 5rem 0;
+    }
 }
 
 .idea-overlay-description {
