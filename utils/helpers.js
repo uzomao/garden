@@ -53,4 +53,18 @@ const sortByDateDescending = (portfolio) => {
     return portfolio.sort((a, b) => parseInt(b.date) - parseInt(a.date));
 }
 
-export { formatDate, contentTypes, getResponsiveDimensions, queryDatasources, sortPortfolioByYearDescending, sortByDateDescending }
+const plants = {
+    seedling: '🌱',
+    cherryBlossom: '🌸',
+    mature: '🌳'
+}
+
+export { 
+    formatDate, 
+    contentTypes, 
+    getResponsiveDimensions, 
+    queryDatasources, 
+    sortPortfolioByYearDescending, 
+    sortByDateDescending,
+    plants
+}
