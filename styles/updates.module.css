@@ -12,7 +12,9 @@
   align-items: center;
   color: white;
   cursor: pointer;
-  background-color: rgba(109, 148, 45, 0.15);;
+  background-color: rgba(109, 148, 45, 0.15);
+  height: fit-content;
+  padding: 2rem 0;
 }
 
 .update:hover {

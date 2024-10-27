@@ -26,6 +26,8 @@
   top: 30%;
   left: 50%;
   transform: translate(-50%, -50%);
+  color: grey;
+  opacity: 0.8;
 }
 
 .ideas {

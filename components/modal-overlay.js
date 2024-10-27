@@ -8,6 +8,8 @@ import Reactions from './reactions'
 import { contentTypes } from '@/utils/helpers'
 import ClickAway from './utils/click-away'
 
+import Image from 'next/image'
+
 export default function ModalOverlay({ postContent, setModalState, contentType }) {
 
     let closeModal;
@@ -17,7 +19,7 @@ export default function ModalOverlay({ postContent, setModalState, contentType }
         }
     }
 
-    const { slug, title } = postContent
+    const { slug, title, coverImage } = postContent
 
     return (
         <ClickAway>
@@ -25,6 +27,13 @@ export default function ModalOverlay({ postContent, setModalState, contentType }
                 <div className={utilStyles.close}>
                     <CloseBtn closeModalFunction={closeModal} />
                 </div>
+                {coverImage && <Image 
+                        src={ coverImage.url } 
+                        alt={ coverImage.fileName }
+                        width={250} 
+                        height={250}
+                    />
+                }
                 <h2>{postContent.title}</h2>
                 { contentType === contentTypes.updates && <p className={utilStyles.tag}>{postContent.tag}</p>}
                 <p>{formatDate(postContent.date)}</p>

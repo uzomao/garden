@@ -9,7 +9,7 @@ import ModalOverlay from '@/components/modal-overlay'
 import IdeaModal from "@/components/idea-modal"
 import ExpandedSky from "@/components/expanded-sky"
 
-import { formatDate } from '@/utils/helpers.js'
+import { formatDate, plants } from '@/utils/helpers.js'
 import { cloudTopPositions } from "@/components/elements/clouds"
 
 import CloseBtn from "@/components/close-btn"
@@ -71,12 +71,6 @@ export default function MainSpace({ expandSky }) {
 
   const ideaImgDimensions = 150
   const ideaContainerWidth = 33.3
-
-  const plants = {
-    seedling: '🌱',
-    cherryBlossom: '🌸',
-    mature: '🌳'
-  }
 
   // Generate emoji plants based on the number of updates an idea has
   const generatePlants = (ideaId) => {
@@ -159,7 +153,7 @@ export default function MainSpace({ expandSky }) {
     <>
       <Sky>
         {
-          thoughts && thoughts.map((thought, index) =>
+          thoughts && thoughts.slice(0,3).map((thought, index) =>
             <Cloud
               key={thought.slug}
               title={thought.title}
@@ -167,6 +161,7 @@ export default function MainSpace({ expandSky }) {
               index={index}
               cloudTopPositions={cloudTopPositions}
               onClick={() => setModalState({ isOpen: true, contentSlug: thought.slug })}
+              numClouds={3}
             />
           )
         }

@@ -53,15 +53,15 @@ export default function IdeaModal({ positionModalInGarden, idea, setIsIdeaModalO
             <div>
                 <p className='padding-md'>{description}</p>
             </div>
-            <div>
-                <h2>Updates</h2>
+            <div className='idea-updates'>
+                <h2>Project Updates</h2>
                 {
                     ideaUpdates ? ideaUpdates.map((update) => 
                             <div key={update.sys.id} className='idea-update'>
                                 <div className='header-section grey-border-bottom' onClick={() => toggleBodySection(update.sys.id)}>
                                     <h4 className='caret'>{expandedUpdates.includes(update.sys.id) ? 'v' : '>'}</h4>
                                     <div>
-                                        <h3 style={{margin: 0}}>{update.title}</h3>
+                                        <h3 style={{margin: 0}} className='heading'>{update.title}</h3>
                                         <small>{formatDate(update.date)}</small>
                                     </div>
                                 </div>

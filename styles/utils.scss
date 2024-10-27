@@ -22,33 +22,45 @@
     margin-left: 1rem;
 }
 
-.idea-update {
-    padding-top: .5rem;
-    cursor: pointer;
+.idea-updates {
 
-    .header-section {
-        display: flex;
-        align-items: center;
-
-        .caret {
-            padding-left: .25rem;
-            margin-right: 1rem;
-        }
-
-        &:hover {
-            background: rgb(254, 207, 204, 0.5);;
-        }
+    h2 {
+        font-size: 21px;
+        color: #2f2e2e;
     }
-
-    .body-section {
-        img {
-            padding: 1rem;
-            width: calc(100% - 2rem);
+    
+    .idea-update {
+        padding-top: .5rem;
+        cursor: pointer;
+    
+        .header-section {
+            display: flex;
+            align-items: center;
+    
+            .heading {
+                color: #666666;
+            }
+    
+            .caret {
+                padding-left: .25rem;
+                margin-right: 1rem;
+            }
+    
+            &:hover {
+                background: rgb(254, 207, 204, 0.5);;
+            }
         }
-
-        width: 90%;
-        margin-left: 5%;
-        padding: 2rem 0 5rem 0;
+    
+        .body-section {
+            img {
+                padding: 1rem;
+                width: calc(100% - 2rem);
+            }
+    
+            width: 90%;
+            margin-left: 5%;
+            padding: 2rem 0 5rem 0;
+        }
     }
 }
 
