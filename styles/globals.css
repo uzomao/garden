@@ -5,6 +5,8 @@
   --sky: #87C1E9;
   --grass: #89BA38;
   --layout-width: 600%;
+  --modal-box-shadow: 8px 8px 2px #fecfcc;
+  --accent-color: #fecfcc;
 }
 
 body {
@@ -101,13 +103,21 @@ img.page-element {
   color: white;
 }
 
-input {
+input, textarea, select {
   background: none;
   border: 1.5px solid #fff;
   border-radius: 10px;
   outline: none;
   padding: .5rem;
   font-family: inherit;
+}
+
+textarea {
+  min-height: 5rem
+}
+
+select {
+  cursor: pointer;
 }
 
 iframe {

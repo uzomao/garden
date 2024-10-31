@@ -44,11 +44,18 @@ export default function UpdatesSpace () {
             <Ground>
                 <div className={styles.updates}>
                     {
-                        updates && updates.map(({ title, date, slug }, index) => 
+                        updates && updates.map(({ title, date, slug, coverImage }, index) => 
                             <div key={index} className={styles.update} onClick={() => { 
                                 changeModalState(true, slug)
                             }}>
-                                <span role="img" aria-label="plant emoji" style={{fontSize: '48px'}}>{plants.cherryBlossom}</span>
+                                {/* <span role="img" aria-label="plant emoji" style={{fontSize: '48px'}}>{plants.cherryBlossom}</span> */}
+                                <Image 
+                                    src={ coverImage.url } 
+                                    alt={ coverImage.fileName }
+                                    width={100} 
+                                    height={100}
+                                    className={styles['update-image']}
+                                />
                                 <div className={styles['update-data']}>
                                     <p>{title}</p>
                                     <p>{formatDate(date)}</p>

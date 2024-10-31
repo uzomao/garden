@@ -1,0 +1,9 @@
+.tooltip {
+    position: absolute;
+    background: var(--modal-bg);
+    margin-left: 1rem;
+    padding: 1rem;
+    border-radius: var(--default-border-radius);
+    max-width: 250px;
+    max-height: 300px;
+}

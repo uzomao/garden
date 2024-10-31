@@ -149,11 +149,13 @@ export default function MainSpace({ expandSky }) {
     </div>
   }
 
+  const numThoughtClouds = 3
+
   return (
     <>
       <Sky>
         {
-          thoughts && thoughts.slice(0,3).map((thought, index) =>
+          thoughts && thoughts.slice(0,numThoughtClouds).map((thought, index) =>
             <Cloud
               key={thought.slug}
               title={thought.title}
@@ -161,7 +163,7 @@ export default function MainSpace({ expandSky }) {
               index={index}
               cloudTopPositions={cloudTopPositions}
               onClick={() => setModalState({ isOpen: true, contentSlug: thought.slug })}
-              numClouds={3}
+              numClouds={numThoughtClouds}
             />
           )
         }

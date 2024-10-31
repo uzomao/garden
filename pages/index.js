@@ -4,8 +4,8 @@ import Layout from "@/components/layout"
 import { useState, useEffect, useContext } from 'react'
 
 import IntroSpace from "@/pages/intro"
+import CommunitySpace from "@/pages/community"
 import MainSpace from "@/pages/main"
-import DreamSpace from "@/pages/dream"
 import UpdatesSpace from "@/pages/updates";
 import WorkSpace from "@/pages/work"
 
@@ -24,20 +24,21 @@ export default function Home() {
 
   const [ currentSpaceIndex, setCurrentSpaceIndex ] = useState(0)
 
-  const [ showWelcome, setShowWelcome ] = useState(false)
+  const [ showWelcome, setShowWelcome ] = useState(true)
 
   const gardenSpaces = [
-    {name: 'intro', component: <IntroSpace showWelcome={showWelcome} setShowWelcome={setShowWelcome} />},
-    {name: 'projects', component: <MainSpace expandSky={expandSky}/>, spaceTitle: 'Thoughts & Ideas'}, 
-    {name: 'updates', component: <UpdatesSpace/>, spaceTitle: 'Updatesss'},
+    {name: 'intro', component: <IntroSpace showWelcome={showWelcome} setShowWelcome={setShowWelcome}/>},
+    {name: 'projects', component: <MainSpace expandSky={expandSky}/>, spaceTitle: 'Projects'}, 
+    {name: 'updates', component: <UpdatesSpace/>, spaceTitle: 'Updates'},
+    {name: 'community', component: <CommunitySpace  />, spaceTitle: 'Community'},
     // {name: 'dream', component: <DreamSpace />, spaceTitle: 'Dreamsss *solange voice*'},
     // {name: 'work', component: <WorkSpace />, spaceTitle: 'Work'}
-    // {name: 'dream', component: <DreamSpace/>}
   ]
 
   const layoutContainerWidth = 100
 
   const renderNavSigns = () => {
+    // TODO: change url with space changes
     const prev = <button onClick={() => setCurrentSpaceIndex(currentSpaceIndex - 1)}><ImArrowLeft /></button>
     const next = <button onClick={() => setCurrentSpaceIndex(currentSpaceIndex + 1)}><ImArrowRight /></button>
 

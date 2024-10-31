@@ -1,0 +1,82 @@
+.intro-container {
+    display: flex;
+    width: 100%;
+    margin-top: 2rem;
+
+    .form-container {
+        width: 50%;
+        display: flex;
+        justify-content: center;
+
+        button {
+            height: fit-content;
+            width: 50%;
+        }
+
+        form {
+            background: var(--modal-bg);
+            border-radius: var(--default-border-radius);
+            box-shadow: var(--modal-box-shadow);
+            display: flex;
+            flex-direction: column;
+            padding: 0 1rem;
+            width: 80%;
+            margin-left: 10%;
+            margin-bottom: 2rem;
+
+            .form-group > * {
+                width: 95%;
+            }
+
+            .heading, #prompt-text {
+                margin: 5px 0;
+            }
+
+            input, textarea, select {
+                margin: 1rem 0;
+                border-color: var(--sky);
+            }
+
+            select:hover {
+                background-color: var(--accent-color);
+            }
+
+            #submit-btn {
+                margin-bottom: 1rem;
+                width: 50%;
+            }
+
+            .plant-selector {
+                margin-bottom: 1.5rem;
+
+                span {
+                    font-size: 36px;
+                    margin: 0 .5rem;
+                    padding: .25rem;
+                    border-radius: 5px;
+                    cursor: pointer;
+
+                    &:hover, &.selected {
+                        background-color: var(--accent-color);
+                    }
+                }
+            }
+        }
+    }
+
+    .plants-container {
+        width: 50%;
+
+        .plant {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            cursor: pointer;
+
+            span {
+                width: 16.67%;
+                font-size: 48px;
+            }
+        }
+    }
+}

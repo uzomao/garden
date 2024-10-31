@@ -59,6 +59,8 @@ const plants = {
     mature: '🌳'
 }
 
+const plantEmojis = ['🌱', '🌸', '🌳', '🌿', '🌺', '🌻', '🍄', '🌾', '🌷']
+
 export { 
     formatDate, 
     contentTypes, 
@@ -66,5 +68,6 @@ export {
     queryDatasources, 
     sortPortfolioByYearDescending, 
     sortByDateDescending,
-    plants
+    plants,
+    plantEmojis
 }

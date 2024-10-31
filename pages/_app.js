@@ -1,5 +1,8 @@
 import '@/styles/globals.css'
 import '@/styles/utils.scss'
+import '@/styles/intro.scss'
+import '@/styles/modal.scss'
+
 import { createContext, useState } from "react";
 
 export const AppStateContext = createContext();
