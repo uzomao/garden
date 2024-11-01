@@ -32,7 +32,6 @@ export default function Home() {
 
   const [ showWelcome, setShowWelcome ] = useState(true)
   const [ spaceContent, setSpaceContent ] = useState({})
-  const [ introPageContent, setIntroPageContent ] = useState(null)
 
   const projectsContent = {projects: spaceContent.projects, portfolio: spaceContent.portfolio}
   const { updates, seeds } = spaceContent
@@ -40,7 +39,7 @@ export default function Home() {
   const filterBuiltPageContent = (pageTitle) => spaceContent.builtPage && spaceContent.builtPage.filter(({ page }) => page === pageTitle)
 
   const gardenSpaces = [
-    {name: 'intro', component: <IntroSpace showWelcome={showWelcome} setShowWelcome={setShowWelcome} content={introPageContent} />},
+    {name: 'intro', component: <IntroSpace showWelcome={showWelcome} setShowWelcome={setShowWelcome} content={filterBuiltPageContent('intro')} />},
     {name: 'projects', component: <MainSpace expandSky={expandSky} content={projectsContent} />, spaceTitle: 'Projects'}, 
     {name: 'updates', component: <UpdatesSpace content={updates} />, spaceTitle: 'Updates'},
     {name: 'community', component: <CommunitySpace content={seeds} />, spaceTitle: 'Community'},
@@ -119,9 +118,6 @@ export default function Home() {
         ...prevContent,
         [spaceKey]: data,
       }));
-      if(spaceKey === 'builtPage'){
-        setIntroPageContent(filterBuiltPageContent('intro'))
-      }
     } catch (error) {
       console.error("Error fetching data from Supabase:", error);
     }

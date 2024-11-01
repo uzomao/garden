@@ -31,8 +31,6 @@ export default function BuiltPage ({ pageTitle, content }) {
 
         setPageElements(content ? content : [])
 
-        return () => {}
-
     }, [content])
 
     const renderPageElement = (content, contentType, elementId, elementPosition, elementSize=undefined) => {
@@ -69,9 +67,7 @@ export default function BuiltPage ({ pageTitle, content }) {
 
     return (
         <>
-            <Sky>
-                { isBuildMode && <Builder pageTitle={pageTitle} /> }
-            </Sky>
+            { isBuildMode && <Builder pageTitle={pageTitle} /> }
             <Ground />
             {
                 pageElements && pageElements.map(({ content, content_type, element_id, element_position, element_size }) => 
