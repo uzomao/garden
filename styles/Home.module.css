@@ -21,15 +21,6 @@
   opacity: 0.75;
 }
 
-.cloud .title {
-  position: absolute;
-  top: 30%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: grey;
-  opacity: 0.8;
-}
-
 .ideas {
   display: flex;
   flex-wrap: wrap;

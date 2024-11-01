@@ -10,18 +10,15 @@ import IdeaModal from "@/components/idea-modal"
 import ExpandedSky from "@/components/expanded-sky"
 
 import { formatDate, plants } from '@/utils/helpers.js'
-import { cloudTopPositions } from "@/components/elements/clouds"
-
-import CloseBtn from "@/components/close-btn"
+import { cloudTopPositions } from "@/utils/helpers.js"
 
 import { differenceInMonths, parseJSON } from 'date-fns'
 import { queryDatasources } from "@/utils/helpers.js"
 import PortfolioModal from "@/components/portfolio-modal"
 
-import Cloud from "@/components/elements/cloud"
 import useModal from "@/hooks/use-modal"
 
-export default function MainSpace({ expandSky }) {
+export default function MainSpace({ expandSky, content }) {
 
   const [thoughts, setThoughts] = useState(null)
   const [ideas, setIdeas] = useState(null)
@@ -48,21 +45,11 @@ export default function MainSpace({ expandSky }) {
   const [currentIdea, setCurrentIdea] = useState(null)
 
   useEffect(() => {
-    // Get content fromn the Garden Contentful space
-    fetchGraphQL(`{ ${queries.thoughts}, ${queries.ideas}, ${queries.getParentIdea} }`)
-      .then((content) => {
-        const data = content.data
-        setThoughts(data.blogPostCollection.items)
-        setIdeas(data.ideaCollection.items)
-        setIdeaUpdates(data.ideaUpdateCollection.items)
-      })
-    // Get content from my pre-existing portfolio Contentful space
-    fetchGraphQL(`{ ${queries.portfolioVisuals}, ${queries.portfolioTech} }`, {}, queryDatasources.portfolioContentful)
-      .then((content) => {
-        const data = content.data
-        setVisualPortfolio(data.workCollection.items)
-        setTechPortfolio(data.techCollection.items)
-      })
+    const { projects, portfolio } = content
+    setIdeas(projects.ideaCollection.items)
+    setIdeaUpdates(projects.ideaUpdateCollection.items)
+    setVisualPortfolio(portfolio.workCollection.items)
+    setTechPortfolio(portfolio.techCollection.items)
     return () => { }
   }, [])
 
@@ -153,7 +140,7 @@ export default function MainSpace({ expandSky }) {
 
   return (
     <>
-      <Sky>
+      {/* <Sky>
         {
           thoughts && thoughts.slice(0,numThoughtClouds).map((thought, index) =>
             <Cloud
@@ -167,7 +154,7 @@ export default function MainSpace({ expandSky }) {
             />
           )
         }
-      </Sky>
+      </Sky> */}
       <Ground>
         <div className={styles.ideas}>
           {/* <div className={`${styles.idea} ${styles.signboardcontainer}`} style={{width: `${ideaContainerWidth}%`}}>

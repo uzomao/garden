@@ -12,7 +12,6 @@ export default function Idea({ modalContent }){
     return (
         <ClickAway>
             <Home />
-            {/* TODO: Change this to Idea Tooltip modal */}
             <IdeaModal positionModalInGarden={false} idea={modalContent} setIsIdeaModalOpen={null} />
         </ClickAway>
     )

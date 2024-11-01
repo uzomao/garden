@@ -1,7 +1,7 @@
 import React from 'react'
 import BuiltPage from '@/components/page-builder/built-page'
 import Welcome from "@/components/interactions/welcome";
-import Clouds from "@/components/elements/clouds"
+import Clouds from "@/components/elements/clouds/clouds"
 
 const Intro = ({ showWelcome, setShowWelcome }) => {
   return (

@@ -9,38 +9,26 @@ import Image from "next/image"
 
 import styles from '@/styles/updates.module.css'
 
-import Clouds from "@/components/elements/clouds"
 import ModalOverlay from "@/components/modal-overlay"
 
-import { formatDate, plants } from "@/utils/helpers"
+import { formatDate } from "@/utils/helpers"
 
-import { sortByDateDescending } from "@/utils/helpers"
 import useModal from "@/hooks/use-modal"
 
 import { contentTypes } from "@/utils/helpers"
 
-export default function UpdatesSpace () {
+export default function UpdatesSpace ({ content }) {
 
     const [ updates, setUpdates ] = useState([])
 
     const { modalState, setModalState, changeModalState } = useModal()
 
     useEffect(() => {
-        fetchGraphQL(`{ ${queries.updates} }`)
-          .then((content) => {
-            const data = content.data
-            console.log(data);
-            setUpdates(data.updatesCollection.items)
-          })
-          return () => {}
+        setUpdates(content.updatesCollection.items)
     }, [])
 
     return (
-        <div>
-            <Sky>
-                <Clouds numClouds={5} />
-            </Sky>
-
+        <>
             <Ground>
                 <div className={styles.updates}>
                     {
@@ -72,35 +60,6 @@ export default function UpdatesSpace () {
                     contentType={contentTypes.updates}
                 />
             }
-            {/* <div className={styles.container}>
-                { title && <h3 className={styles.title}>{title}</h3>}
-                {
-                    updates && updates.map(({ title, coverImage, slug }) => 
-                        <div className={`${styles.update} ${styles.animate} update`} style={{width: `${100/numColumns}%`}}>
-                            <Image 
-                                src={ coverImage.url } 
-                                alt={ coverImage.fileName }
-                                width={250} 
-                                height={250}  
-                                onClick={ () => { 
-                                    changeModalState(true, slug)
-                                }}
-                                // onMouseOver={() => toggleAnimation(pause)} 
-                                // onMouseOut={() => !modalState.isOpen && toggleAnimation(play)}
-                                onMouseOver={() => setTitle(title)} 
-                                onMouseOut={() => setTitle('')}
-                            />
-                        </div>
-                    )
-                }
-                { modalState.isOpen &&
-                    <ModalOverlay 
-                        postContent={updates.filter(({ slug }) => slug === modalState.contentSlug)[0]}
-                        setModalState={setModalState}
-                        contentType={contentTypes.updates}
-                    />
-                }
-            </div> */}
-        </div>
+        </>
     )
 }

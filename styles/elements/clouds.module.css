@@ -21,6 +21,15 @@
   opacity: 0.75;
 }
 
+.title {
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: grey;
+  opacity: 0.8;
+}
+
 @keyframes drift {
   100% {
       transform: translate(calc(-100vw - 200px));

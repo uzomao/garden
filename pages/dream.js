@@ -1,5 +1,5 @@
 import BuiltPage from "@/components/page-builder/built-page"
-import Clouds from "@/components/elements/clouds"
+import Clouds from "@/components/elements/clouds/clouds"
 
 export default function Dream () {
 

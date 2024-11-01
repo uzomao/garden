@@ -61,6 +61,9 @@ const plants = {
 
 const plantEmojis = ['🌱', '🌸', '🌳', '🌿', '🌺', '🌻', '🍄', '🌾', '🌷']
 
+// Used to set the y-axis positions of the clouds in the sky
+const cloudTopPositions = [10, 100, 25, 80, 15, 60, 20, 40, 10]
+
 export { 
     formatDate, 
     contentTypes, 
@@ -69,5 +72,6 @@ export {
     sortPortfolioByYearDescending, 
     sortByDateDescending,
     plants,
-    plantEmojis
+    plantEmojis,
+    cloudTopPositions
 }

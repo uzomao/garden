@@ -9,7 +9,7 @@ import ResizableContent from './resizable-content'
 import { AppStateContext } from "@/pages/_app"
 import { getResponsiveDimensions } from '@/utils/helpers'
 
-export default function BuiltPage ({ pageTitle }) {
+export default function BuiltPage ({ pageTitle, content }) {
 
     const { appState } = useContext(AppStateContext);
     const { isBuildMode } = appState
@@ -18,30 +18,22 @@ export default function BuiltPage ({ pageTitle }) {
 
     const { image, text, embed } = pageElementTypes
 
-    const getPageElements = async () => {
-
-        let { data, error } = await supabase
-        .from('page builder')
-        .select('*')
-        .eq('page', pageTitle)
-        if(error) console.log(error)
-        else {
-            setPageElements(data)
-        }
-
-    }
-
     const [ screenSizes, setScreenSizes ] = useState({})
 
     useEffect(() => { 
+
+        console.log(content);
 
         const screenWidth = window.outerWidth
         const screenHeight = window.outerHeight
 
         setScreenSizes({ width: screenWidth, height: screenHeight })
 
-        getPageElements()
-    }, [])
+        setPageElements(content ? content : [])
+
+        return () => {}
+
+    }, [content])
 
     const renderPageElement = (content, contentType, elementId, elementPosition, elementSize=undefined) => {
 
