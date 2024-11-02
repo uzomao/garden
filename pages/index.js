@@ -5,15 +5,15 @@ import { useState, useEffect, useContext, useMemo } from 'react'
 
 import IntroSpace from "@/pages/intro"
 import CommunitySpace from "@/pages/community"
-import MainSpace from "@/pages/main"
+import ProjectsSpace from "@/pages/projects"
 import UpdatesSpace from "@/pages/updates";
-import WorkSpace from "@/pages/work"
 
 import NavIcons from "@/components/nav-icons";
+import Info from "@/components/modals/info"
 
 import { ImArrowRight, ImArrowLeft } from "react-icons/im";
 
-import NavSignboard from "@/components/nav-signboard";
+import NavModal from "@/components/modals/nav-modal";
 
 import { AppStateContext } from "@/pages/_app"
 
@@ -27,6 +27,7 @@ export default function Home() {
 
   const [ expandSky, setExpandSky ] = useState(false)
   const [ showSignpost, setShowSignpost ] = useState(false)
+  const [ showInfo, setShowInfo ] = useState(false)
 
   const [ currentSpaceIndex, setCurrentSpaceIndex ] = useState(0)
 
@@ -40,7 +41,7 @@ export default function Home() {
 
   const gardenSpaces = [
     {name: 'intro', component: <IntroSpace showWelcome={showWelcome} setShowWelcome={setShowWelcome} content={filterBuiltPageContent('intro')} />},
-    {name: 'projects', component: <MainSpace expandSky={expandSky} content={projectsContent} />, spaceTitle: 'Projects'}, 
+    {name: 'projects', component: <ProjectsSpace expandSky={expandSky} content={projectsContent} />, spaceTitle: 'Projects'}, 
     {name: 'updates', component: <UpdatesSpace content={updates} />, spaceTitle: 'Updates'},
     {name: 'community', component: <CommunitySpace content={seeds} />, spaceTitle: 'Community'},
     // {name: 'dream', component: <DreamSpace />, spaceTitle: 'Dreamsss *solange voice*'},
@@ -158,20 +159,25 @@ export default function Home() {
             <Clouds numClouds={3} content={spaceContent.thoughts} />
           </Sky>
           {/* CRITICAL: Use the gardenSpaces array above to render the garden space currently shown */}
+          {/* TODO: Wrap this in a single Ground component to avoid using this component across spaces */}
           { currentSpace.component }
         </>
 
         <NavIcons expandSky={expandSky} setExpandSky={setExpandSky} 
           showSignpost={showSignpost} setShowSignpost={setShowSignpost}
+          showInfo={showInfo} setShowInfo={setShowInfo}
         />
         { 
           showSignpost && 
-            <NavSignboard 
+            <NavModal 
               gardenSpaces={gardenSpaces}
               currentSpaceIndex={currentSpaceIndex}
               setCurrentSpaceIndex={setCurrentSpaceIndex}
               setShowSignpost={setShowSignpost}
             />
+        }
+        {
+          showInfo && <Info closeFn={setShowInfo} />
         }
         { renderNavArrows() }
       </Layout>

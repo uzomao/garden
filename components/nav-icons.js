@@ -2,15 +2,12 @@ import { useState } from 'react';
 import styles from '@/styles/nav-icons.module.css'
 
 import { FaExpandAlt } from "react-icons/fa";
-import { BsFillSignpostSplitFill, BsCloudRainHeavy } from "react-icons/bs"
-
-import UpdatesSpace from '@/pages/updates';
+import { BsFillSignpostSplitFill } from "react-icons/bs"
+import { IoInformation } from "react-icons/io5";
 
 const iconSpacing = '15px'
 
-export default function NavIcons ({ expandSky, setExpandSky, showSignpost, setShowSignpost }) {
-
-    const [ showUpdates, setShowUpdates ] = useState(false)
+export default function NavIcons ({ expandSky, setExpandSky, showSignpost, setShowSignpost, showInfo, setShowInfo }) {
     
     return (
         <div className={styles.container}>
@@ -22,11 +19,10 @@ export default function NavIcons ({ expandSky, setExpandSky, showSignpost, setSh
                 className={styles.icon}
                 onClick={() => setShowSignpost(!showSignpost)}
             />
-            <BsCloudRainHeavy style={{ top: iconSpacing, left: iconSpacing, fontSize: '32px' }}
+            <IoInformation style={{ top: iconSpacing, left: iconSpacing, fontSize: '32px' }}
                 className={styles.icon}
-                onClick={() => setShowUpdates(!showUpdates)}
+                onClick={() => setShowInfo(!showInfo)}
             />
-            { showUpdates && <UpdatesSpace /> }
         </div>
     )
 }

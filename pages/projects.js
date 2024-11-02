@@ -1,8 +1,5 @@
-import Sky from "@/components/elements/sky"
 import Ground from "@/components/elements/ground"
 
-import { fetchGraphQL } from "@/utils/contentful"
-import { queries } from '@/utils/query'
 import { useState, useEffect } from "react"
 import styles from '@/styles/Home.module.css'
 import ModalOverlay from '@/components/modal-overlay'
@@ -10,10 +7,8 @@ import IdeaModal from "@/components/idea-modal"
 import ExpandedSky from "@/components/expanded-sky"
 
 import { formatDate, plants } from '@/utils/helpers.js'
-import { cloudTopPositions } from "@/utils/helpers.js"
 
 import { differenceInMonths, parseJSON } from 'date-fns'
-import { queryDatasources } from "@/utils/helpers.js"
 import PortfolioModal from "@/components/portfolio-modal"
 
 import useModal from "@/hooks/use-modal"
@@ -140,21 +135,6 @@ export default function MainSpace({ expandSky, content }) {
 
   return (
     <>
-      {/* <Sky>
-        {
-          thoughts && thoughts.slice(0,numThoughtClouds).map((thought, index) =>
-            <Cloud
-              key={thought.slug}
-              title={thought.title}
-              slug={thought.slug}
-              index={index}
-              cloudTopPositions={cloudTopPositions}
-              onClick={() => setModalState({ isOpen: true, contentSlug: thought.slug })}
-              numClouds={numThoughtClouds}
-            />
-          )
-        }
-      </Sky> */}
       <Ground>
         <div className={styles.ideas}>
           {/* <div className={`${styles.idea} ${styles.signboardcontainer}`} style={{width: `${ideaContainerWidth}%`}}>

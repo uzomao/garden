@@ -17,7 +17,7 @@
     justify-content: center;
 }
 
-.signpost p {
+/* .signpost p {
     color: #fff;
     text-decoration: none;
     padding: 30px;
@@ -25,6 +25,24 @@
     background-size: contain;
     background-position: center;
     cursor: pointer;
+} */
+
+.sign {
+    text-align: center;
+    background-size: contain;
+    background-position: center;
+    cursor: pointer;
+
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sign p {
+    color: #fff;
+    padding: 30px;
+    margin: 0;
 }
 
 .signpost p:hover {
@@ -38,5 +56,10 @@
 
 .facing-right {
     background-image: url('../public/images/sign/sign-right.png');
+    background-repeat: no-repeat;
+}
+
+.sign-center {
+    background-image: url('../public/images/sign/sign-centre.png');
     background-repeat: no-repeat;
 }
