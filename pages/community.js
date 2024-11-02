@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import Ground from "@/components/elements/ground"
 import CloseBtn from "@/components/close-btn";
 
-import { supabase } from '@/utils/supabase'
+import { supabase } from "@/utils/supabase";
 import { plantEmojis } from "@/utils/helpers";
 
 import Tooltip from "@/components/modals/tooltip";
@@ -14,8 +14,8 @@ export default function Community ({ content }) {
     const [ showForm, setShowForm ] = useState(false)
     const [ isFormSubmitted, setIsFormSubmitted ] = useState(false)
     const [ selectedPlant, setSelectedPlant ] = useState('')
-    const [ selectedPrompt, setSelectedPrompt ] = useState('')
-    const [ thoughts, setThoughts ] = useState([])
+    const [ selectedPrompt, setSelectedPrompt ] = useState(null)
+    const [ seeds, setSeeds ] = useState([])
 
     // Tooltip stuff can be moved to a useTooltip hook
     const [tooltip, setTooltip] = useState({
@@ -26,7 +26,10 @@ export default function Community ({ content }) {
         },
         content: {}
     })
-    const changeTooltip = (isOpen, coords, content) => setTooltip({ isOpen, coords, content })
+    const changeTooltip = (isOpen, coords, content) => { 
+        closeForm();
+        setTooltip({ isOpen, coords, content }) 
+    }
 
     const closeTooltip = () => {
         setTooltip({isOpen: false, coords: {x: 0, y: 0}, content: {}})
@@ -41,30 +44,41 @@ export default function Community ({ content }) {
     const submitForm = async (event) => {
         event.preventDefault()
 
-        setIsFormSubmitted(true)
-        const { data, error } = await supabase
-            .from('thoughts')
-            .insert([
-                { 
-                    response: document.getElementById('response').value,
-                    name: document.getElementById('name').value,
-                    plant: selectedPlant,
-                    prompt: selectedPrompt
-                },
+        const newSeed = {
+            name: document.getElementById('name').value,
+            response: document.getElementById('response').value,
+            plant: selectedPlant,
+            prompt: selectedPrompt,
+        }
+        const { name, response, plant, prompt } = newSeed
+
+        if(name !== '' && response !== '' && plant !== '' && prompt){
+            setIsFormSubmitted(true)
+            setSeeds((prevSeeds) => [
+                ...prevSeeds,
+                newSeed
             ])
-            if(error) console.log(error)
-            else {
-                console.log('form updated!')
-            }
+            const { data, error } = await supabase
+                .from('thoughts')
+                .insert([ newSeed ])
+                if(error) console.log(error)
+                else {
+                    console.log('form updated!')
+                }
+        } else {
+            alert('Fill in all fields to plant a seed')
+        }
     }
 
     const closeForm = () => {
         setShowForm(false)
         setIsFormSubmitted(false)
+        setSelectedPlant('')
+        setSelectedPrompt(null)
     }
 
     useEffect(() => {
-      setThoughts(content)
+      setSeeds(content)
     
       return () => {}
     }, [])
@@ -150,10 +164,10 @@ export default function Community ({ content }) {
                 </div>
                 <div className="plants-container">
                     <p className="text-center" style={{color: '#fff', fontSize: '18px'}}>Click on a plant to see its seed</p>
-                    <div className="plant">
+                    <div className="plants">
                         {
-                            thoughts && thoughts.map(({ plant, name, response, prompt, created_at }) => 
-                                <div className="thought-container"
+                            seeds && seeds.map(({ plant, name, response, prompt, created_at }) => 
+                                <div className="plant"
                                     key={uuidv4()}
                                     onClick={(e) => changeTooltip(true, { x: e.target.offsetLeft, y: e.target.offsetTop }, { name: name, response: response, prompt: prompt, date: created_at })}
                                 >
@@ -167,7 +181,7 @@ export default function Community ({ content }) {
                         }
                         {
                             tooltip && tooltip.isOpen &&
-                                <Tooltip data={tooltip} closeTooltip={closeTooltip} dimesions={150} />
+                                <Tooltip data={tooltip} closeTooltip={closeTooltip} dimensions={40} />
                         }
                     </div>
                 </div>

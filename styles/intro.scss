@@ -67,16 +67,19 @@
     .plants-container {
         width: 50%;
 
-        .plant {
+        .plants {
             display: flex;
-            justify-content: space-between;
             flex-wrap: wrap;
             cursor: pointer;
 
-            span {
+            .plant {
                 width: 16.67%;
-                font-size: 48px;
+
+                span {
+                    font-size: 48px;
+                }
             }
+
         }
     }
 }

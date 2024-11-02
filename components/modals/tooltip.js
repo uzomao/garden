@@ -12,7 +12,7 @@ const Tooltip = ({ data, closeTooltip, dimensions}) => {
         <h4>{content.prompt}</h4>
         <div>
             <p style={{margin: 0}}>by {content.name}</p>
-            <p style={{margin: 0}}>{formatDate(content.date)}</p>
+            <p style={{margin: 0}}>{content.date ? formatDate(content.date) : 'just now'}</p>
         </div>
         <p style={{ maxHeight: '100px', overflowY: 'scroll' }}>{content.response}</p>
         <div className="flex-horizontal center">
