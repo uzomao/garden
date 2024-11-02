@@ -22,8 +22,6 @@ export default function BuiltPage ({ pageTitle, content }) {
 
     useEffect(() => { 
 
-        console.log(content);
-
         const screenWidth = window.outerWidth
         const screenHeight = window.outerHeight
 
