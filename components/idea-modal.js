@@ -10,7 +10,7 @@ import Reactions from './reactions'
 
 import ClickAway from './utils/click-away'
 
-export default function IdeaModal({ positionModalInGarden, idea, setIsIdeaModalOpen, modalCoords, ideaImgDimensions, topPosition }) {
+export default function IdeaModal({ positionModalInGarden, idea, setIsIdeaModalOpen }) {
     const { slug, title, status, date, description } = idea
 
     const closeModal = () => {

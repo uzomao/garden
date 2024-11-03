@@ -40,3 +40,7 @@
 .content .piece {
     margin: 1rem 0;
 }
+
+.piece:hover > h2, .piece:hover > p, .toggler p:hover {
+    color: var(--accent-color);
+}

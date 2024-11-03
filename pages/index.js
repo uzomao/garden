@@ -10,6 +10,7 @@ import UpdatesSpace from "@/pages/updates";
 
 import NavIcons from "@/components/nav-icons";
 import Info from "@/components/modals/info"
+import ExpandedSky from "@/components/expanded-sky"
 
 import { ImArrowRight, ImArrowLeft } from "react-icons/im";
 
@@ -41,11 +42,9 @@ export default function Home() {
 
   const gardenSpaces = [
     {name: 'intro', component: <IntroSpace showWelcome={showWelcome} setShowWelcome={setShowWelcome} content={filterBuiltPageContent('intro')} />},
-    {name: 'projects', component: <ProjectsSpace expandSky={expandSky} content={projectsContent} />, spaceTitle: 'Projects'}, 
+    {name: 'projects', component: <ProjectsSpace content={projectsContent} />, spaceTitle: 'Projects'}, 
     {name: 'updates', component: <UpdatesSpace content={updates} />, spaceTitle: 'Updates'},
     {name: 'community', component: <CommunitySpace content={seeds} />, spaceTitle: 'Community'},
-    // {name: 'dream', component: <DreamSpace />, spaceTitle: 'Dreamsss *solange voice*'},
-    // {name: 'work', component: <WorkSpace />, spaceTitle: 'Work'}
   ]
 
   const layoutContainerWidth = 100
@@ -180,6 +179,11 @@ export default function Home() {
           showInfo && <Info closeFn={setShowInfo} />
         }
         { renderNavArrows() }
+        {expandSky &&
+          <ExpandedSky
+            content={{thoughts: spaceContent.thoughts, projects: spaceContent.projects, updates: updates}}
+          />
+        }
       </Layout>
     </>
   )

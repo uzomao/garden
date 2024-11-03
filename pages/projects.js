@@ -4,7 +4,6 @@ import { useState, useEffect } from "react"
 import styles from '@/styles/Home.module.css'
 import ModalOverlay from '@/components/modal-overlay'
 import IdeaModal from "@/components/idea-modal"
-import ExpandedSky from "@/components/expanded-sky"
 
 import { formatDate, plants } from '@/utils/helpers.js'
 
@@ -13,7 +12,7 @@ import PortfolioModal from "@/components/portfolio-modal"
 
 import useModal from "@/hooks/use-modal"
 
-export default function MainSpace({ expandSky, content }) {
+export default function MainSpace({ content }) {
 
   const [thoughts, setThoughts] = useState(null)
   const [ideas, setIdeas] = useState(null)
@@ -26,16 +25,6 @@ export default function MainSpace({ expandSky, content }) {
   })
 
   const { modalState, setModalState, changeModalState } = useModal()
-
-  const [tooltip, setTooltip] = useState({
-    isOpen: false,
-    coords: {
-      x: 0,
-      y: 0
-    }
-  })
-
-  const changeTooltip = (isOpen, coords) => setTooltip({ isOpen, coords })
 
   const [currentIdea, setCurrentIdea] = useState(null)
 
@@ -192,18 +181,6 @@ export default function MainSpace({ expandSky, content }) {
           positionModalInGarden={false}
           idea={currentIdea}
           setIsIdeaModalOpen={setIsIdeaModalOpen}
-          modalCoords={tooltip.coords}
-          ideaImgDimensions={ideaImgDimensions}
-          topPosition={`${(Math.floor(ideaindex / (Math.floor(100 / ideaContainerWidth)))) * 200}px`}
-        />
-      }
-      {expandSky &&
-        <ExpandedSky
-          thoughts={thoughts}
-          ideas={ideas}
-          changeModalState={changeModalState}
-          setIsIdeaModalOpen={setIsIdeaModalOpen}
-          setCurrentIdea={setCurrentIdea}
         />
       }
     </>
