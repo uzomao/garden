@@ -14,11 +14,10 @@
   animation-timing-function: linear;
   animation-iteration-count: infinite;
   animation-duration: 30s;
-  animation-play-state: running;
 
   cursor: pointer;
   
-  opacity: 0.75;
+  /* opacity: 0.75; */
 }
 
 .title {

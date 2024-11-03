@@ -1,8 +1,5 @@
-import Sky from "@/components/elements/sky"
 import Ground from "@/components/elements/ground"
 
-import { fetchGraphQL } from "@/utils/contentful"
-import { queries } from '@/utils/query'
 import { useState, useEffect } from "react"
 
 import Image from "next/image"

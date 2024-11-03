@@ -70,9 +70,11 @@ export default function BuiltPage ({ pageTitle, content }) {
             {
                 pageElements && pageElements.map(({ content, content_type, element_id, element_position, element_size }) => 
                     !isBuildMode ? 
-                        renderPageElement(content, content_type, element_id, element_position, element_size)
+                        <span key={element_id}>
+                            { renderPageElement(content, content_type, element_id, element_position, element_size) }
+                        </span>
                         :
-                        <Draggable updateElementPagePosition={updateElementPagePosition} elementId={element_id} setInitialPosition={false} position={element_position}>
+                        <Draggable key={element_id} updateElementPagePosition={updateElementPagePosition} elementId={element_id} setInitialPosition={false} position={element_position}>
                             { renderPageElement(content, content_type, element_id, element_position, element_size) }
                         </Draggable>
                 )

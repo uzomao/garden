@@ -7,8 +7,6 @@ import ModalOverlay from './modal-overlay';
 import IdeaModal from './idea-modal';
 
 export default function ExpandedSky({ content }) {
-    console.log(content);
-
     const [ activeContentType, setActiveContentType ] = useState(contentTypes.thoughts)
     const [ currentIdea, setCurrentIdea ] = useState(null)
 
