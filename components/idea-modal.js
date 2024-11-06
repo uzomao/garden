@@ -1,6 +1,6 @@
 import CloseBtn from './close-btn'
 import { fetchGraphQL, parseRichText } from '@/utils/contentful'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { queries } from '@/utils/query'
 import { formatDate, contentTypes } from '@/utils/helpers'
 
@@ -10,7 +10,10 @@ import Reactions from './reactions'
 
 import ClickAway from './utils/click-away'
 
-export default function IdeaModal({ positionModalInGarden, idea, setIsIdeaModalOpen }) {
+import { FaCaretDown, FaCaretRight } from "react-icons/fa";
+
+export default function IdeaModal({ positionModalInGarden, idea, setIsIdeaModalOpen, cacheProjectUpdates, content }) {
+    
     const { slug, title, status, date, description } = idea
 
     const closeModal = () => {
@@ -31,19 +34,37 @@ export default function IdeaModal({ positionModalInGarden, idea, setIsIdeaModalO
         );
     };
 
+    const QUERY_LIMIT = 10
+
     useEffect(() => {
-        fetchGraphQL(`{ ${queries.ideaUpdates} }`)
-            .then((content) => {
-                const ideaUpdatesCollection = content.data.ideaUpdateCollection.items
-                setIdeaUpdates(ideaUpdatesCollection.filter(({ idea: referenceIdea }) => referenceIdea.sys.id == ideaId )) //idea.sys.id = id of the idea that the update references
-            })
+        if(content){
+            const ideaUpdates = content.filter((update) => update.idea.title === title)
+            if(ideaUpdates.length > 0){
+                setIdeaUpdates(ideaUpdates)
+            } else {
+                fetchContent()
+            }
+        } else {
+            fetchContent()
+        }
+        
     }, [])
+
+    const fetchContent = useCallback(() => {
+        // TODO: Add provision for "Load more" to circumvent query limit
+        fetchGraphQL(queries.ideaUpdates, { ideaId: idea.sys.id, limit: QUERY_LIMIT })
+            .then((content) => { 
+                const updates = content.data.ideaUpdateCollection.items;
+                setIdeaUpdates(updates);
+                cacheProjectUpdates(updates);
+            });
+    }, [idea.sys.id]);
 
     const modalClassName = positionModalInGarden ? `idea-modal-overlay idea-overlay text-left` : `idea-modal-overlay text-left`
     
   return (
     <ClickAway setModalOpenFn={setIsIdeaModalOpen}>
-        <div className={modalClassName} style={{top: `${window.scrollY}px` }}>
+        <div className={modalClassName} style={{top: window ? `${window.scrollY}px` : `` }}>
             { setIsIdeaModalOpen ? <CloseBtn closeModalFunction={closeModal} /> : <CloseBtn /> }
             <h1 className='text-center'>{title}</h1>
             <div className="grey-border-bottom">
@@ -59,7 +80,7 @@ export default function IdeaModal({ positionModalInGarden, idea, setIsIdeaModalO
                     ideaUpdates ? ideaUpdates.map((update) => 
                             <div key={update.sys.id} className='idea-update'>
                                 <div className='header-section grey-border-bottom' onClick={() => toggleBodySection(update.sys.id)}>
-                                    <h4 className='caret'>{expandedUpdates.includes(update.sys.id) ? 'v' : '>'}</h4>
+                                    <h4 className='caret'>{expandedUpdates.includes(update.sys.id) ? <FaCaretDown /> : <FaCaretRight />}</h4>
                                     <div>
                                         <h3 style={{margin: 0}} className='heading'>{update.title}</h3>
                                         <small>{formatDate(update.date)}</small>

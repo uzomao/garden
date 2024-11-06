@@ -35,14 +35,41 @@ export default function Home() {
   const [ showWelcome, setShowWelcome ] = useState(true)
   const [ spaceContent, setSpaceContent ] = useState({})
 
-  const projectsContent = {projects: spaceContent.projects, portfolio: spaceContent.portfolio}
+  const projectsContent = {projects: spaceContent.projects, portfolio: spaceContent.portfolio, projectUpdates: spaceContent.projectUpdates}
   const { updates, seeds } = spaceContent
+
+  const [ cachedUpdateTitles, setCachedUpdateTitles ] = useState([])
+
+  const _handleUpdatesCache = (updates) => {
+    // Filter out updates that are already in the cache by title
+    const newUpdates = updates.filter(update => !cachedUpdateTitles.includes(update.title));
+    return [...spaceContent.projectUpdates, ...newUpdates];
+  };
+
+  const cacheProjectUpdates = (updates) => {
+    setSpaceContent((prevContent) => ({
+      ...prevContent,
+      [spaceKeys.projectUpdates]: spaceKeys.projectUpdates in spaceContent
+        ? _handleUpdatesCache(updates)
+        : updates
+    }));
+  
+    // Add only new update titles to cachedUpdateTitles
+    const newTitles = updates
+      .map(update => update.title)
+      .filter(title => !cachedUpdateTitles.includes(title));
+  
+    setCachedUpdateTitles([...cachedUpdateTitles, ...newTitles]);
+  };
+
+  console.log(spaceContent);
+  
 
   const filterBuiltPageContent = (pageTitle) => spaceContent.builtPage && spaceContent.builtPage.filter(({ page }) => page === pageTitle)
 
   const gardenSpaces = [
     {name: 'intro', component: <IntroSpace showWelcome={showWelcome} setShowWelcome={setShowWelcome} content={filterBuiltPageContent('intro')} />},
-    {name: 'projects', component: <ProjectsSpace content={projectsContent} />, spaceTitle: 'Projects'}, 
+    {name: 'projects', component: <ProjectsSpace content={projectsContent} cacheProjectUpdates={cacheProjectUpdates} />, spaceTitle: 'Projects'}, 
     {name: 'updates', component: <UpdatesSpace content={updates} />, spaceTitle: 'Updates'},
     {name: 'community', component: <CommunitySpace content={seeds} />, spaceTitle: 'Community'},
   ]

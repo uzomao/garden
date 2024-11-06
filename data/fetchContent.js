@@ -8,7 +8,8 @@ const spaceKeys = {
     portfolio: 'portfolio',
     thoughts: 'thoughts',
     updates: 'updates',
-    seeds: 'seeds'
+    seeds: 'seeds',
+    projectUpdates: 'projectUpdates'
 }
 
 const mapQueriesToSpace = {

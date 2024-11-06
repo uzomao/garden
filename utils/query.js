@@ -34,34 +34,37 @@ const queries = {
         }
     `,
     ideaUpdates: `
-        ideaUpdateCollection(limit:10) {
-            items {
-                title
-                body {
-                    json
-                    links {
-                        assets {
-                            block {
-                                sys {
-                                    id
+        query GetIdeaUpdates($ideaId: String!, $limit: Int!) {
+            ideaUpdateCollection(where: { idea: { sys: { id: $ideaId }}}, limit: $limit) {
+                total
+                items {
+                    title
+                    body {
+                        json
+                        links {
+                            assets {
+                                block {
+                                    sys {
+                                        id
+                                    }
+                                    url
+                                    title
                                 }
-                                url
-                                title
                             }
                         }
                     }
-                }
-                date
-                idea {
+                    date
+                    idea {
+                        sys {
+                            id
+                        }
+                        title
+                    }
                     sys {
                         id
                     }
-                    title
+                    plant
                 }
-                sys {
-                    id
-                }
-                plant
             }
         }
     `,

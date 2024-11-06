@@ -12,7 +12,8 @@ import PortfolioModal from "@/components/portfolio-modal"
 
 import useModal from "@/hooks/use-modal"
 
-export default function MainSpace({ content }) {
+export default function MainSpace({ content, cacheProjectUpdates }) {
+  
 
   const [thoughts, setThoughts] = useState(null)
   const [ideas, setIdeas] = useState(null)
@@ -181,6 +182,8 @@ export default function MainSpace({ content }) {
           positionModalInGarden={false}
           idea={currentIdea}
           setIsIdeaModalOpen={setIsIdeaModalOpen}
+          cacheProjectUpdates={cacheProjectUpdates}
+          content={content.projectUpdates}
         />
       }
     </>
