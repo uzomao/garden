@@ -62,9 +62,6 @@ export default function Home() {
     setCachedUpdateTitles([...cachedUpdateTitles, ...newTitles]);
   };
 
-  console.log(spaceContent);
-  
-
   const filterBuiltPageContent = (pageTitle) => spaceContent.builtPage && spaceContent.builtPage.filter(({ page }) => page === pageTitle)
 
   const gardenSpaces = [

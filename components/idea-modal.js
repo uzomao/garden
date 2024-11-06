@@ -12,9 +12,14 @@ import ClickAway from './utils/click-away'
 
 import { FaCaretDown, FaCaretRight } from "react-icons/fa";
 
+import { useRouter } from 'next/router'
+
 export default function IdeaModal({ positionModalInGarden, idea, setIsIdeaModalOpen, cacheProjectUpdates, content }) {
     
     const { slug, title, status, date, description } = idea
+
+    const router = useRouter()
+    const { pathname } = router
 
     const closeModal = () => {
         setIsIdeaModalOpen(false)
@@ -56,7 +61,10 @@ export default function IdeaModal({ positionModalInGarden, idea, setIsIdeaModalO
             .then((content) => { 
                 const updates = content.data.ideaUpdateCollection.items;
                 setIdeaUpdates(updates);
-                cacheProjectUpdates(updates);
+                //needed for when idea modals are opened via a url e.g '/ideas/uzoma-studio' and cacheProjectUpdates is not drilled down from index where it's defined
+                if(cacheProjectUpdates){
+                    cacheProjectUpdates(updates);
+                }
             });
     }, [idea.sys.id]);
 
@@ -64,7 +72,7 @@ export default function IdeaModal({ positionModalInGarden, idea, setIsIdeaModalO
     
   return (
     <ClickAway setModalOpenFn={setIsIdeaModalOpen}>
-        <div className={modalClassName} style={{top: window ? `${window.scrollY}px` : `` }}>
+        <div className={modalClassName} style={{top: pathname.includes('idea') ? ``: `${window.scrollY}px`}}>
             { setIsIdeaModalOpen ? <CloseBtn closeModalFunction={closeModal} /> : <CloseBtn /> }
             <h1 className='text-center'>{title}</h1>
             <div className="grey-border-bottom">
