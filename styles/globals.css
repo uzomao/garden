@@ -155,3 +155,17 @@ iframe {
     
   }
 } */
+
+.clouds-text-drift-in {
+  opacity: 0;
+  animation: textDriftIn 1.5s ease forwards;
+}
+
+@keyframes textDriftIn {
+  0% {
+      opacity: 0;
+  }
+  100% {
+      opacity: 0.8;
+  }
+}
