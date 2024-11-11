@@ -72,7 +72,7 @@ export default function IdeaModal({ positionModalInGarden, idea, setIsIdeaModalO
     
   return (
     <ClickAway setModalOpenFn={setIsIdeaModalOpen}>
-        <div className={modalClassName} style={{top: pathname.includes('idea') ? ``: `${window.scrollY}px`}}>
+        <div className={modalClassName} style={{top: pathname.includes('projects') ? ``: `${window.scrollY}px`}}>
             { setIsIdeaModalOpen ? <CloseBtn closeModalFunction={closeModal} /> : <CloseBtn /> }
             <h1 className='text-center'>{title}</h1>
             <div className="grey-border-bottom">
@@ -95,10 +95,16 @@ export default function IdeaModal({ positionModalInGarden, idea, setIsIdeaModalO
                                     </div>
                                 </div>
                                 {expandedUpdates.includes(update.sys.id) && ( // Conditionally render body-section
-                                    <div
-                                        className='body-section grey-border-bottom'
-                                        dangerouslySetInnerHTML={{ __html: parseRichText(update.body.json, update.body.links) }}
-                                    />
+                                    <div className='grey-border-bottom'>
+                                        <div className='body-section'>
+                                            <div
+                                                dangerouslySetInnerHTML={{ __html: parseRichText(update.body.json, update.body.links) }}
+                                            />
+                                            <div className='sharer'>
+                                                <Sharer contentType={contentTypes.ideaUpdate} slug={slug} id={update.sys.id} isInline={true} />
+                                            </div>
+                                        </div>
+                                    </div>
                                 )}
                             </div>
                         )
@@ -107,7 +113,7 @@ export default function IdeaModal({ positionModalInGarden, idea, setIsIdeaModalO
                 }
                 {/* <Reactions contentId={slug} />
                 <Comment slug={slug} title={title} /> */}
-                <Sharer contentType={contentTypes.ideas} slug={slug} />
+                <Sharer contentType={contentTypes.projects} slug={slug} />
             </div>
         </div>
     </ClickAway>

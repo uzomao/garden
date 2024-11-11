@@ -1,11 +1,16 @@
 import { useState, useEffect } from 'react'
+import { contentTypes } from '@/utils/helpers'
 
-export default function Sharer({ contentType, slug }) {
+export default function Sharer({ contentType, slug, id, isInline }) {
 
     const [ pageLink, setPageLink ] = useState(null)
 
-    useEffect(() => { 
-        setPageLink(`${window.location.origin}/${contentType}/${slug}`)
+    useEffect(() => {
+        if(contentType === contentTypes.ideaUpdate){
+            setPageLink(`${window.location.origin}/${contentTypes.projects}/${slug}/${id}`)
+        } else {
+            setPageLink(`${window.location.origin}/${contentType}/${slug}`)
+        }
     }, [])
     
 
@@ -34,10 +39,10 @@ export default function Sharer({ contentType, slug }) {
     }
 
     return (
-        <div style={{marginTop: `2.5em`}}>
-            Share: 
+        <div style={{marginTop: `2.5em`, display: isInline ? 'flex' : 'block', alignItems: 'center'}}>
+            <p style={{marginRight: `1rem`}}>Share:</p>
             <p onClick={() => copyURI()} style={shareStyles} id='copy-link'>{copyLink}</p>
-            <p>{twitterLink}</p>
+            { !isInline && <p>{twitterLink}</p> }
         </div>
     )
 }

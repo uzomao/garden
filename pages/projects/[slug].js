@@ -29,7 +29,7 @@ export async function getStaticProps ({ params }) {
     const query = `{ ${queries.ideas} }`
 
     const content = await fetchGraphQLAsync(query)
-    const modalContent = content.data.ideaCollection.items.filter(({ slug }) => slug === params.slug)[0]
+    const modalContent = content.data.ideaCollection.items.find(({ slug }) => slug === params.slug)
 
     return {
         props: {

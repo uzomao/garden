@@ -6,8 +6,9 @@ const formatDate = (date) => {
 
 const contentTypes = {
     thoughts: 'thoughts',
-    ideas: 'ideas',
-    updates: 'updates'
+    projects: 'projects',
+    updates: 'updates',
+    ideaUpdate: 'idea-update'
 }
 
 /* 

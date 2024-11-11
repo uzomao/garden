@@ -1,5 +1,4 @@
-import { getUpdatePaths, fetchGraphQLAsync } from "@/utils/contentful"
-import { queries } from "@/utils/query";
+import { getIdeaUpdatePaths, fetchGraphQLAsync } from "@/utils/contentful"
 import Home from '@/pages/index.js'
 import { useRouter } from "next/router";
 import ModalOverlay from "@/components/modal-overlay";
@@ -19,18 +18,47 @@ export default function Update({ postContent }){
 }
 
 export async function getStaticPaths() {
-    const paths = await getUpdatePaths()
+    const paths = await getIdeaUpdatePaths()
     return {
         paths,
         fallback: false,
     };
 }
 
+const queries = {
+    ideaUpdates: `
+      {
+        ideaUpdateCollection {
+          items {
+            title
+            body {
+              json
+            }
+            date
+            idea {
+              sys {
+                id
+              }
+              title
+            }
+            sys {
+              id
+            }
+            plant
+          }
+        }
+      }
+    `
+  };
+
 export async function getStaticProps ({ params }) {
-    const query = `{ ${queries.updates} }`
+    const query = queries.ideaUpdates
 
     const content = await fetchGraphQLAsync(query)
-    const postContent = content.data.updatesCollection.items.find(({ slug }) => slug === params.slug)
+    
+    const postContent = content.data.ideaUpdateCollection.items.find(
+        ({ sys }) => sys.id === params.id
+      ) || null; // Set to null if not found
 
     return {
         props: {

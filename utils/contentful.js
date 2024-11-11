@@ -35,7 +35,7 @@ const fetchGraphQL = (query, variables, dataSource=gardenContentful) => {
     ).then((response) => response.json());
 }
 
-async function fetchGraphQLAsync(query) {
+async function fetchGraphQLAsync(query, variables) {
   return fetch(
     `https://graphql.contentful.com/content/v1/spaces/${process.env.CONTENTFUL_SPACE_ID}`,
     {
@@ -44,7 +44,7 @@ async function fetchGraphQLAsync(query) {
         "Content-Type": "application/json",
         Authorization: `Bearer ${process.env.CONTENTFUL_ACCESS_TOKEN}`,
       },
-      body: JSON.stringify({ query }),
+      body: JSON.stringify({ query, variables }),
     }
   ).then((response) => response.json());
 }
@@ -93,6 +93,20 @@ async function getUpdatePaths (arg){
   return slugs
 }
 
+async function getIdeaUpdatePaths (arg){
+  const content = await fetchGraphQL(`{ ${queries.ideaUpdatesNoContent} }`)
+  const ids = []
+  content.data.ideaUpdateCollection.items.forEach(item => {
+    ids.push({
+      params: {
+        slug: item.idea.slug,
+        id: item.sys.id
+      }
+    })
+  })
+  return ids
+}
+
 const parseRichText = (richText, links=null) => {
   const options = {
       renderMark: {
@@ -111,5 +125,13 @@ const parseRichText = (richText, links=null) => {
   return links ? documentToHtmlString(richText, options): documentToHtmlString(richText)
 }
 
-export { fetchGraphQL, fetchGraphQLAsync, getAllContent, getThoughtPaths, getIdeaPaths, getUpdatePaths, parseRichText }
+export { fetchGraphQL, 
+          fetchGraphQLAsync, 
+          getAllContent, 
+          getThoughtPaths, 
+          getIdeaPaths, 
+          getUpdatePaths, 
+          getIdeaUpdatePaths, 
+          parseRichText 
+        }
 

@@ -59,7 +59,11 @@
     
             width: 90%;
             margin-left: 5%;
-            padding: 2rem 0 5rem 0;
+            padding: 2rem 1rem 0 0;
+
+            .sharer {
+                padding-left: 1rem;
+            }
         }
     }
 }

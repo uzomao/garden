@@ -68,35 +68,16 @@ const queries = {
             }
         }
     `,
-    ideaUpdates2: `
-        ideaUpdateCollection(limit: $limit, skip: $skip) {
+    ideaUpdatesNoContent: `
+        ideaUpdateCollection {
             items {
                 title
-                body {
-                    json
-                    links {
-                        assets {
-                            block {
-                                sys {
-                                    id
-                                }
-                                url
-                                title
-                            }
-                        }
-                    }
-                }
-                date
                 idea {
-                    sys {
-                        id
-                    }
-                    title
+                    slug
                 }
                 sys {
                     id
                 }
-                plant
             }
         }
     `,

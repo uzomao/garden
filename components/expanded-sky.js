@@ -52,7 +52,7 @@ export default function ExpandedSky({ content }) {
                 <div className={styles.toggler}>
                     <p onClick={() => setActiveContentType(contentTypes.thoughts)} className={`${getActiveClass(contentTypes.thoughts)}`}>Thoughts</p>
                     <p className={styles.divider}>|</p>
-                    <p onClick={() => setActiveContentType(contentTypes.ideas)} className={`${getActiveClass(contentTypes.ideas)}`}>Ideas</p>
+                    <p onClick={() => setActiveContentType(contentTypes.projects)} className={`${getActiveClass(contentTypes.projects)}`}>Ideas</p>
                     <p className={styles.divider}>|</p>
                     <p onClick={() => setActiveContentType(contentTypes.updates)} className={`${getActiveClass(contentTypes.updates)}`}>Updates</p>
                 </div>
