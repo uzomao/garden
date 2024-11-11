@@ -71,12 +71,15 @@ const queries = {
     ideaUpdatesNoContent: `
         ideaUpdateCollection {
             items {
+                sys {
+                    id
+                }
                 title
                 idea {
                     slug
-                }
-                sys {
-                    id
+                    sys {
+                        id
+                    }
                 }
             }
         }

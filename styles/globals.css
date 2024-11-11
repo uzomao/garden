@@ -169,3 +169,9 @@ iframe {
       opacity: 0.8;
   }
 }
+
+.modal-image {
+  padding: 1rem;
+  width: calc(100% - 2rem);
+  border-radius: 30px;
+}

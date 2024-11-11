@@ -99,8 +99,8 @@ async function getIdeaUpdatePaths (arg){
   content.data.ideaUpdateCollection.items.forEach(item => {
     ids.push({
       params: {
+        id: item.sys.id,
         slug: item.idea.slug,
-        id: item.sys.id
       }
     })
   })
@@ -117,7 +117,7 @@ const parseRichText = (richText, links=null) => {
           [BLOCKS.EMBEDDED_ASSET]: (node) => {
             const assetId = node.data.target.sys.id
             const asset = links.assets.block.filter((block) => block.sys.id === assetId)
-            return `<img src=${asset[0].url} />`
+            return `<img class='modal-image' src=${asset[0].url} />`
           }
       }
   }
