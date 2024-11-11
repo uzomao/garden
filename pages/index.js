@@ -1,7 +1,7 @@
 import Head from "next/head"
 import Layout from "@/components/layout"
 
-import { useState, useEffect, useContext, useMemo } from 'react'
+import { useState, useEffect, useContext, useRef } from 'react'
 
 import IntroSpace from "@/pages/intro"
 import CommunitySpace from "@/pages/community"
@@ -29,6 +29,7 @@ export default function Home() {
   const [ expandSky, setExpandSky ] = useState(false)
   const [ showSignpost, setShowSignpost ] = useState(false)
   const [ showInfo, setShowInfo ] = useState(false)
+  const [ playAudio, setPlayAudio ] = useState(false)
 
   const [ currentSpaceIndex, setCurrentSpaceIndex ] = useState(0)
 
@@ -122,7 +123,24 @@ export default function Home() {
       }
   }, []);
 
-  
+  const audioRef = useRef(null)
+  // Initialize audio element on mount
+  useEffect(() => {
+    audioRef.current = new Audio('/sounds/garden.mov');
+    audioRef.current.loop = true; // Set audio to loop
+  }, []);
+
+  // Play or pause the sound when `isPlaying` state changes
+  useEffect(() => {
+    if (audioRef.current) {
+      if (playAudio) {
+        audioRef.current.play();
+      } else {
+        audioRef.current.pause();
+      }
+    }
+  }, [playAudio]);
+
   const fetchData = async (spaceKey, dataSource) => {
     try {
       const content = await fetchSpaceContent(spaceKey, dataSource);
@@ -189,6 +207,7 @@ export default function Home() {
         <NavIcons expandSky={expandSky} setExpandSky={setExpandSky} 
           showSignpost={showSignpost} setShowSignpost={setShowSignpost}
           showInfo={showInfo} setShowInfo={setShowInfo}
+          playAudio={playAudio} setPlayAudio={setPlayAudio}
         />
         { 
           showSignpost && 
