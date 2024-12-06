@@ -80,7 +80,7 @@ export default function IdeaModal({ positionModalInGarden, idea, setIsIdeaModalO
                 <p>First seeded: {formatDate(date)}</p>
             </div>
             <div>
-                <p className='padding-md'>{description}</p>
+                <p className='padding-md text-content'>{description}</p>
             </div>
             <div className='idea-updates'>
                 <h2>Project Updates</h2>
@@ -96,7 +96,7 @@ export default function IdeaModal({ positionModalInGarden, idea, setIsIdeaModalO
                                 </div>
                                 {expandedUpdates.includes(update.sys.id) && ( // Conditionally render body-section
                                     <div className='grey-border-bottom'>
-                                        <div className='body-section'>
+                                        <div className='body-section text-content'>
                                             <div
                                                 dangerouslySetInnerHTML={{ __html: parseRichText(update.body.json, update.body.links) }}
                                             />

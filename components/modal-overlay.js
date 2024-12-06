@@ -40,7 +40,7 @@ export default function ModalOverlay({ postContent, setModalState, contentType }
                 { contentType === contentTypes.updates && <p className={utilStyles.tag}>{postContent.tag}</p>}
                 <p>{formatDate(postContent.date)}</p>
                 <br />
-                <div dangerouslySetInnerHTML={{ __html: parseRichText(postContent.body.json, postContent.body.links) }} />
+                <div dangerouslySetInnerHTML={{ __html: parseRichText(postContent.body.json, postContent.body.links) }} className='text-content' />
                 
                 <Reactions contentId={slug} />
                 <Comment slug={slug} title={title} />
